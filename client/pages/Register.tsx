@@ -100,6 +100,9 @@ export default function Register() {
     description: "",
   });
   const [newCertification, setNewCertification] = useState("");
+  const [uploadedDocuments, setUploadedDocuments] = useState<{
+    [key: string]: boolean;
+  }>({});
 
   const { register } = useAuth();
   const navigate = useNavigate();
@@ -822,32 +825,105 @@ export default function Register() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {[
-            { type: "id_document", name: "Government ID", required: true },
+            {
+              type: "id_document",
+              name: "Government ID",
+              required: true,
+              description: "Driver's License, Passport, or State ID",
+            },
             {
               type: "proof_of_address",
               name: "Proof of Address",
               required: false,
+              description: "Utility bill, bank statement, or lease",
             },
             {
               type: "professional_docs",
               name: "Professional Documents",
               required: false,
+              description: "Licenses, certificates, or credentials",
             },
-          ].map((doc) => (
-            <div
-              key={doc.type}
-              className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-4 text-center hover:border-primary/50 transition-colors cursor-pointer"
-            >
-              <FileText className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
-              <div className="text-sm font-medium">{doc.name}</div>
-              <div className="text-xs text-muted-foreground mb-2">
-                {doc.required ? "Required" : "Optional"}
+            {
+              type: "insurance_docs",
+              name: "Insurance Documents",
+              required: false,
+              description: "Liability insurance certificates",
+            },
+            {
+              type: "portfolio",
+              name: "Work Portfolio",
+              required: false,
+              description: "Photos of previous work",
+            },
+            {
+              type: "references",
+              name: "References",
+              required: false,
+              description: "Contact information for references",
+            },
+          ].map((doc) => {
+            const isUploaded = uploadedDocuments[doc.type];
+            return (
+              <div
+                key={doc.type}
+                className={`border-2 border-dashed rounded-lg p-4 text-center transition-colors cursor-pointer ${
+                  isUploaded
+                    ? "border-green-300 bg-green-50 dark:bg-green-950/20"
+                    : "border-muted-foreground/25 hover:border-primary/50"
+                }`}
+                onClick={() => {
+                  // Simulate file upload
+                  setUploadedDocuments((prev) => ({
+                    ...prev,
+                    [doc.type]: !prev[doc.type],
+                  }));
+
+                  // Update documents in tasker profile
+                  setTaskerProfile((prev) => {
+                    const existingDocIndex = prev.documents.findIndex(
+                      (d) => d.type === doc.type,
+                    );
+                    const newDocuments = [...prev.documents];
+
+                    if (existingDocIndex >= 0) {
+                      newDocuments[existingDocIndex] = {
+                        ...newDocuments[existingDocIndex],
+                        uploaded: !uploadedDocuments[doc.type],
+                      };
+                    } else {
+                      newDocuments.push({
+                        type: doc.type,
+                        name: doc.name,
+                        uploaded: true,
+                      });
+                    }
+
+                    return { ...prev, documents: newDocuments };
+                  });
+                }}
+              >
+                {isUploaded ? (
+                  <CheckCircle className="w-8 h-8 mx-auto mb-2 text-green-600" />
+                ) : (
+                  <FileText className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
+                )}
+                <div className="text-sm font-medium">{doc.name}</div>
+                <div className="text-xs text-muted-foreground mb-2">
+                  {doc.required ? "Required" : "Optional"}
+                </div>
+                <div className="text-xs text-muted-foreground mb-3">
+                  {doc.description}
+                </div>
+                <Button
+                  variant={isUploaded ? "default" : "outline"}
+                  size="sm"
+                  type="button"
+                >
+                  {isUploaded ? "✓ Uploaded" : "Upload"}
+                </Button>
               </div>
-              <Button variant="outline" size="sm">
-                Upload
-              </Button>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
