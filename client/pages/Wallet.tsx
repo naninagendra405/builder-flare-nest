@@ -258,27 +258,59 @@ export default function Wallet() {
   };
 
   const handleWithdraw = async () => {
-    if (!withdrawAmount || parseFloat(withdrawAmount) <= 0) return;
-    if (parseFloat(withdrawAmount) > balance) {
-      alert("Insufficient funds");
+    if (!withdrawAmount || parseFloat(withdrawAmount) <= 0) {
+      addNotification({
+        type: "error",
+        title: "Invalid Amount",
+        message: "Please enter a valid amount greater than 0.",
+      });
+      return;
+    }
+
+    const amount = parseFloat(withdrawAmount);
+    if (amount > balance) {
+      addNotification({
+        type: "error",
+        title: "Insufficient Funds",
+        message: `You only have ₹${balance.toFixed(2)} available in your wallet.`,
+      });
       return;
     }
 
     setIsProcessing(true);
     try {
-      // TODO: Call actual withdrawal API
+      // Simulate withdrawal processing
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      console.log("Withdrawing funds:", {
-        amount: parseFloat(withdrawAmount),
+      // Update balance in state
+      setBalance((prev) => prev - amount);
+
+      // Add transaction record
+      const newTransaction = {
+        id: `txn_${Date.now()}`,
+        type: "debit" as const,
+        amount: amount,
+        description: "Funds withdrawn to bank account",
+        date: new Date().toISOString(),
+        status: "completed" as const,
+      };
+
+      setTransactions((prev) => [newTransaction, ...prev]);
+
+      addNotification({
+        type: "payment",
+        title: "Withdrawal Successful",
+        message: `₹${withdrawAmount} has been withdrawn from your wallet.`,
       });
 
-      // Mock success
-      alert(`Successfully withdrew ₹${withdrawAmount}!`);
       setShowWithdraw(false);
       setWithdrawAmount("");
     } catch (error) {
-      alert("Failed to withdraw funds. Please try again.");
+      addNotification({
+        type: "error",
+        title: "Withdrawal Failed",
+        message: "Failed to process withdrawal. Please try again.",
+      });
     } finally {
       setIsProcessing(false);
     }
