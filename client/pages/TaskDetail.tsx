@@ -422,7 +422,11 @@ export default function TaskDetail() {
                   {bids.map((bid, index) => (
                     <div
                       key={bid.id}
-                      className="border rounded-lg p-4 hover:bg-muted/50 transition-colors duration-200"
+                      className={`border rounded-lg p-4 hover:bg-muted/50 transition-colors duration-200 ${
+                        bid.isAccepted
+                          ? "bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800"
+                          : ""
+                      }`}
                     >
                       <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-3 space-y-3 sm:space-y-0">
                         <div className="flex items-center space-x-3 flex-1">
