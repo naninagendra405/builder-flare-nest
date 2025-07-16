@@ -36,7 +36,7 @@ import {
   CheckCircle,
   Clock,
   AlertCircle,
-  Zap,
+  Home,
   FileText,
   Camera,
   Smile,
@@ -293,7 +293,7 @@ export default function Chat() {
               </Button>
               <div className="flex items-center space-x-2">
                 <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                  <Zap className="w-5 h-5 text-primary-foreground" />
+                  <Home className="w-5 h-5 text-primary-foreground" />
                 </div>
                 <span className="text-2xl font-bold text-primary">TaskIt</span>
               </div>

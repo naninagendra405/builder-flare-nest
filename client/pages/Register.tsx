@@ -14,7 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  Zap,
+  Home,
   Eye,
   EyeOff,
   ArrowLeft,
