@@ -63,9 +63,10 @@ export default function Dashboard() {
     navigate("/");
   };
 
-  // Extract first name for nickname display
+  // Extract first name for nickname display (limit to 7-8 chars)
   const getUserNickname = (fullName: string) => {
-    return fullName.split(" ")[0];
+    const firstName = fullName.split(" ")[0];
+    return firstName.length > 8 ? firstName.substring(0, 7) : firstName;
   };
 
   const userTasks = getTasksByUser(user.id);
