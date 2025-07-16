@@ -43,6 +43,10 @@ export default function App() {
                 <Route path="/notifications" element={<Notifications />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/add-credentials" element={<AddCredentials />} />
+                <Route
+                  path="/task-suggestions"
+                  element={<TaskSuggestionsPage />}
+                />
                 <Route path="/admin" element={<AdminDashboard />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
