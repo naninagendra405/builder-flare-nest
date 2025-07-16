@@ -369,10 +369,10 @@ export default function Wallet() {
         </div>
 
         {/* Quick Actions */}
-        <div className="flex flex-wrap gap-4 mb-8">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-6 sm:mb-8">
           <Dialog open={showAddFunds} onOpenChange={setShowAddFunds}>
             <DialogTrigger asChild>
-              <Button className="flex items-center">
+              <Button className="flex items-center h-11 px-6 text-sm sm:text-base">
                 <Plus className="w-4 h-4 mr-2" />
                 Add Funds
               </Button>
@@ -447,7 +447,10 @@ export default function Wallet() {
 
           <Dialog open={showWithdraw} onOpenChange={setShowWithdraw}>
             <DialogTrigger asChild>
-              <Button variant="outline">
+              <Button
+                variant="outline"
+                className="h-11 px-6 text-sm sm:text-base"
+              >
                 <TrendingDown className="w-4 h-4 mr-2" />
                 Withdraw
               </Button>
@@ -498,7 +501,11 @@ export default function Wallet() {
             </DialogContent>
           </Dialog>
 
-          <Button variant="outline" asChild>
+          <Button
+            variant="outline"
+            asChild
+            className="h-11 px-6 text-sm sm:text-base"
+          >
             <Link to="/payment-methods">
               <CreditCard className="w-4 h-4 mr-2" />
               Payment Methods
