@@ -37,6 +37,13 @@ interface TaskContextType {
   updateTask: (id: string, updates: Partial<Task>) => void;
   getTasksByUser: (userId: string) => Task[];
   getAllTasks: () => Task[];
+  acceptBid: (
+    taskId: string,
+    bidId: string,
+    taskerId: string,
+    taskerName: string,
+  ) => void;
+  getTasksByTasker: (taskerId: string) => Task[];
 }
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
