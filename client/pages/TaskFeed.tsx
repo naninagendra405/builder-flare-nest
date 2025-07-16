@@ -221,8 +221,9 @@ export default function TaskFeed() {
       value !== 1000,
   ).length;
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
+    return (
+    <TooltipProvider>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
       {/* Enhanced Mobile-Optimized Header */}
       <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50 shadow-sm">
         <div className="container mx-auto px-4 py-3 lg:py-4">
