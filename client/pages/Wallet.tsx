@@ -207,24 +207,51 @@ export default function Wallet() {
   };
 
   const handleAddFunds = async () => {
-    if (!addAmount || parseFloat(addAmount) <= 0) return;
+    if (!addAmount || parseFloat(addAmount) <= 0) {
+      addNotification({
+        type: "error",
+        title: "Invalid Amount",
+        message: "Please enter a valid amount greater than 0.",
+      });
+      return;
+    }
 
     setIsProcessing(true);
     try {
-      // TODO: Call actual payment processing API
+      // Simulate payment processing
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      console.log("Adding funds:", {
-        amount: parseFloat(addAmount),
-        paymentMethod: selectedPaymentMethod,
+      const amount = parseFloat(addAmount);
+
+      // Update balance in state
+      setBalance((prev) => prev + amount);
+
+      // Add transaction record
+      const newTransaction = {
+        id: `txn_${Date.now()}`,
+        type: "credit" as const,
+        amount: amount,
+        description: `Added funds via payment method`,
+        date: new Date().toISOString(),
+        status: "completed" as const,
+      };
+
+      setTransactions((prev) => [newTransaction, ...prev]);
+
+      addNotification({
+        type: "payment",
+        title: "Funds Added Successfully",
+        message: `₹${addAmount} has been added to your wallet.`,
       });
 
-      // Mock success
-      alert(`Successfully added ₹${addAmount} to your wallet!`);
       setShowAddFunds(false);
       setAddAmount("");
     } catch (error) {
-      alert("Failed to add funds. Please try again.");
+      addNotification({
+        type: "error",
+        title: "Payment Failed",
+        message: "Failed to add funds. Please try again.",
+      });
     } finally {
       setIsProcessing(false);
     }
