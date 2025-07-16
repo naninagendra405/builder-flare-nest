@@ -351,7 +351,7 @@ export default function Dashboard() {
           <Card>
             <CardHeader>
               <CardTitle>
-                {user.role === "customer" ? "Your Tasks" : "Current Tasks"}
+                {user.role === "customer" ? "Your Tasks" : "Assigned Tasks"}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
