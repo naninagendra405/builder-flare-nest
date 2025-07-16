@@ -542,6 +542,194 @@ export default function Profile() {
                 </div>
               </CardContent>
             </Card>
+
+            {/* Professional Credentials - Only for taskers */}
+            {user.role === "tasker" && user.taskerProfile && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Shield className="w-5 h-5 mr-2 text-primary" />
+                    Professional Credentials
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  {/* Categories */}
+                  <div>
+                    <h4 className="font-medium mb-3">Service Categories</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {user.taskerProfile.categories.map((category) => (
+                        <Badge
+                          key={category}
+                          variant="outline"
+                          className="capitalize"
+                        >
+                          {category.replace("_", " ")}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Professional Info */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <h4 className="font-medium mb-2">Experience Level</h4>
+                      <Badge variant="secondary" className="capitalize">
+                        {user.taskerProfile.experience}
+                      </Badge>
+                    </div>
+                    <div>
+                      <h4 className="font-medium mb-2">Hourly Rate</h4>
+                      <div className="text-lg font-semibold">
+                        ${user.taskerProfile.hourlyRate}/hr
+                      </div>
+                    </div>
+                    <div>
+                      <h4 className="font-medium mb-2">Service Area</h4>
+                      <p className="text-sm text-muted-foreground">
+                        {user.taskerProfile.serviceArea}
+                      </p>
+                    </div>
+                    <div>
+                      <h4 className="font-medium mb-2">Availability</h4>
+                      <Badge variant="outline" className="capitalize">
+                        {user.taskerProfile.availability?.replace("_", " ")}
+                      </Badge>
+                    </div>
+                  </div>
+
+                  {/* Credentials */}
+                  {user.taskerProfile.professionalCredentials &&
+                    user.taskerProfile.professionalCredentials.length > 0 && (
+                      <div>
+                        <h4 className="font-medium mb-3">
+                          Licenses & Credentials
+                        </h4>
+                        <div className="space-y-3">
+                          {user.taskerProfile.professionalCredentials.map(
+                            (cred, index) => (
+                              <div
+                                key={index}
+                                className="flex items-center justify-between p-3 bg-muted/50 rounded-lg"
+                              >
+                                <div>
+                                  <div className="font-medium text-sm capitalize">
+                                    {cred.type.replace("_", " ")}
+                                  </div>
+                                  <div className="text-xs text-muted-foreground">
+                                    {cred.description}
+                                  </div>
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                  {cred.verified ? (
+                                    <>
+                                      <CheckCircle className="w-4 h-4 text-green-600" />
+                                      <Badge
+                                        variant="default"
+                                        className="text-xs"
+                                      >
+                                        Verified
+                                      </Badge>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <AlertCircle className="w-4 h-4 text-yellow-500" />
+                                      <Badge
+                                        variant="secondary"
+                                        className="text-xs"
+                                      >
+                                        Pending
+                                      </Badge>
+                                    </>
+                                  )}
+                                </div>
+                              </div>
+                            ),
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                  {/* Certifications */}
+                  {user.taskerProfile.certifications &&
+                    user.taskerProfile.certifications.length > 0 && (
+                      <div>
+                        <h4 className="font-medium mb-3">
+                          Certifications & Training
+                        </h4>
+                        <div className="flex flex-wrap gap-2">
+                          {user.taskerProfile.certifications.map(
+                            (cert, index) => (
+                              <Badge
+                                key={index}
+                                variant="outline"
+                                className="flex items-center"
+                              >
+                                <Award className="w-3 h-3 mr-1" />
+                                {cert}
+                              </Badge>
+                            ),
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                  {/* Languages */}
+                  {user.taskerProfile.languages &&
+                    user.taskerProfile.languages.length > 0 && (
+                      <div>
+                        <h4 className="font-medium mb-3">Languages</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {user.taskerProfile.languages.map((lang, index) => (
+                            <Badge
+                              key={index}
+                              variant="outline"
+                              className="flex items-center"
+                            >
+                              <Globe className="w-3 h-3 mr-1" />
+                              {lang}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                  {/* Professional Bio */}
+                  {user.taskerProfile.bio && (
+                    <div>
+                      <h4 className="font-medium mb-3">Professional Bio</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        {user.taskerProfile.bio}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Trust Score */}
+                  <div className="bg-primary/10 p-4 rounded-lg">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h4 className="font-medium">Trust Score</h4>
+                        <p className="text-sm text-muted-foreground">
+                          Based on verification status and customer feedback
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-2xl font-bold text-primary">
+                          {user.taskerProfile.professionalCredentials?.filter(
+                            (c) => c.verified,
+                          ).length *
+                            20 +
+                            60}
+                          %
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          Verified Professional
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
           </TabsContent>
 
           {/* Reviews Tab */}
