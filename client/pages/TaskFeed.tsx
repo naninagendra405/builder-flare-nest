@@ -402,10 +402,21 @@ export default function TaskFeed() {
             {sortedTasks.length} tasks found
           </p>
           {user.role === "customer" && (
-            <Button variant="outline" onClick={() => navigate("/create-task")}>
-              <Plus className="w-4 h-4 mr-2" />
-              Post a Task
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                onClick={() => navigate("/task-suggestions")}
+              >
+                💡 Get Task Ideas
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => navigate("/create-task")}
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Post a Task
+              </Button>
+            </div>
           )}
         </div>
 
