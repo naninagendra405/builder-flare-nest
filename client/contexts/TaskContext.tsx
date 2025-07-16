@@ -384,6 +384,9 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
         getAllTasks,
         acceptBid,
         getTasksByTasker,
+        approveTaskAndHoldEscrow,
+        markTaskCompleted,
+        releasePayment,
       }}
     >
       {children}
