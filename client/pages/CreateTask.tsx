@@ -33,7 +33,7 @@ import {
   Car,
   Users,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { getAIPricingSuggestion } from "../utils/aiPricing";
 import { useTasks } from "../contexts/TaskContext";
 
