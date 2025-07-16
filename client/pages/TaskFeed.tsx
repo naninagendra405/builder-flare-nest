@@ -470,10 +470,10 @@ export default function TaskFeed() {
                         {task.urgency}
                       </Badge>
                       {task.customerVerified && (
-                        <CheckCircle className="w-4 h-4 text-green-600 animate-pulse" />
+                        <CheckCircle className="w-4 h-4 text-green-600" />
                       )}
                     </div>
-                    <CardTitle className="text-base md:text-lg line-clamp-2 mb-2 group-hover:text-primary transition-colors duration-200">
+                    <CardTitle className="text-base md:text-lg line-clamp-2 mb-2">
                       {task.title}
                     </CardTitle>
                     <p className="text-muted-foreground text-sm line-clamp-2">
