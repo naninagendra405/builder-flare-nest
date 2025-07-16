@@ -226,7 +226,9 @@ export default function TaskSuggestionsPage() {
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => navigate("/tasks")}
+                onClick={() =>
+                  navigate(user.role === "customer" ? "/dashboard" : "/tasks")
+                }
               >
                 <ArrowLeft className="w-5 h-5" />
               </Button>
