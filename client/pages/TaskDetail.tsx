@@ -227,20 +227,30 @@ export default function TaskDetail() {
       // Add notification for the tasker
       addNotification({
         type: "task_update",
-        title: "Task Assigned!",
-        message: `Your bid for "${task.title}" has been accepted. The task is now assigned to you.`,
+        title: "Bid Accepted!",
+        message: `Your bid for "${task.title}" has been accepted! Waiting for customer approval to start work.`,
         priority: "high",
         taskId: task.id,
         fromUser: user.name,
       });
 
+      // Add notification for the customer
+      addNotification({
+        type: "task_update",
+        title: "Bid Accepted",
+        message: `${acceptedBid.bidderName}'s bid for "${task.title}" has been accepted. Please approve the task to hold payment in escrow.`,
+        priority: "high",
+        taskId: task.id,
+        fromUser: "TaskIt System",
+      });
+
       // Show success message
       alert(
-        `🎉 Bid accepted! ${acceptedBid.bidderName} has been assigned to this task. The order is now in progress and they will be notified immediately.`,
+        `🎉 Bid accepted! ${acceptedBid.bidderName} has been assigned to this task. Please approve the task to start work and secure payment.`,
       );
 
-      // Navigate to chat for communication
-      navigate(`/chat?task=${task.id}&bidder=${acceptedBid.bidderId}`);
+      // Reload page to show new workflow
+      window.location.reload();
     }
   };
 
