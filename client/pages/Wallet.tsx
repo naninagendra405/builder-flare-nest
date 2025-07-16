@@ -545,39 +545,50 @@ export default function Wallet() {
               {transactions.map((transaction) => (
                 <div
                   key={transaction.id}
-                  className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors space-y-3 sm:space-y-0"
+                  className="flex flex-col space-y-3 p-3 sm:p-4 border rounded-lg hover:bg-muted/50 transition-colors"
                 >
-                  <div className="flex items-center space-x-4 flex-1">
-                    <div className="w-10 h-10 bg-muted rounded-full flex items-center justify-center">
+                  <div className="flex items-start space-x-3 flex-1">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 bg-muted rounded-full flex items-center justify-center flex-shrink-0">
                       {getTransactionIcon(transaction.type)}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-medium">{transaction.description}</h4>
-                      <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-sm text-muted-foreground">
-                        <span>
-                          {new Date(transaction.date).toLocaleDateString()}
-                        </span>
-                        {transaction.counterparty && (
-                          <span>• {transaction.counterparty}</span>
-                        )}
-                        {transaction.taskTitle && (
-                          <span className="hidden sm:inline">
-                            • {transaction.taskTitle}
-                          </span>
-                        )}
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-medium text-sm sm:text-base leading-tight">
+                            {transaction.description}
+                          </h4>
+                          <div className="flex flex-wrap items-center gap-1 sm:gap-2 text-xs sm:text-sm text-muted-foreground mt-1">
+                            <span>
+                              {new Date(transaction.date).toLocaleDateString()}
+                            </span>
+                            {transaction.counterparty && (
+                              <>
+                                <span>•</span>
+                                <span className="truncate max-w-[120px] sm:max-w-none">
+                                  {transaction.counterparty}
+                                </span>
+                              </>
+                            )}
+                          </div>
+                          {transaction.taskTitle && (
+                            <p className="text-xs sm:text-sm text-muted-foreground mt-1 truncate">
+                              {transaction.taskTitle}
+                            </p>
+                          )}
+                        </div>
+                        <div className="flex flex-col items-end ml-3 flex-shrink-0">
+                          <div className="text-base sm:text-lg font-semibold">
+                            {formatAmount(transaction.amount, transaction.type)}
+                          </div>
+                          <Badge
+                            className={`mt-1 text-xs ${getStatusColor(transaction.status)}`}
+                            variant="secondary"
+                          >
+                            {transaction.status}
+                          </Badge>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center text-left sm:text-right">
-                    <div className="text-lg font-semibold">
-                      {formatAmount(transaction.amount, transaction.type)}
-                    </div>
-                    <Badge
-                      className={`mt-0 sm:mt-1 ${getStatusColor(transaction.status)}`}
-                      variant="secondary"
-                    >
-                      {transaction.status}
-                    </Badge>
                   </div>
                 </div>
               ))}
