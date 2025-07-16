@@ -452,10 +452,10 @@ export default function Wallet() {
                 >
                   <div className="flex items-center space-x-4">
                     <div
-                      className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                      className={`w-10 h-10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 ${
                         transaction.type === "credit"
-                          ? "bg-green-100 dark:bg-green-900/30"
-                          : "bg-red-100 dark:bg-red-900/30"
+                          ? "bg-green-100 dark:bg-green-900/30 group-hover:bg-green-200 dark:group-hover:bg-green-800/50"
+                          : "bg-red-100 dark:bg-red-900/30 group-hover:bg-red-200 dark:group-hover:bg-red-800/50"
                       }`}
                     >
                       {transaction.type === "credit" ? (
