@@ -450,8 +450,7 @@ export default function TaskFeed() {
           {sortedTasks.map((task, index) => (
             <Card
               key={task.id}
-              className="group hover:shadow-xl hover:shadow-primary/20 transition-all duration-300 cursor-pointer transform hover:scale-[1.02] hover:-translate-y-1 animate-in slide-in-from-bottom duration-500"
-              style={{ animationDelay: `${index * 100}ms` }}
+              className="hover:shadow-md transition-shadow duration-200 cursor-pointer"
               onClick={() => navigate(`/task/${task.id}`)}
             >
               <CardHeader className="pb-3">
