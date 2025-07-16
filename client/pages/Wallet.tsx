@@ -217,7 +217,7 @@ export default function Wallet() {
       });
 
       // Mock success
-      alert(`Successfully added $${addAmount} to your wallet!`);
+      alert(`Successfully added ₹${addAmount} to your wallet!`);
       setShowAddFunds(false);
       setAddAmount("");
     } catch (error) {
@@ -244,7 +244,7 @@ export default function Wallet() {
       });
 
       // Mock success
-      alert(`Successfully withdrew $${withdrawAmount}!`);
+      alert(`Successfully withdrew ₹${withdrawAmount}!`);
       setShowWithdraw(false);
       setWithdrawAmount("");
     } catch (error) {
@@ -423,7 +423,7 @@ export default function Wallet() {
                 >
                   {isProcessing
                     ? "Processing..."
-                    : `Add $${addAmount || "0.00"}`}
+                    : `Add ₹${addAmount || "0.00"}`}
                 </Button>
               </div>
             </DialogContent>
@@ -476,7 +476,7 @@ export default function Wallet() {
                 >
                   {isProcessing
                     ? "Processing..."
-                    : `Withdraw $${withdrawAmount || "0.00"}`}
+                    : `Withdraw ₹${withdrawAmount || "0.00"}`}
                 </Button>
               </div>
             </DialogContent>
