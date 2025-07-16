@@ -49,6 +49,7 @@ import {
 } from "lucide-react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { formatCurrency } from "@/lib/currency";
+import { RupeeIcon } from "@/components/ui/rupee-icon";
 
 interface Bid {
   id: string;
@@ -592,7 +593,7 @@ export default function TaskDetail() {
                     className="w-full"
                     onClick={() => setShowBidDialog(true)}
                   >
-                    <DollarSign className="w-4 h-4 mr-2" />
+                    <RupeeIcon className="w-4 h-4 mr-2" />
                     Place Bid
                   </Button>
                 )}
@@ -655,7 +656,7 @@ export default function TaskDetail() {
               <div>
                 <Label htmlFor="bidAmount">Your Bid Amount *</Label>
                 <div className="relative">
-                  <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                  <RupeeIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
                   <Input
                     id="bidAmount"
                     type="number"
