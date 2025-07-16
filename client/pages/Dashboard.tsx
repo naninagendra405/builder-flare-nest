@@ -97,6 +97,14 @@ export default function Dashboard() {
       : getTasksByTasker(user.id || "");
   const allTasks = getAllTasks();
 
+  // For taskers, also get available tasks they can bid on
+  const availableTasksForTaskers =
+    user.role === "tasker"
+      ? allTasks.filter(
+          (task) => task.status === "open" && !task.assignedTaskerId,
+        )
+      : [];
+
   // Format tasks for display
   const recentTasks = userTasks.slice(0, 3).map((task) => ({
     id: task.id,
