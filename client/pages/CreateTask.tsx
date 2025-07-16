@@ -57,6 +57,10 @@ export default function CreateTask() {
   const { user } = useAuth();
   const { addTask } = useTasks();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Get suggested task data from navigation state
+  const suggestedTask = location.state?.suggestedTask;
 
   const [currentStep, setCurrentStep] = useState(1);
   const [aiPricingSuggestion, setAiPricingSuggestion] = useState<any>(null);
