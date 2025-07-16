@@ -140,9 +140,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const emailName = email.split("@")[0];
         const shortName =
           emailName.length > 7
-            ? emailName.substring(0, 7).charAt(0).toUpperCase() +
-              emailName.substring(1, 7)
-            : emailName.charAt(0).toUpperCase() + emailName.substring(1);
+            ? emailName.substring(0, 1).toUpperCase() +
+              emailName.substring(1, 7).toLowerCase()
+            : emailName.charAt(0).toUpperCase() +
+              emailName.substring(1).toLowerCase();
 
         mockUser = {
           id: "1",
