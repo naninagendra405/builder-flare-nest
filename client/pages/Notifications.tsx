@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useNotifications } from "../contexts/NotificationContext";
+import { RupeeIcon } from "@/components/ui/rupee-icon";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -45,11 +46,11 @@ export default function Notifications() {
   const getNotificationIcon = (type: string) => {
     switch (type) {
       case "bid":
-        return <DollarSign className="w-5 h-5 text-green-600" />;
+        return <RupeeIcon className="w-5 h-5 text-green-600" />;
       case "message":
         return <MessageSquare className="w-5 h-5 text-blue-600" />;
       case "payment":
-        return <DollarSign className="w-5 h-5 text-purple-600" />;
+        return <RupeeIcon className="w-5 h-5 text-purple-600" />;
       case "task_update":
         return <Briefcase className="w-5 h-5 text-orange-600" />;
       case "system":
