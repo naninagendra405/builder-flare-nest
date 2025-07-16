@@ -1,6 +1,17 @@
 import { useAuth } from "../contexts/AuthContext";
+import { useTasks } from "../contexts/TaskContext";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  ArrowLeft,
+  MapPin,
+  Clock,
+  IndianRupee,
+  Star,
+  Users,
+  Eye,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import TaskSuggestions from "../components/TaskSuggestions";
 
