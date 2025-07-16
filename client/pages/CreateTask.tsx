@@ -56,6 +56,7 @@ interface TaskForm {
 
 export default function CreateTask() {
   const { user } = useAuth();
+  const { addTask } = useTasks();
   const navigate = useNavigate();
 
   const [currentStep, setCurrentStep] = useState(1);
