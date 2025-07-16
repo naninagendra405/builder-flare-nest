@@ -446,6 +446,11 @@ export default function TaskDetail() {
                               {bid.bidderVerified && (
                                 <CheckCircle className="w-4 h-4 text-green-600" />
                               )}
+                              {bid.isAccepted && (
+                                <Badge className="bg-green-100 text-green-800 border-green-200">
+                                  Accepted
+                                </Badge>
+                              )}
                             </div>
                             <div className="flex flex-wrap items-center gap-2 md:gap-4 text-sm text-muted-foreground">
                               <span className="flex items-center">
