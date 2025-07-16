@@ -160,6 +160,31 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
     return tasks;
   };
 
+  const acceptBid = (
+    taskId: string,
+    bidId: string,
+    taskerId: string,
+    taskerName: string,
+  ) => {
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === taskId
+          ? {
+              ...task,
+              status: "in_progress" as const,
+              assignedTaskerId: taskerId,
+              assignedTaskerName: taskerName,
+              acceptedBidId: bidId,
+            }
+          : task,
+      ),
+    );
+  };
+
+  const getTasksByTasker = (taskerId: string) => {
+    return tasks.filter((task) => task.assignedTaskerId === taskerId);
+  };
+
   return (
     <TaskContext.Provider
       value={{
@@ -168,6 +193,8 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
         updateTask,
         getTasksByUser,
         getAllTasks,
+        acceptBid,
+        getTasksByTasker,
       }}
     >
       {children}
