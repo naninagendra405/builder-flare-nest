@@ -315,7 +315,7 @@ export default function CreateTask() {
 
                 <div className="space-y-3">
                   <Label>Category *</Label>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                     {categories.map((category) => {
                       const Icon = category.icon;
                       return (
