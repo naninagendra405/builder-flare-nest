@@ -41,6 +41,7 @@ export default function App() {
                 <Route path="/payment-methods" element={<PaymentMethods />} />
                 <Route path="/notifications" element={<Notifications />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/add-credentials" element={<AddCredentials />} />
                 <Route path="/admin" element={<AdminDashboard />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
