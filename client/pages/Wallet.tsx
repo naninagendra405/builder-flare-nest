@@ -313,7 +313,7 @@ export default function Wallet() {
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-primary">
-                ${balance.toFixed(2)}
+                ₹{balance.toFixed(2)}
               </div>
               <p className="text-sm text-muted-foreground mt-2">Ready to use</p>
             </CardContent>
