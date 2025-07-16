@@ -71,7 +71,7 @@ interface Bid {
 
 export default function TaskDetail() {
   const { user } = useAuth();
-  const { acceptBid, getAllTasks } = useTasks();
+  const { acceptBid, getAllTasks, placeBid, updateTask } = useTasks();
   const { addNotification } = useNotifications();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -201,11 +201,28 @@ export default function TaskDetail() {
       bidderResponse: "under 1 hour",
     };
 
-    // Add bid to the task (this would normally go to backend)
-    console.log("Bid submitted successfully:", newBid);
+    // Update task bid count using context
+    placeBid(task.id);
 
-    // Update task bid count
-    // updateTask(task.id, { bidsCount: task.bidsCount + 1 });
+    // Notify customer about new bid
+    addNotification({
+      type: "bid_received",
+      title: "New Bid Received!",
+      message: `${user.name} placed a bid of ₹${bidAmount} on your task "${task.title}". Review and accept to start work.`,
+      priority: "high",
+      taskId: task.id,
+      fromUser: user.name,
+    });
+
+    // Notify tasker about successful bid placement
+    addNotification({
+      type: "bid_placed",
+      title: "Bid Placed Successfully!",
+      message: `Your bid of ₹${bidAmount} for "${task.title}" has been submitted. You'll be notified when the customer responds.`,
+      priority: "medium",
+      taskId: task.id,
+      fromUser: "TaskIt System",
+    });
 
     setShowBidDialog(false);
     setBidAmount("");
