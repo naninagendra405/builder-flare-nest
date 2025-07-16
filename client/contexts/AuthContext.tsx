@@ -70,14 +70,81 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsLoading(true);
     try {
       // TODO: Replace with actual API call
-      const mockUser: User = {
-        id: "1",
-        email,
-        name: email.split("@")[0],
-        role: email.includes("admin") ? "admin" : "customer",
-        rating: 4.8,
-        verificationStatus: "verified",
-      };
+      let mockUser: User;
+
+      if (email === "tasker@demo.com") {
+        // Demo tasker with full verification profile
+        mockUser = {
+          id: "demo-tasker",
+          email,
+          name: "John Smith",
+          phone: "+1 (555) 123-4567",
+          role: "tasker",
+          rating: 4.9,
+          verificationStatus: "verified",
+          location: "New York, NY",
+          taskerProfile: {
+            bio: "Professional handyman with 10+ years of experience. I specialize in home repairs, electrical work, and furniture assembly. Licensed, insured, and committed to quality work.",
+            skills: [
+              "Plumbing",
+              "Electrical Work",
+              "Carpentry",
+              "Painting",
+              "Furniture Assembly",
+            ],
+            categories: ["handyman", "transport"],
+            experience: "expert",
+            hourlyRate: "45",
+            availability: "flexible",
+            serviceArea: "New York City and surrounding areas",
+            professionalCredentials: [
+              {
+                type: "trade_license",
+                description: "Licensed Electrician - State of NY",
+                verified: true,
+              },
+              {
+                type: "business_license",
+                description: "General Contractor License",
+                verified: true,
+              },
+              {
+                type: "insurance",
+                description: "General Liability Insurance - $1M coverage",
+                verified: true,
+              },
+              {
+                type: "background_check",
+                description: "Background Check Completed",
+                verified: false,
+              },
+            ],
+            documents: [
+              { type: "id_document", name: "Driver's License", uploaded: true },
+              {
+                type: "professional_docs",
+                name: "Electrician License",
+                uploaded: true,
+              },
+            ],
+            languages: ["English", "Spanish"],
+            certifications: [
+              "EPA Universal Certification",
+              "OSHA 10-Hour Safety",
+              "Home Depot Pro Certified",
+            ],
+          },
+        };
+      } else {
+        mockUser = {
+          id: "1",
+          email,
+          name: email.split("@")[0],
+          role: email.includes("admin") ? "admin" : "customer",
+          rating: 4.8,
+          verificationStatus: "verified",
+        };
+      }
 
       localStorage.setItem("taskit-user", JSON.stringify(mockUser));
       setUser(mockUser);
