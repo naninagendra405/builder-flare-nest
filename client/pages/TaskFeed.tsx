@@ -233,19 +233,21 @@ export default function TaskFeed() {
         </div>
       </nav>
 
-      <div className="container mx-auto px-4 py-4 md:py-8">
+      <div className="container mx-auto px-3 sm:px-4 py-4 md:py-8">
         {/* Header */}
-        <div className="mb-6 md:mb-8">
-          <h1 className="text-2xl md:text-3xl font-bold">Find Tasks</h1>
-          <p className="text-muted-foreground text-sm md:text-base">
+        <div className="mb-4 sm:mb-6 md:mb-8">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold">
+            Find Tasks
+          </h1>
+          <p className="text-muted-foreground text-sm md:text-base mt-1">
             Discover opportunities that match your skills and schedule
           </p>
         </div>
 
         {/* Search and Filters */}
-        <Card className="mb-6">
-          <CardContent className="p-4 md:p-6">
-            <div className="space-y-4">
+        <Card className="mb-4 sm:mb-6">
+          <CardContent className="p-3 sm:p-4 md:p-6">
+            <div className="space-y-3 sm:space-y-4">
               {/* Search */}
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
