@@ -40,6 +40,7 @@ import {
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { formatCurrency } from "@/lib/currency";
+import { RupeeIcon } from "@/components/ui/rupee-icon";
 
 interface Transaction {
   id: string;
@@ -300,7 +301,7 @@ export default function Wallet() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold flex items-center">
-            <WalletIcon className="w-8 h-8 mr-3 text-primary" />
+            <RupeeIcon className="w-8 h-8 mr-3 text-primary" />
             Wallet
           </h1>
           <p className="text-muted-foreground">
@@ -313,7 +314,7 @@ export default function Wallet() {
           <Card className="border-2 border-primary/20">
             <CardHeader>
               <CardTitle className="text-lg flex items-center">
-                <WalletIcon className="w-5 h-5 mr-2 text-primary" />
+                <RupeeIcon className="w-5 h-5 mr-2 text-primary" />
                 Available Balance
               </CardTitle>
             </CardHeader>
