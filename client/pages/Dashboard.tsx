@@ -229,12 +229,12 @@ export default function Dashboard() {
 
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
-        <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0 mb-8 animate-in slide-in-from-left duration-700 delay-200">
+        <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0 mb-8">
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent animate-in slide-in-from-left duration-500 delay-300">
+            <h1 className="text-2xl md:text-3xl font-bold">
               Welcome back, {user.name.split(" ")[0]}! 👋
             </h1>
-            <p className="text-muted-foreground text-sm md:text-base animate-in slide-in-from-left duration-500 delay-500">
+            <p className="text-muted-foreground text-sm md:text-base">
               {user.role === "customer"
                 ? "Manage your tasks and find great taskers"
                 : "Find new opportunities and grow your business"}
