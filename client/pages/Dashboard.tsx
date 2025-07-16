@@ -306,9 +306,11 @@ export default function Dashboard() {
                 <CardContent className="p-4 md:p-6">
                   <div className="flex items-center space-x-3">
                     <div
-                      className={`w-12 h-12 rounded-xl ${stat.bg} flex items-center justify-center`}
+                      className={`w-12 h-12 rounded-xl ${stat.bg} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}
                     >
-                      <Icon className={`w-6 h-6 ${stat.color}`} />
+                      <Icon
+                        className={`w-6 h-6 ${stat.color} group-hover:animate-pulse`}
+                      />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-gray-600 dark:text-gray-400 truncate">
