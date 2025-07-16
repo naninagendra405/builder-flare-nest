@@ -461,6 +461,14 @@ export default function TaskFeed() {
                       >
                         {task.urgency}
                       </Badge>
+                      {task.status !== "open" && (
+                        <Badge
+                          className={`text-xs ${getStatusColor(task.status)}`}
+                          variant="secondary"
+                        >
+                          {task.status.replace("_", " ")}
+                        </Badge>
+                      )}
                       {task.customerVerified && (
                         <CheckCircle className="w-4 h-4 text-green-600" />
                       )}
