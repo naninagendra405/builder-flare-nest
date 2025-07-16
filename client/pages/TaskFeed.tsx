@@ -461,7 +461,7 @@ export default function TaskFeed() {
                   {/* Budget */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center text-lg font-bold text-primary">
-                      <DollarSign className="w-5 h-5 mr-1" />${task.budget}
+                      <IndianRupee className="w-5 h-5 mr-1" />₹{task.budget}
                       {task.budgetType === "hourly" ? "/hr" : ""}
                     </div>
                     <div className="text-sm text-muted-foreground">
