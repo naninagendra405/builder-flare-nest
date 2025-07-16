@@ -67,6 +67,8 @@ interface Task {
   timeEstimate: string;
   customerVerified: boolean;
   distance?: number;
+  customerId: string;
+  status: "open" | "in_progress" | "completed" | "cancelled";
 }
 
 export default function TaskFeed() {
