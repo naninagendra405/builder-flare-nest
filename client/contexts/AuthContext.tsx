@@ -77,7 +77,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         mockUser = {
           id: "demo-tasker",
           email,
-          name: "John Smith",
+          name: "John S",
           phone: "+1 (555) 123-4567",
           role: "tasker",
           rating: 4.9,
@@ -136,10 +136,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           },
         };
       } else {
+        // Create short name from email (max 7 characters)
+        const emailName = email.split("@")[0];
+        const shortName =
+          emailName.length > 7
+            ? emailName.substring(0, 7).charAt(0).toUpperCase() +
+              emailName.substring(1, 7)
+            : emailName.charAt(0).toUpperCase() + emailName.substring(1);
+
         mockUser = {
           id: "1",
           email,
-          name: email.split("@")[0],
+          name: shortName,
           role: email.includes("admin") ? "admin" : "customer",
           rating: 4.8,
           verificationStatus: "verified",
