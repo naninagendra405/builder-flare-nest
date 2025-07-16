@@ -225,7 +225,7 @@ export default function TaskFeed() {
                     .join("") || "U"}
                 </AvatarFallback>
               </Avatar>
-              <span className="font-medium text-sm sm:text-base hidden xs:block">
+              <span className="font-medium text-sm sm:text-base hidden md:block">
                 {user.name}
               </span>
             </div>
