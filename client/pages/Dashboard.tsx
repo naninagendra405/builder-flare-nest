@@ -47,7 +47,6 @@ import {
   Bell,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
 
 export default function Dashboard() {
   const { user, logout } = useAuth();
