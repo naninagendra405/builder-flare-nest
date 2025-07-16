@@ -429,7 +429,7 @@ export default function Wallet() {
                 >
                   {isProcessing
                     ? "Processing..."
-                    : `Add $${addAmount || "0.00"}`}
+                    : `Add ${formatCurrency(parseFloat(addAmount) || 0)}`}
                 </Button>
               </div>
             </DialogContent>
@@ -458,7 +458,7 @@ export default function Wallet() {
                     className="text-lg"
                   />
                   <p className="text-sm text-muted-foreground mt-1">
-                    Available: ${balance.toFixed(2)}
+                    Available: {formatCurrency(balance)}
                   </p>
                 </div>
 
@@ -482,7 +482,7 @@ export default function Wallet() {
                 >
                   {isProcessing
                     ? "Processing..."
-                    : `Withdraw $${withdrawAmount || "0.00"}`}
+                    : `Withdraw ${formatCurrency(parseFloat(withdrawAmount) || 0)}`}
                 </Button>
               </div>
             </DialogContent>
