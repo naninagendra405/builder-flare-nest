@@ -490,7 +490,7 @@ export default function Dashboard() {
                         if (user.role === "customer") {
                           navigate(`/task/${task.id}`);
                         } else {
-                          navigate("/task-suggestions");
+                          navigate(`/task/${task.id}`);
                         }
                       }}
                     >
