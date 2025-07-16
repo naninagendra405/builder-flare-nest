@@ -622,7 +622,7 @@ export default function TaskDetail() {
                         Bathroom sink repair
                       </h4>
                       <div className="flex items-center justify-between text-xs text-muted-foreground">
-                        <span>$65</span>
+                        <span>₹5,417</span>
                         <span>5 bids</span>
                       </div>
                     </div>
