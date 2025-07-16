@@ -42,6 +42,7 @@ import {
   Smile,
 } from "lucide-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { formatCurrency } from "@/lib/currency";
 
 interface Message {
   id: string;
@@ -481,7 +482,7 @@ export default function Chat() {
                   <div className="flex items-center space-x-4 text-sm">
                     <span className="flex items-center text-primary font-semibold">
                       <DollarSign className="w-4 h-4 mr-1" />
-                      {selectedChat.taskBudget}
+                      {formatCurrency(selectedChat.taskBudget)}
                     </span>
                     <Button size="sm" onClick={() => setShowTaskDetails(true)}>
                       View Details
@@ -608,7 +609,7 @@ export default function Chat() {
                   </Badge>
                   <span className="flex items-center">
                     <DollarSign className="w-4 h-4 mr-1" />
-                    {selectedChat.taskBudget}
+                    {formatCurrency(selectedChat.taskBudget)}
                   </span>
                 </div>
               </div>
