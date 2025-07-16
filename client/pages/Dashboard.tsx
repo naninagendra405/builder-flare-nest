@@ -301,7 +301,7 @@ export default function Dashboard() {
             return (
               <Card
                 key={index}
-                className="bg-white dark:bg-gray-900 border-0 shadow-lg hover:shadow-xl transition-all duration-300"
+                className="bg-white dark:bg-gray-900 border-0 shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 cursor-pointer group"
               >
                 <CardContent className="p-4 md:p-6">
                   <div className="flex items-center space-x-3">
