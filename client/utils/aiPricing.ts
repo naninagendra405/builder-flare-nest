@@ -16,17 +16,17 @@ interface TaskDetails {
   timeEstimate?: string;
 }
 
-// Mock AI pricing data based on common task patterns
+// Mock AI pricing data based on common task patterns (INR pricing)
 const categoryBasePricing: Record<string, { base: number; hourly: number }> = {
-  "Home Repair": { base: 50, hourly: 35 },
-  "Digital Services": { base: 75, hourly: 45 },
-  "Emergency Help": { base: 40, hourly: 30 },
-  Handyman: { base: 45, hourly: 32 },
-  "Business Services": { base: 80, hourly: 50 },
-  "Transport & Moving": { base: 60, hourly: 25 },
-  "Events & Personal": { base: 35, hourly: 28 },
-  Cleaning: { base: 30, hourly: 25 },
-  Tutoring: { base: 40, hourly: 35 },
+  "Home Repair": { base: 4200, hourly: 2900 },
+  "Digital Services": { base: 6300, hourly: 3800 },
+  "Emergency Help": { base: 3300, hourly: 2500 },
+  Handyman: { base: 3800, hourly: 2700 },
+  "Business Services": { base: 6700, hourly: 4200 },
+  "Transport & Moving": { base: 5000, hourly: 2100 },
+  "Events & Personal": { base: 2900, hourly: 2300 },
+  Cleaning: { base: 2500, hourly: 2100 },
+  Tutoring: { base: 3300, hourly: 2900 },
 };
 
 const complexityMultipliers = {
@@ -151,8 +151,8 @@ export function getAIPricingSuggestion(
     basePrice *= timeMultiplier;
   }
 
-  // Calculate range
-  const min = Math.max(15, Math.round(basePrice * 0.7));
+  // Calculate range (minimum ₹125 for any task)
+  const min = Math.max(125, Math.round(basePrice * 0.7));
   const max = Math.round(basePrice * 1.4);
   const recommended = Math.round(basePrice);
 
@@ -182,38 +182,38 @@ export function getPopularTaskPricing(): Array<{
     {
       title: "Kitchen sink repair",
       category: "Home Repair",
-      averagePrice: 75,
-      priceRange: "$50 - $120",
+      averagePrice: 6300,
+      priceRange: "₹4,200 - ₹10,000",
     },
     {
       title: "Logo design",
       category: "Digital Services",
-      averagePrice: 250,
-      priceRange: "$150 - $400",
+      averagePrice: 20900,
+      priceRange: "₹12,500 - ₹33,400",
     },
     {
       title: "Apartment cleaning",
       category: "Cleaning",
-      averagePrice: 80,
-      priceRange: "$60 - $120",
+      averagePrice: 6700,
+      priceRange: "₹5,000 - ₹10,000",
     },
     {
       title: "Furniture assembly",
       category: "Handyman",
-      averagePrice: 65,
-      priceRange: "$40 - $100",
+      averagePrice: 5400,
+      priceRange: "₹3,300 - ₹8,400",
     },
     {
       title: "Math tutoring",
       category: "Tutoring",
-      averagePrice: 45,
-      priceRange: "$30 - $70",
+      averagePrice: 3800,
+      priceRange: "₹2,500 - ₹5,800",
     },
     {
       title: "Moving help",
       category: "Transport & Moving",
-      averagePrice: 90,
-      priceRange: "$60 - $140",
+      averagePrice: 7500,
+      priceRange: "₹5,000 - ₹11,700",
     },
   ];
 }
