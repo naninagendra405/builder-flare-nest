@@ -413,6 +413,7 @@ export default function Dashboard() {
                 <div
                   key={task.id}
                   className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors cursor-pointer"
+                  onClick={() => navigate(`/task/${task.id}`)}
                 >
                   <div className="flex-1">
                     <h4 className="font-medium">{task.title}</h4>
