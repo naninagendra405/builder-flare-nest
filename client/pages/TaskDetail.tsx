@@ -245,21 +245,21 @@ export default function TaskDetail() {
     alert("Bid placed successfully! The customer will be notified.");
   };
 
-  const acceptBid = (bidId: string) => {
+  const acceptBidHandler = (bidId: string) => {
     const acceptedBid = bids.find((bid) => bid.id === bidId);
 
     if (acceptedBid) {
       console.log("Bid accepted:", acceptedBid);
 
-      // Update task status to in_progress
-      // updateTask(task.id, { status: "in_progress" });
+      // Use context to accept bid and assign task
+      acceptBid(task.id, bidId, acceptedBid.bidderId, acceptedBid.bidderName);
 
       // Show success message
       alert(
-        `Bid accepted! ${acceptedBid.bidderName} has been assigned to this task. They will be notified immediately.`,
+        `🎉 Bid accepted! ${acceptedBid.bidderName} has been assigned to this task. The order is now in progress and they will be notified immediately.`,
       );
 
-      // Navigate to chat or task management
+      // Navigate to chat for communication
       navigate(`/chat?task=${task.id}&bidder=${acceptedBid.bidderId}`);
     }
   };
