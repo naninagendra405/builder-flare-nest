@@ -591,10 +591,10 @@ export default function TaskFeed() {
                   )}
 
                   {/* Action Buttons */}
-                  <div className="flex gap-2 pt-2">
+                  <div className="flex gap-2 pt-2 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
                     <Button
                       size="sm"
-                      className="flex-1"
+                      className="flex-1 hover:scale-105 transition-transform duration-200 hover:shadow-md"
                       onClick={(e) => {
                         e.stopPropagation();
                         navigate(`/task/${task.id}?action=bid`);
@@ -605,6 +605,7 @@ export default function TaskFeed() {
                     <Button
                       size="sm"
                       variant="outline"
+                      className="hover:scale-110 transition-transform duration-200 hover:shadow-md"
                       onClick={(e) => {
                         e.stopPropagation();
                         navigate(`/chat?task=${task.id}`);
