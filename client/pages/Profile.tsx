@@ -367,7 +367,7 @@ export default function Profile() {
                 {user.role === "tasker" && (
                   <div className="mt-4 flex items-center space-x-4">
                     <div className="flex items-center">
-                      <DollarSign className="w-4 h-4 mr-1" />
+                      <IndianRupee className="w-4 h-4 mr-1" />
                       {isEditing ? (
                         <Input
                           value={profile.hourlyRate}
