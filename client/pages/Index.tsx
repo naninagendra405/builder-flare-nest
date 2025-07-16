@@ -10,7 +10,7 @@ import {
   Users,
   CheckCircle,
   TrendingUp,
-  Zap,
+  Home,
   Shield,
   CreditCard,
 } from "lucide-react";
