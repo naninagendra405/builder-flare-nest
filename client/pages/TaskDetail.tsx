@@ -50,6 +50,7 @@ import {
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useTasks } from "../contexts/TaskContext";
 import { useNotifications } from "../contexts/NotificationContext";
+import TaskWorkflow from "../components/TaskWorkflow";
 
 interface Bid {
   id: string;
