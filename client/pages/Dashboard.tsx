@@ -139,10 +139,36 @@ export default function Dashboard() {
         return "bg-green-100 text-green-800";
       case "in_progress":
         return "bg-blue-100 text-blue-800";
-      case "pending":
+      case "open":
         return "bg-yellow-100 text-yellow-800";
       default:
         return "bg-gray-100 text-gray-800";
+    }
+  };
+
+  const getStatusText = (status: string, role: string) => {
+    if (role === "tasker") {
+      switch (status) {
+        case "in_progress":
+          return "Assigned to You";
+        case "open":
+          return "Available";
+        case "completed":
+          return "Completed";
+        default:
+          return status.replace("_", " ");
+      }
+    } else {
+      switch (status) {
+        case "in_progress":
+          return "In Progress";
+        case "open":
+          return "Open for Bids";
+        case "completed":
+          return "Completed";
+        default:
+          return status.replace("_", " ");
+      }
     }
   };
 
