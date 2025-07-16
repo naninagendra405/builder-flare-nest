@@ -31,7 +31,7 @@ import {
   Search,
   Star,
   MapPin,
-  DollarSign,
+  IndianRupee,
   Calendar,
   CheckCircle,
   Clock,
