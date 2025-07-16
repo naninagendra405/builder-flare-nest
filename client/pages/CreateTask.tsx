@@ -19,7 +19,7 @@ import { Switch } from "@/components/ui/switch";
 import {
   ArrowLeft,
   MapPin,
-  DollarSign,
+  IndianRupee,
   Calendar,
   Clock,
   Camera,
