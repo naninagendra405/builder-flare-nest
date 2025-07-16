@@ -19,14 +19,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuCheckboxItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Slider } from "@/components/ui/slider";
 import {
   ArrowLeft,
@@ -146,72 +138,6 @@ export default function TaskFeed() {
       timeEstimate: "3-5 days",
       customerVerified: true,
     },
-    {
-      id: "3",
-      title: "Help with apartment moving",
-      description:
-        "Need 2-3 people to help move from a 2-bedroom apartment. Heavy furniture included. Truck provided.",
-      category: "Emergency Help",
-      budget: 35,
-      budgetType: "hourly",
-      location: "Brooklyn, NY",
-      isRemote: false,
-      customerName: "Mike Wilson",
-      customerRating: 4.6,
-      postedAt: "2024-01-14T09:45:00Z",
-      deadline: "2024-01-16",
-      urgency: "high",
-      skillsRequired: ["Moving", "Physical Labor"],
-      bidsCount: 8,
-      viewsCount: 43,
-      images: [],
-      timeEstimate: "4-6 hours",
-      customerVerified: false,
-      distance: 5.7,
-    },
-    {
-      id: "4",
-      title: "Assembly IKEA furniture",
-      description:
-        "Need someone to assemble a bedroom set from IKEA. Instructions included, some tools might be needed.",
-      category: "Handyman",
-      budget: 60,
-      budgetType: "fixed",
-      location: "Queens, NY",
-      isRemote: false,
-      customerName: "Emily Davis",
-      customerRating: 4.7,
-      postedAt: "2024-01-13T16:20:00Z",
-      urgency: "low",
-      skillsRequired: ["Assembly", "Tools"],
-      bidsCount: 15,
-      viewsCount: 89,
-      images: [],
-      timeEstimate: "2-3 hours",
-      customerVerified: true,
-      distance: 8.2,
-    },
-    {
-      id: "5",
-      title: "Website bug fixes",
-      description:
-        "Small e-commerce site has a few bugs that need fixing. React/Node.js experience required.",
-      category: "Digital Services",
-      budget: 45,
-      budgetType: "hourly",
-      location: "Remote",
-      isRemote: true,
-      customerName: "Small Business Co.",
-      customerRating: 4.4,
-      postedAt: "2024-01-13T11:10:00Z",
-      urgency: "medium",
-      skillsRequired: ["React", "Node.js", "JavaScript", "Bug Fixing"],
-      bidsCount: 19,
-      viewsCount: 134,
-      images: [],
-      timeEstimate: "1-2 days",
-      customerVerified: true,
-    },
   ];
 
   const categories = [
@@ -324,7 +250,9 @@ export default function TaskFeed() {
                 <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                   <Zap className="w-5 h-5 text-primary-foreground" />
                 </div>
-                <span className="text-2xl font-bold text-primary">TaskIt</span>
+                <span className="text-xl md:text-2xl font-bold text-primary">
+                  TaskIt
+                </span>
               </div>
             </div>
             <div className="flex items-center space-x-2">
@@ -336,25 +264,25 @@ export default function TaskFeed() {
                     .join("") || "U"}
                 </AvatarFallback>
               </Avatar>
-              <span className="font-medium">{user.name}</span>
+              <span className="font-medium hidden sm:block">{user.name}</span>
             </div>
           </div>
         </div>
       </nav>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-4 md:py-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold">Find Tasks</h1>
-          <p className="text-muted-foreground">
+        <div className="mb-6 md:mb-8">
+          <h1 className="text-2xl md:text-3xl font-bold">Find Tasks</h1>
+          <p className="text-muted-foreground text-sm md:text-base">
             Discover opportunities that match your skills and schedule
           </p>
         </div>
 
-                {/* Search and Filters */}
+        {/* Search and Filters */}
         <Card className="mb-6">
           <CardContent className="p-4 md:p-6">
-            <div className="flex flex-col gap-4">
+            <div className="space-y-4">
               {/* Search */}
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
@@ -387,7 +315,7 @@ export default function TaskFeed() {
                   </SelectContent>
                 </Select>
 
-                              {/* Advanced Filters */}
+                {/* Advanced Filters */}
                 <Dialog>
                   <DialogTrigger asChild>
                     <Button variant="outline" className="w-full sm:w-auto">
@@ -395,147 +323,145 @@ export default function TaskFeed() {
                       Filters
                     </Button>
                   </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Advanced Filters</DialogTitle>
-                  </DialogHeader>
-                  <div className="space-y-6">
-                    <div>
-                      <label className="text-sm font-medium mb-2 block">
-                        Budget Range
-                      </label>
-                      <div className="px-3">
-                        <Slider
-                          value={[filters.minBudget, filters.maxBudget]}
-                          onValueChange={([min, max]) =>
-                            setFilters((prev) => ({
-                              ...prev,
-                              minBudget: min,
-                              maxBudget: max,
-                            }))
-                          }
-                          max={1000}
-                          step={10}
-                          className="mb-2"
-                        />
-                        <div className="flex justify-between text-sm text-muted-foreground">
-                          <span>${filters.minBudget}</span>
-                          <span>${filters.maxBudget}</span>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Advanced Filters</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-6">
+                      <div>
+                        <label className="text-sm font-medium mb-2 block">
+                          Budget Range
+                        </label>
+                        <div className="px-3">
+                          <Slider
+                            value={[filters.minBudget, filters.maxBudget]}
+                            onValueChange={([min, max]) =>
+                              setFilters((prev) => ({
+                                ...prev,
+                                minBudget: min,
+                                maxBudget: max,
+                              }))
+                            }
+                            max={1000}
+                            step={10}
+                            className="mb-2"
+                          />
+                          <div className="flex justify-between text-sm text-muted-foreground">
+                            <span>${filters.minBudget}</span>
+                            <span>${filters.maxBudget}</span>
+                          </div>
                         </div>
                       </div>
+
+                      <div>
+                        <label className="text-sm font-medium mb-2 block">
+                          Urgency
+                        </label>
+                        <Select
+                          value={filters.urgency}
+                          onValueChange={(value) =>
+                            setFilters((prev) => ({ ...prev, urgency: value }))
+                          }
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder="Any urgency" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="">Any urgency</SelectItem>
+                            <SelectItem value="high">High</SelectItem>
+                            <SelectItem value="medium">Medium</SelectItem>
+                            <SelectItem value="low">Low</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div>
+                        <label className="text-sm font-medium mb-2 block">
+                          Distance ({filters.radius} miles)
+                        </label>
+                        <Slider
+                          value={[filters.radius]}
+                          onValueChange={([value]) =>
+                            setFilters((prev) => ({ ...prev, radius: value }))
+                          }
+                          max={50}
+                          step={5}
+                        />
+                      </div>
                     </div>
+                  </DialogContent>
+                </Dialog>
 
-                    <div>
-                      <label className="text-sm font-medium mb-2 block">
-                        Urgency
-                      </label>
-                      <Select
-                        value={filters.urgency}
-                        onValueChange={(value) =>
-                          setFilters((prev) => ({ ...prev, urgency: value }))
-                        }
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Any urgency" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="">Any urgency</SelectItem>
-                          <SelectItem value="high">High</SelectItem>
-                          <SelectItem value="medium">Medium</SelectItem>
-                          <SelectItem value="low">Low</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
+                {/* Sort */}
+                <Select value={sortBy} onValueChange={setSortBy}>
+                  <SelectTrigger className="w-full sm:w-40">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="newest">Newest</SelectItem>
+                    <SelectItem value="budget-high">
+                      Budget: High to Low
+                    </SelectItem>
+                    <SelectItem value="budget-low">
+                      Budget: Low to High
+                    </SelectItem>
+                    <SelectItem value="deadline">Deadline</SelectItem>
+                    <SelectItem value="distance">Distance</SelectItem>
+                  </SelectContent>
+                </Select>
 
-                    <div>
-                      <label className="text-sm font-medium mb-2 block">
-                        Distance ({filters.radius} miles)
-                      </label>
-                      <Slider
-                        value={[filters.radius]}
-                        onValueChange={([value]) =>
-                          setFilters((prev) => ({ ...prev, radius: value }))
-                        }
-                        max={50}
-                        step={5}
-                      />
-                    </div>
-                  </div>
-                </DialogContent>
-              </Dialog>
-
-              {/* Sort */}
-              <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="w-40">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="newest">Newest</SelectItem>
-                  <SelectItem value="budget-high">
-                    Budget: High to Low
-                  </SelectItem>
-                  <SelectItem value="budget-low">
-                    Budget: Low to High
-                  </SelectItem>
-                  <SelectItem value="deadline">Deadline</SelectItem>
-                  <SelectItem value="distance">Distance</SelectItem>
-                </SelectContent>
-              </Select>
-
-              {/* View Mode */}
-              <div className="flex border rounded-lg p-1">
-                <Button
-                  variant={viewMode === "grid" ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => setViewMode("grid")}
-                >
-                  <Grid className="w-4 h-4" />
-                </Button>
-                <Button
-                  variant={viewMode === "list" ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => setViewMode("list")}
-                >
-                  <List className="w-4 h-4" />
-                </Button>
+                {/* View Mode - Hidden on mobile */}
+                <div className="hidden sm:flex border rounded-lg p-1">
+                  <Button
+                    variant={viewMode === "grid" ? "default" : "ghost"}
+                    size="sm"
+                    onClick={() => setViewMode("grid")}
+                  >
+                    <Grid className="w-4 h-4" />
+                  </Button>
+                  <Button
+                    variant={viewMode === "list" ? "default" : "ghost"}
+                    size="sm"
+                    onClick={() => setViewMode("list")}
+                  >
+                    <List className="w-4 h-4" />
+                  </Button>
+                </div>
               </div>
             </div>
           </CardContent>
         </Card>
 
         {/* Results Count */}
-        <div className="mb-6 flex items-center justify-between">
+        <div className="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <p className="text-muted-foreground">
             {sortedTasks.length} tasks found
           </p>
           {user.role === "customer" && (
             <Button variant="outline" onClick={() => navigate("/create-task")}>
+              <Plus className="w-4 h-4 mr-2" />
               Post a Task
             </Button>
           )}
         </div>
 
-        {/* Tasks Grid/List */}
-        <div
-          className={
-            viewMode === "grid"
-              ? "grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-              : "space-y-4"
-          }
-        >
+        {/* Tasks Grid/List - Always grid on mobile */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {sortedTasks.map((task) => (
             <Card
               key={task.id}
-              className={`hover:shadow-lg transition-all cursor-pointer ${viewMode === "list" ? "flex" : ""}`}
+              className="hover:shadow-lg transition-all cursor-pointer"
               onClick={() => navigate(`/task/${task.id}`)}
             >
-              <CardHeader className={viewMode === "list" ? "flex-1" : ""}>
+              <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-2 mb-2">
-                      <Badge variant="outline">{task.category}</Badge>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center gap-2 mb-2">
+                      <Badge variant="outline" className="text-xs">
+                        {task.category}
+                      </Badge>
                       <Badge
-                        className={getUrgencyColor(task.urgency)}
+                        className={`text-xs ${getUrgencyColor(task.urgency)}`}
                         variant="secondary"
                       >
                         {task.urgency}
@@ -544,10 +470,10 @@ export default function TaskFeed() {
                         <CheckCircle className="w-4 h-4 text-green-600" />
                       )}
                     </div>
-                    <CardTitle className="text-lg line-clamp-2">
+                    <CardTitle className="text-base md:text-lg line-clamp-2 mb-2">
                       {task.title}
                     </CardTitle>
-                    <p className="text-muted-foreground text-sm mt-2 line-clamp-2">
+                    <p className="text-muted-foreground text-sm line-clamp-2">
                       {task.description}
                     </p>
                   </div>
@@ -558,6 +484,7 @@ export default function TaskFeed() {
                       e.stopPropagation();
                       toggleSaveTask(task.id);
                     }}
+                    className="ml-2 p-2"
                   >
                     {savedTasks.includes(task.id) ? (
                       <BookmarkCheck className="w-4 h-4 text-primary" />
@@ -568,7 +495,7 @@ export default function TaskFeed() {
                 </div>
               </CardHeader>
 
-              <CardContent className={viewMode === "list" ? "flex-1" : ""}>
+              <CardContent className="pt-0">
                 <div className="space-y-3">
                   {/* Budget */}
                   <div className="flex items-center justify-between">
@@ -621,7 +548,9 @@ export default function TaskFeed() {
                             .join("")}
                         </AvatarFallback>
                       </Avatar>
-                      <span className="text-sm">{task.customerName}</span>
+                      <span className="text-sm truncate">
+                        {task.customerName}
+                      </span>
                       <div className="flex items-center">
                         <Star className="w-3 h-3 text-yellow-500 mr-1" />
                         <span className="text-xs">{task.customerRating}</span>
@@ -631,10 +560,10 @@ export default function TaskFeed() {
 
                   {/* Stats */}
                   <div className="flex items-center justify-between text-sm text-muted-foreground">
-                    <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-3">
                       <span className="flex items-center">
                         <Users className="w-3 h-3 mr-1" />
-                        {task.bidsCount} bids
+                        {task.bidsCount}
                       </span>
                       <span className="flex items-center">
                         <Eye className="w-3 h-3 mr-1" />
@@ -656,7 +585,7 @@ export default function TaskFeed() {
                   )}
 
                   {/* Action Buttons */}
-                  <div className="flex space-x-2 pt-2">
+                  <div className="flex gap-2 pt-2">
                     <Button
                       size="sm"
                       className="flex-1"
