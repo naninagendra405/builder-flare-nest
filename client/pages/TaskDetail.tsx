@@ -66,30 +66,7 @@ interface Bid {
   bidderResponse: string;
 }
 
-interface TaskData {
-  id: string;
-  title: string;
-  description: string;
-  category: string;
-  budget: number;
-  budgetType: "fixed" | "hourly";
-  location: string;
-  isRemote: boolean;
-  customerName: string;
-  customerId: string;
-  customerRating: number;
-  customerVerified: boolean;
-  postedAt: string;
-  deadline?: string;
-  urgency: "low" | "medium" | "high";
-  skillsRequired: string[];
-  bidsCount: number;
-  viewsCount: number;
-  images: string[];
-  timeEstimate: string;
-  status: "open" | "in_progress" | "completed" | "cancelled";
-  instructions?: string;
-}
+// Use Task interface from context instead of duplicating
 
 export default function TaskDetail() {
   const { user } = useAuth();
