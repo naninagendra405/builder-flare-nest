@@ -642,10 +642,10 @@ export default function TaskDetail() {
                 {canUserBid && (
                   <Button
                     className="w-full"
-                    onClick={() => setShowBidDialog(true)}
+                    onClick={() => navigate("/task-suggestions")}
                   >
                     <IndianRupee className="w-4 h-4 mr-2" />
-                    Place Bid
+                    Get Task Ideas
                   </Button>
                 )}
                 <Button variant="outline" className="w-full">
