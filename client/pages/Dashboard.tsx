@@ -22,7 +22,7 @@ import {
   MessageSquare,
   Clock,
   CheckCircle,
-  DollarSign,
+  IndianRupee,
   TrendingUp,
   MapPin,
   Star,
