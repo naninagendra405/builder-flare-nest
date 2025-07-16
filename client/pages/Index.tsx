@@ -160,6 +160,27 @@ export default function Index() {
             </div>
           </form>
 
+          {/* Quick Search Categories */}
+          <div className="flex flex-wrap justify-center gap-3 mb-8">
+            {[
+              "Home Repair",
+              "Digital Services",
+              "Moving Help",
+              "Cleaning",
+              "Tutoring",
+            ].map((category) => (
+              <Button
+                key={category}
+                variant="outline"
+                size="sm"
+                onClick={() => handleQuickSearch(category)}
+                className="hover:bg-primary hover:text-primary-foreground transition-colors"
+              >
+                {category}
+              </Button>
+            ))}
+          </div>
+
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="text-lg px-8 py-6" asChild>
