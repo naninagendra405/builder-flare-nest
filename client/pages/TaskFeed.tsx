@@ -282,7 +282,7 @@ export default function TaskFeed() {
         </div>
 
         {/* Search and Filters */}
-        <Card className="mb-6">
+        <Card className="mb-6 animate-in slide-in-from-bottom duration-700 delay-300 hover:shadow-lg transition-all duration-300">
           <CardContent className="p-4 md:p-6">
             <div className="space-y-4">
               {/* Search */}
