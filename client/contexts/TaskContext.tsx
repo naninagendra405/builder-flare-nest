@@ -293,10 +293,77 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
         task.id === taskId
           ? {
               ...task,
-              status: "in_progress" as const,
+              status: "bid_accepted" as const,
               assignedTaskerId: taskerId,
               assignedTaskerName: taskerName,
               acceptedBidId: bidId,
+            }
+          : task,
+      ),
+    );
+  };
+
+  const approveTaskAndHoldEscrow = (taskId: string) => {
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === taskId
+          ? {
+              ...task,
+              status: "approved" as const,
+              customerApproval: true,
+              escrowAmount: task.budget,
+              escrowStatus: "held" as const,
+              adminCommission: Math.round(task.budget * 0.1), // 10% commission
+              taskerPayment: Math.round(task.budget * 0.9), // 90% to tasker
+            }
+          : task,
+      ),
+    );
+  };
+
+  const markTaskCompleted = (
+    taskId: string,
+    userId: string,
+    userRole: "customer" | "tasker",
+  ) => {
+    setTasks((prev) =>
+      prev.map((task) => {
+        if (task.id === taskId) {
+          const updates: Partial<Task> = {};
+
+          if (userRole === "customer") {
+            updates.customerCompleted = true;
+          } else {
+            updates.taskerCompleted = true;
+          }
+
+          // If both have marked as completed, change status and set completion date
+          const bothCompleted =
+            (userRole === "customer" ? true : task.customerCompleted) &&
+            (userRole === "tasker" ? true : task.taskerCompleted);
+
+          if (bothCompleted) {
+            updates.status = "completed" as const;
+            updates.completedAt = new Date().toISOString();
+          } else {
+            updates.status = "in_progress" as const;
+          }
+
+          return { ...task, ...updates };
+        }
+        return task;
+      }),
+    );
+  };
+
+  const releasePayment = (taskId: string) => {
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === taskId && task.status === "completed"
+          ? {
+              ...task,
+              escrowStatus: "released" as const,
+              paymentReleased: true,
             }
           : task,
       ),
