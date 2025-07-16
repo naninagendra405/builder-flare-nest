@@ -49,7 +49,7 @@ export default function Notifications() {
       case "message":
         return <MessageSquare className="w-5 h-5 text-blue-600" />;
       case "payment":
-        return <DollarSign className="w-5 h-5 text-purple-600" />;
+        return <IndianRupee className="w-5 h-5 text-purple-600" />;
       case "task_update":
         return <Briefcase className="w-5 h-5 text-orange-600" />;
       case "system":
