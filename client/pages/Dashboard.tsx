@@ -453,7 +453,7 @@ export default function Dashboard() {
               <CardTitle>
                 {user.role === "customer"
                   ? "Recommended Tasks"
-                  : "Available Tasks"}
+                  : "Available Work"}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
