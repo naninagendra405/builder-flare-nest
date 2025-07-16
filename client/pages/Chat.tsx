@@ -391,7 +391,7 @@ export default function Chat() {
                           {chat.taskStatus.replace("_", " ")}
                         </Badge>
                         <span className="text-sm font-semibold text-primary">
-                          ${chat.taskBudget}
+                          {formatCurrency(chat.taskBudget)}
                         </span>
                       </div>
                     </div>
