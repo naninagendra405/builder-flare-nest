@@ -512,15 +512,15 @@ export default function Wallet() {
               {transactions.map((transaction) => (
                 <div
                   key={transaction.id}
-                  className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors"
+                  className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors space-y-3 sm:space-y-0"
                 >
-                  <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-4 flex-1">
                     <div className="w-10 h-10 bg-muted rounded-full flex items-center justify-center">
                       {getTransactionIcon(transaction.type)}
                     </div>
-                    <div>
+                    <div className="flex-1 min-w-0">
                       <h4 className="font-medium">{transaction.description}</h4>
-                      <div className="flex items-center space-x-4 text-sm text-muted-foreground">
+                      <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-sm text-muted-foreground">
                         <span>
                           {new Date(transaction.date).toLocaleDateString()}
                         </span>
@@ -528,17 +528,19 @@ export default function Wallet() {
                           <span>• {transaction.counterparty}</span>
                         )}
                         {transaction.taskTitle && (
-                          <span>• {transaction.taskTitle}</span>
+                          <span className="hidden sm:inline">
+                            • {transaction.taskTitle}
+                          </span>
                         )}
                       </div>
                     </div>
                   </div>
-                  <div className="text-right">
+                  <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center text-left sm:text-right">
                     <div className="text-lg font-semibold">
                       {formatAmount(transaction.amount, transaction.type)}
                     </div>
                     <Badge
-                      className={`mt-1 ${getStatusColor(transaction.status)}`}
+                      className={`mt-0 sm:mt-1 ${getStatusColor(transaction.status)}`}
                       variant="secondary"
                     >
                       {transaction.status}
