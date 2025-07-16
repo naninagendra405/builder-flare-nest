@@ -143,7 +143,31 @@ export default function CreateTask() {
   ];
 
   const updateForm = (field: keyof TaskForm, value: any) => {
-    setForm((prev) => ({ ...prev, [field]: value }));
+    const newForm = { ...form, [field]: value };
+    setForm(newForm);
+
+    // Generate AI pricing suggestion when key fields change
+    if (
+      (field === "title" ||
+        field === "description" ||
+        field === "category" ||
+        field === "location" ||
+        field === "urgency" ||
+        field === "timeEstimate") &&
+      newForm.title &&
+      newForm.description &&
+      newForm.category
+    ) {
+      const suggestion = getAIPricingSuggestion({
+        category: newForm.category,
+        title: newForm.title,
+        description: newForm.description,
+        location: newForm.location,
+        urgency: newForm.urgency,
+        timeEstimate: newForm.timeEstimate,
+      });
+      setAiPricingSuggestion(suggestion);
+    }
   };
 
   const addSkill = (skill: string) => {
