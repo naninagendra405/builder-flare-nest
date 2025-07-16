@@ -328,7 +328,7 @@ export default function Wallet() {
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-yellow-600">
-                ${escrowBalance.toFixed(2)}
+                ₹{escrowBalance.toFixed(2)}
               </div>
               <p className="text-sm text-muted-foreground mt-2">
                 Held for active tasks
