@@ -116,3 +116,47 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  /* Mobile-first responsive utilities */
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+
+  /* Better mobile touch targets */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Mobile-optimized text sizing */
+  .text-mobile-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .text-mobile-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  /* Mobile-friendly spacing */
+  .mobile-container {
+    @apply px-3 sm:px-4 lg:px-6;
+  }
+
+  /* Optimized mobile cards */
+  .mobile-card {
+    @apply p-3 sm:p-4 lg:p-6 rounded-lg;
+  }
+
+  /* Mobile button improvements */
+  .mobile-btn {
+    @apply h-11 px-4 text-sm sm:text-base touch-manipulation;
+  }
+
+  /* Better mobile navigation */
+  .mobile-nav {
+    @apply h-14 sm:h-16 px-3 sm:px-4;
+  }
+}
