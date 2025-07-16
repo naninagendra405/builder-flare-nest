@@ -416,7 +416,7 @@ export default function Dashboard() {
                       className={`mt-0 sm:mt-2 ${getStatusColor(task.status)}`}
                       variant="secondary"
                     >
-                      {task.status.replace("_", " ")}
+                      {getStatusText(task.status, user.role)}
                     </Badge>
                   </div>
                 </div>
