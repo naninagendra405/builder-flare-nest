@@ -65,18 +65,18 @@ export default function CreateTask() {
   const [currentStep, setCurrentStep] = useState(1);
   const [aiPricingSuggestion, setAiPricingSuggestion] = useState<any>(null);
   const [form, setForm] = useState<TaskForm>({
-    title: "",
-    description: "",
-    category: "",
-    budget: "",
+    title: suggestedTask?.title || "",
+    description: suggestedTask?.description || "",
+    category: suggestedTask?.category || "",
+    budget: suggestedTask?.estimatedBudget?.toString() || "",
     budgetType: "fixed",
-    location: "",
+    location: suggestedTask?.location || "",
     isRemote: false,
     deadline: "",
-    timeEstimate: "",
-    skillsRequired: [],
+    timeEstimate: suggestedTask?.estimatedDuration || "",
+    skillsRequired: suggestedTask?.tags || [],
     images: [],
-    urgency: "medium",
+    urgency: suggestedTask?.urgency || "medium",
     instructions: "",
   });
 
