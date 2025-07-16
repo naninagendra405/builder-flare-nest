@@ -199,7 +199,8 @@ export default function Wallet() {
     const color = amount >= 0 ? "text-green-600" : "text-red-600";
     return (
       <span className={color}>
-        {sign}${Math.abs(amount).toFixed(2)}
+        {sign}
+        {formatCurrency(Math.abs(amount))}
       </span>
     );
   };
@@ -218,7 +219,9 @@ export default function Wallet() {
       });
 
       // Mock success
-      alert(`Successfully added $${addAmount} to your wallet!`);
+      alert(
+        `Successfully added ${formatCurrency(parseFloat(addAmount))} to your wallet!`,
+      );
       setShowAddFunds(false);
       setAddAmount("");
     } catch (error) {
@@ -245,7 +248,9 @@ export default function Wallet() {
       });
 
       // Mock success
-      alert(`Successfully withdrew $${withdrawAmount}!`);
+      alert(
+        `Successfully withdrew ${formatCurrency(parseFloat(withdrawAmount))}!`,
+      );
       setShowWithdraw(false);
       setWithdrawAmount("");
     } catch (error) {
@@ -314,7 +319,7 @@ export default function Wallet() {
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-primary">
-                ${balance.toFixed(2)}
+                {formatCurrency(balance)}
               </div>
               <p className="text-sm text-muted-foreground mt-2">Ready to use</p>
             </CardContent>
@@ -329,7 +334,7 @@ export default function Wallet() {
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-yellow-600">
-                ${escrowBalance.toFixed(2)}
+                {formatCurrency(escrowBalance)}
               </div>
               <p className="text-sm text-muted-foreground mt-2">
                 Held for active tasks
@@ -346,7 +351,7 @@ export default function Wallet() {
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-blue-600">
-                ${pendingBalance.toFixed(2)}
+                {formatCurrency(pendingBalance)}
               </div>
               <p className="text-sm text-muted-foreground mt-2">Processing</p>
             </CardContent>
