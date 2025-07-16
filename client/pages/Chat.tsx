@@ -309,7 +309,9 @@ export default function Chat() {
                     .join("") || "U"}
                 </AvatarFallback>
               </Avatar>
-              <span className="font-medium">{user.name}</span>
+              <span className="font-medium text-sm sm:text-base hidden md:block">
+                {user.name}
+              </span>
             </div>
           </div>
         </div>
