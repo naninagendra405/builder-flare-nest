@@ -19,6 +19,7 @@ import NotFound from "./pages/NotFound";
 import { AuthProvider } from "./contexts/AuthContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
 import { TaskProvider } from "./contexts/TaskContext";
+import { BidProvider } from "./contexts/BidContext";
 import AIChatSupport from "./components/AIChatSupport";
 
 export default function App() {
