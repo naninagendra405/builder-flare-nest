@@ -229,34 +229,34 @@ export default function Dashboard() {
 
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0 mb-8">
           <div>
-            <h1 className="text-3xl font-bold">
+            <h1 className="text-2xl md:text-3xl font-bold">
               Welcome back, {user.name.split(" ")[0]}!
             </h1>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground text-sm md:text-base">
               {user.role === "customer"
                 ? "Manage your tasks and find great taskers"
                 : "Find new opportunities and grow your business"}
             </p>
           </div>
-          <div className="flex space-x-3">
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
             {user.role === "customer" ? (
-              <Button asChild>
+              <Button asChild className="w-full sm:w-auto">
                 <Link to="/create-task">
                   <Plus className="w-4 h-4 mr-2" />
                   Post New Task
                 </Link>
               </Button>
             ) : (
-              <Button asChild>
+              <Button asChild className="w-full sm:w-auto">
                 <Link to="/tasks">
                   <Search className="w-4 h-4 mr-2" />
                   Browse Tasks
                 </Link>
               </Button>
             )}
-            <Button variant="outline" asChild>
+            <Button variant="outline" asChild className="w-full sm:w-auto">
               <Link to="/chat">
                 <MessageSquare className="w-4 h-4 mr-2" />
                 Messages
