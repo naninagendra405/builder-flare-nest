@@ -370,9 +370,15 @@ export default function Dashboard() {
                       </span>
                       <span>{task.time}</span>
                     </div>
-                    {user.role === "customer" && (
+                    {user.role === "customer" &&
+                      task.status === "in_progress" && (
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Assigned to: {task.customer}
+                        </p>
+                      )}
+                    {user.role === "tasker" && (
                       <p className="text-sm text-muted-foreground mt-1">
-                        Tasker: {task.customer}
+                        Customer: {task.customer}
                       </p>
                     )}
                   </div>
