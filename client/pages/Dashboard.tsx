@@ -399,7 +399,7 @@ export default function Dashboard() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-                            {recentTasks.length === 0 && user.role === "tasker" ? (
+              {recentTasks.length === 0 && user.role === "tasker" ? (
                 <div className="text-center py-8">
                   <p className="text-muted-foreground mb-4">
                     No assigned tasks yet. Start by browsing available work!
@@ -410,45 +410,46 @@ export default function Dashboard() {
                 </div>
               ) : (
                 recentTasks.map((task) => (
-                <div
-                  key={task.id}
-                  className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors cursor-pointer space-y-3 sm:space-y-0"
-                  onClick={() => navigate(`/task/${task.id}`)}
-                >
-                  <div className="flex-1">
-                    <h4 className="font-medium">{task.title}</h4>
-                    <div className="flex flex-wrap items-center gap-2 sm:gap-4 mt-2 text-sm text-muted-foreground">
-                      <span className="flex items-center">
-                        <MapPin className="w-3 h-3 mr-1" />
-                        {task.location}
-                      </span>
-                      <span>{task.time}</span>
-                    </div>
-                    {user.role === "customer" &&
-                      task.status === "in_progress" && (
+                  <div
+                    key={task.id}
+                    className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors cursor-pointer space-y-3 sm:space-y-0"
+                    onClick={() => navigate(`/task/${task.id}`)}
+                  >
+                    <div className="flex-1">
+                      <h4 className="font-medium">{task.title}</h4>
+                      <div className="flex flex-wrap items-center gap-2 sm:gap-4 mt-2 text-sm text-muted-foreground">
+                        <span className="flex items-center">
+                          <MapPin className="w-3 h-3 mr-1" />
+                          {task.location}
+                        </span>
+                        <span>{task.time}</span>
+                      </div>
+                      {user.role === "customer" &&
+                        task.status === "in_progress" && (
+                          <p className="text-sm text-muted-foreground mt-1">
+                            Assigned to: {task.customer}
+                          </p>
+                        )}
+                      {user.role === "tasker" && (
                         <p className="text-sm text-muted-foreground mt-1">
-                          Assigned to: {task.customer}
+                          Customer: {task.customer}
                         </p>
                       )}
-                    {user.role === "tasker" && (
-                      <p className="text-sm text-muted-foreground mt-1">
-                        Customer: {task.customer}
-                      </p>
-                    )}
-                  </div>
-                  <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center text-right">
-                    <div className="text-lg font-semibold text-primary">
-                      {task.budget}
                     </div>
-                    <Badge
-                      className={`mt-0 sm:mt-2 ${getStatusColor(task.status)}`}
-                      variant="secondary"
-                    >
-                      {getStatusText(task.status, user.role)}
-                    </Badge>
+                    <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center text-right">
+                      <div className="text-lg font-semibold text-primary">
+                        {task.budget}
+                      </div>
+                      <Badge
+                        className={`mt-0 sm:mt-2 ${getStatusColor(task.status)}`}
+                        variant="secondary"
+                      >
+                        {getStatusText(task.status, user.role)}
+                      </Badge>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))
+              )}
               <Button variant="outline" className="w-full" asChild>
                 <Link to={user.role === "customer" ? "/tasks" : "/tasks"}>
                   View All Tasks
