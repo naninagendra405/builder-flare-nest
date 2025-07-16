@@ -110,7 +110,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
               },
               {
                 type: "insurance",
-                description: "General Liability Insurance - $1M coverage",
+                description: "General Liability Insurance - ₹8.35 Cr coverage",
                 verified: true,
               },
               {
