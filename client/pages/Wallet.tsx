@@ -39,6 +39,7 @@ import {
   Zap,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import { formatCurrency } from "@/lib/currency";
 
 interface Transaction {
   id: string;
@@ -70,9 +71,9 @@ interface PaymentMethod {
 export default function Wallet() {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [balance] = useState(1247.5);
-  const [escrowBalance] = useState(325.0);
-  const [pendingBalance] = useState(75.0);
+  const [balance] = useState(104500);
+  const [escrowBalance] = useState(27200);
+  const [pendingBalance] = useState(6300);
   const [showAddFunds, setShowAddFunds] = useState(false);
   const [showWithdraw, setShowWithdraw] = useState(false);
   const [addAmount, setAddAmount] = useState("");
@@ -89,7 +90,7 @@ export default function Wallet() {
     {
       id: "1",
       type: "escrow_release",
-      amount: 75.0,
+      amount: 6300,
       description: "Payment released for kitchen sink repair",
       status: "completed",
       date: "2024-01-15",
@@ -100,7 +101,7 @@ export default function Wallet() {
     {
       id: "2",
       type: "escrow_hold",
-      amount: -120.0,
+      amount: -10000,
       description: "Funds held in escrow for moving help",
       status: "pending",
       date: "2024-01-14",
@@ -111,7 +112,7 @@ export default function Wallet() {
     {
       id: "3",
       type: "deposit",
-      amount: 200.0,
+      amount: 16700,
       description: "Added funds via Credit Card ****1234",
       status: "completed",
       date: "2024-01-13",
@@ -119,7 +120,7 @@ export default function Wallet() {
     {
       id: "4",
       type: "payment",
-      amount: -45.0,
+      amount: -3800,
       description: "Payment for logo design work",
       status: "completed",
       date: "2024-01-12",
@@ -130,7 +131,7 @@ export default function Wallet() {
     {
       id: "5",
       type: "withdrawal",
-      amount: -150.0,
+      amount: -12500,
       description: "Withdrawal to Bank Account ****5678",
       status: "completed",
       date: "2024-01-11",
