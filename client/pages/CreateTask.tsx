@@ -19,7 +19,7 @@ import { Switch } from "@/components/ui/switch";
 import {
   ArrowLeft,
   MapPin,
-  DollarSign,
+  IndianRupee,
   Calendar,
   Clock,
   Camera,
@@ -447,7 +447,7 @@ export default function CreateTask() {
                     <div className="flex-1">
                       <Label htmlFor="budget">Budget *</Label>
                       <div className="relative">
-                        <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
+                        <IndianRupee className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
                         <Input
                           id="budget"
                           type="number"
