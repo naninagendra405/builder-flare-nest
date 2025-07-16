@@ -432,7 +432,17 @@ export default function Dashboard() {
                     <div className="text-lg font-semibold text-primary">
                       {task.budget}
                     </div>
-                    <Button size="sm" className="mt-2">
+                    <Button
+                      size="sm"
+                      className="mt-2"
+                      onClick={() =>
+                        navigate(
+                          user.role === "customer"
+                            ? `/task/${task.id}`
+                            : `/task/${task.id}?action=bid`,
+                        )
+                      }
+                    >
                       {user.role === "customer" ? "View" : "Bid Now"}
                     </Button>
                   </div>
