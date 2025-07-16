@@ -36,6 +36,7 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { getAIPricingSuggestion } from "../utils/aiPricing";
+import { useTasks } from "../contexts/TaskContext";
 
 interface TaskForm {
   title: string;
