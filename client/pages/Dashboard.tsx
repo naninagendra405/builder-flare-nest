@@ -475,11 +475,11 @@ export default function Dashboard() {
                       className="mt-2"
                       onClick={(e) => {
                         e.stopPropagation();
-                        navigate(
-                          user.role === "customer"
-                            ? `/task/${task.id}`
-                            : "/task-suggestions",
-                        );
+                        if (user.role === "customer") {
+                          navigate(`/task/${task.id}`);
+                        } else {
+                          navigate("/task-suggestions");
+                        }
                       }}
                     >
                       {user.role === "customer" ? "View" : "Find Work"}
