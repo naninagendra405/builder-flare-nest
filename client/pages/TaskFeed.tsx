@@ -387,14 +387,14 @@ export default function TaskFeed() {
                   </SelectContent>
                 </Select>
 
-              {/* Advanced Filters */}
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button variant="outline">
-                    <SlidersHorizontal className="w-4 h-4 mr-2" />
-                    Filters
-                  </Button>
-                </DialogTrigger>
+                              {/* Advanced Filters */}
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="outline" className="w-full sm:w-auto">
+                      <SlidersHorizontal className="w-4 h-4 mr-2" />
+                      Filters
+                    </Button>
+                  </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
                     <DialogTitle>Advanced Filters</DialogTitle>
