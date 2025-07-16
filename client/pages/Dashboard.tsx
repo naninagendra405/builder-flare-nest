@@ -248,14 +248,14 @@ export default function Dashboard() {
         </div>
       </nav>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
         {/* Header */}
-        <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0 mb-8">
+        <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0 mb-6 sm:mb-8">
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold">
               Welcome back, {user.name.split(" ")[0]}! 👋
             </h1>
-            <p className="text-muted-foreground text-sm md:text-base">
+            <p className="text-muted-foreground text-sm md:text-base mt-1">
               {user.role === "customer"
                 ? "Manage your tasks and find great taskers"
                 : "Find new opportunities and grow your business"}
@@ -263,21 +263,31 @@ export default function Dashboard() {
           </div>
           <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
             {user.role === "customer" ? (
-              <Button asChild className="w-full sm:w-auto">
+              <Button
+                asChild
+                className="w-full sm:w-auto h-11 text-sm sm:text-base"
+              >
                 <Link to="/create-task">
                   <Plus className="w-4 h-4 mr-2" />
                   Post New Task
                 </Link>
               </Button>
             ) : (
-              <Button asChild className="w-full sm:w-auto">
+              <Button
+                asChild
+                className="w-full sm:w-auto h-11 text-sm sm:text-base"
+              >
                 <Link to="/tasks">
                   <Search className="w-4 h-4 mr-2" />
                   Browse Tasks
                 </Link>
               </Button>
             )}
-            <Button variant="outline" asChild className="w-full sm:w-auto">
+            <Button
+              variant="outline"
+              asChild
+              className="w-full sm:w-auto h-11 text-sm sm:text-base"
+            >
               <Link to="/chat">
                 <MessageSquare className="w-4 h-4 mr-2" />
                 Messages
@@ -333,7 +343,7 @@ export default function Dashboard() {
                 </div>
                 <div className="flex-1">
                   <h3 className="text-lg font-semibold text-green-900 dark:text-green-100">
-                    🎉 You're Verified!
+                    ��� You're Verified!
                   </h3>
                   <p className="text-sm text-green-700 dark:text-green-200 mt-1">
                     Your professional credentials have been verified. You now
