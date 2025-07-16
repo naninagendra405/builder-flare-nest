@@ -275,6 +275,59 @@ export default function Index() {
         </div>
       </section>
 
+      {/* How it works Section */}
+      <section id="how-it-works" className="py-20 px-4">
+        <div className="container mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">How It Works</h2>
+            <p className="text-xl text-muted-foreground">
+              Get things done in just a few simple steps
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="text-center p-6">
+              <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-bold text-xl">
+                  1
+                </div>
+              </div>
+              <h3 className="text-xl font-semibold mb-4">Post Your Task</h3>
+              <p className="text-muted-foreground">
+                Describe what you need done, set your budget, and post your
+                task. It's free and takes just minutes.
+              </p>
+            </div>
+
+            <div className="text-center p-6">
+              <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-bold text-xl">
+                  2
+                </div>
+              </div>
+              <h3 className="text-xl font-semibold mb-4">Review Offers</h3>
+              <p className="text-muted-foreground">
+                Skilled taskers will send you offers. Review their profiles,
+                ratings, and choose the best one for your task.
+              </p>
+            </div>
+
+            <div className="text-center p-6">
+              <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-bold text-xl">
+                  3
+                </div>
+              </div>
+              <h3 className="text-xl font-semibold mb-4">Get It Done</h3>
+              <p className="text-muted-foreground">
+                Work with your chosen tasker to complete the task. Pay securely
+                through our platform when you're satisfied.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
       <section id="features" className="py-20 bg-card/30">
         <div className="container mx-auto px-4">
