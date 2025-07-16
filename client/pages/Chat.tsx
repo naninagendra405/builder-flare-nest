@@ -315,7 +315,7 @@ export default function Chat() {
 
       <div className="flex-1 flex overflow-hidden">
         {/* Chat List Sidebar */}
-        <div className="w-80 border-r bg-background/50 flex flex-col">
+        <div className="w-full md:w-80 border-r bg-background/50 flex flex-col md:flex">
           <div className="p-4 border-b">
             <h2 className="text-xl font-semibold mb-4">Messages</h2>
             <div className="relative">
