@@ -79,7 +79,7 @@ export default function Dashboard() {
     {
       label: "Total Earned",
       value: "₹2,88,074",
-      icon: DollarSign,
+      icon: IndianRupee,
       color: "text-purple-600",
     },
     {
