@@ -71,9 +71,11 @@ interface PaymentMethod {
 export default function Wallet() {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [balance] = useState(1247.5);
+  const { addNotification } = useNotifications();
+  const [balance, setBalance] = useState(1247.5);
   const [escrowBalance] = useState(325.0);
   const [pendingBalance] = useState(75.0);
+  const [transactions, setTransactions] = useState(mockTransactions);
   const [showAddFunds, setShowAddFunds] = useState(false);
   const [showWithdraw, setShowWithdraw] = useState(false);
   const [addAmount, setAddAmount] = useState("");
