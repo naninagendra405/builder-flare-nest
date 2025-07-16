@@ -23,6 +23,7 @@ export interface Task {
   timeEstimate: string;
   status: "open" | "in_progress" | "completed" | "cancelled";
   instructions?: string;
+  distance?: number;
 }
 
 interface TaskContextType {
