@@ -14,7 +14,6 @@ import {
 import {
   Plus,
   Search,
-  Bell,
   Settings,
   User,
   LogOut,
