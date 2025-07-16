@@ -294,29 +294,29 @@ export default function CreateTask() {
         </div>
       </nav>
 
-      <div className="container mx-auto px-4 py-4 md:py-8 max-w-4xl">
+      <div className="container mx-auto px-3 sm:px-4 py-4 md:py-8 max-w-4xl">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold">Post a New Task</h1>
-          <p className="text-muted-foreground">
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold">Post a New Task</h1>
+          <p className="text-muted-foreground text-sm sm:text-base mt-1">
             Tell us what you need done and connect with skilled taskers
           </p>
         </div>
 
         {/* Progress Steps */}
-        <div className="flex items-center justify-center mb-8">
-          <div className="flex items-center space-x-4">
+        <div className="flex items-center justify-center mb-6 sm:mb-8">
+          <div className="flex items-center space-x-2 sm:space-x-4">
             {[1, 2, 3].map((step) => (
               <div key={step} className="flex items-center">
                 <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-colors duration-300 ${
+                  className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-semibold transition-colors duration-300 text-sm sm:text-base ${
                     currentStep >= step
                       ? "bg-primary text-primary-foreground"
                       : "bg-muted text-muted-foreground"
                   }`}
                 >
                   {currentStep > step ? (
-                    <CheckCircle className="w-5 h-5" />
+                    <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5" />
                   ) : (
                     step
                   )}
