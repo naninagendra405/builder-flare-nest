@@ -217,14 +217,49 @@ export default function Notifications() {
 
         {/* Filter Tabs */}
         <Tabs value={filter} onValueChange={setFilter} className="mb-6">
-          <TabsList className="grid w-full grid-cols-6">
-            <TabsTrigger value="all">All</TabsTrigger>
-            <TabsTrigger value="unread">Unread</TabsTrigger>
-            <TabsTrigger value="bid">Bids</TabsTrigger>
-            <TabsTrigger value="message">Messages</TabsTrigger>
-            <TabsTrigger value="payment">Payments</TabsTrigger>
-            <TabsTrigger value="task">Tasks</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-3 md:grid-cols-6">
+            <TabsTrigger value="all" className="text-xs md:text-sm">
+              All
+            </TabsTrigger>
+            <TabsTrigger value="unread" className="text-xs md:text-sm">
+              Unread
+            </TabsTrigger>
+            <TabsTrigger value="bid" className="text-xs md:text-sm">
+              Bids
+            </TabsTrigger>
+            <TabsTrigger
+              value="message"
+              className="text-xs md:text-sm md:block hidden"
+            >
+              Messages
+            </TabsTrigger>
+            <TabsTrigger
+              value="payment"
+              className="text-xs md:text-sm md:block hidden"
+            >
+              Payments
+            </TabsTrigger>
+            <TabsTrigger
+              value="task"
+              className="text-xs md:text-sm md:block hidden"
+            >
+              Tasks
+            </TabsTrigger>
           </TabsList>
+          {/* Mobile additional tabs */}
+          <div className="md:hidden mt-2">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="message" className="text-xs">
+                Messages
+              </TabsTrigger>
+              <TabsTrigger value="payment" className="text-xs">
+                Payments
+              </TabsTrigger>
+              <TabsTrigger value="task" className="text-xs">
+                Tasks
+              </TabsTrigger>
+            </TabsList>
+          </div>
         </Tabs>
 
         {/* Notifications List */}
