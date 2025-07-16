@@ -1,15 +1,39 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 
+export interface TaskerProfile {
+  bio: string;
+  skills: string[];
+  categories: string[];
+  experience: string;
+  hourlyRate: string;
+  availability: string;
+  serviceArea: string;
+  professionalCredentials: {
+    type: string;
+    description: string;
+    verified: boolean;
+  }[];
+  documents: {
+    type: string;
+    name: string;
+    uploaded: boolean;
+  }[];
+  languages: string[];
+  certifications: string[];
+}
+
 export interface User {
   id: string;
   email: string;
   name: string;
   role: "customer" | "tasker" | "admin";
+  phone?: string;
   avatar?: string;
   rating?: number;
   location?: string;
   skills?: string[];
   verificationStatus?: "pending" | "verified" | "rejected";
+  taskerProfile?: TaskerProfile;
 }
 
 interface AuthContextType {
@@ -20,6 +44,8 @@ interface AuthContextType {
     password: string,
     name: string,
     role: "customer" | "tasker",
+    taskerProfile?: TaskerProfile,
+    phone?: string,
   ) => Promise<void>;
   logout: () => void;
   isLoading: boolean;
@@ -67,6 +93,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     password: string,
     name: string,
     role: "customer" | "tasker",
+    taskerProfile?: TaskerProfile,
+    phone?: string,
   ) => {
     setIsLoading(true);
     try {
@@ -75,8 +103,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         id: Date.now().toString(),
         email,
         name,
+        phone,
         role,
-        verificationStatus: "pending",
+        verificationStatus: role === "tasker" ? "pending" : "verified",
+        taskerProfile: role === "tasker" ? taskerProfile : undefined,
+        rating: role === "tasker" ? 0 : undefined,
+        skills: role === "tasker" ? taskerProfile?.skills : undefined,
+        location: role === "tasker" ? taskerProfile?.serviceArea : undefined,
       };
 
       localStorage.setItem("taskit-user", JSON.stringify(mockUser));
