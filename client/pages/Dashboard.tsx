@@ -53,7 +53,6 @@ export default function Dashboard() {
   const { user, logout } = useAuth();
   const { getTasksByUser, getAllTasks } = useTasks();
   const navigate = useNavigate();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   if (!user) {
     navigate("/login");
