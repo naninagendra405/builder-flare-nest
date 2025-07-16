@@ -558,12 +558,16 @@ export default function TaskFeed() {
                       className="flex-1"
                       onClick={(e) => {
                         e.stopPropagation();
-                        navigate("/task-suggestions");
+                        if (user.role === "customer") {
+                          navigate("/task-suggestions");
+                        } else {
+                          navigate(`/task/${task.id}`);
+                        }
                       }}
                     >
                       {user.role === "customer"
                         ? "Get Task Ideas"
-                        : "Find More Work"}
+                        : "View & Bid"}
                     </Button>
                     <Button
                       size="sm"
