@@ -385,7 +385,7 @@ export default function TaskFeed() {
                     )}
                   </Button>
                 </div>
-                <CardTitle className="text-lg line-clamp-2 group-hover:text-blue-600 transition-colors">
+                <CardTitle className="text-lg line-clamp-2 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors">
                   {task.title}
                 </CardTitle>
               </CardHeader>
