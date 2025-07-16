@@ -375,6 +375,131 @@ export default function Index() {
         </div>
       </section>
 
+      {/* Pricing Section */}
+      <section id="pricing" className="py-20 px-4">
+        <div className="container mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">Simple Pricing</h2>
+            <p className="text-xl text-muted-foreground">
+              Pay only when you're satisfied. No hidden fees, no subscriptions.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <Card className="relative">
+              <CardHeader>
+                <CardTitle className="text-center">For Task Posters</CardTitle>
+              </CardHeader>
+              <CardContent className="text-center">
+                <div className="text-4xl font-bold mb-4">Free</div>
+                <p className="text-muted-foreground mb-6">
+                  Post unlimited tasks at no cost
+                </p>
+                <ul className="space-y-3 text-left">
+                  <li className="flex items-center">
+                    <CheckCircle className="w-5 h-5 text-success mr-3" />
+                    Post unlimited tasks
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle className="w-5 h-5 text-success mr-3" />
+                    Receive bids from taskers
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle className="w-5 h-5 text-success mr-3" />
+                    Secure payment protection
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle className="w-5 h-5 text-success mr-3" />
+                    24/7 customer support
+                  </li>
+                </ul>
+                <Button className="w-full mt-6" asChild>
+                  <Link to="/register?role=customer">Get Started</Link>
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="relative border-primary bg-primary/5">
+              <CardHeader>
+                <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-primary">
+                  Most Popular
+                </Badge>
+                <CardTitle className="text-center">For Taskers</CardTitle>
+              </CardHeader>
+              <CardContent className="text-center">
+                <div className="text-4xl font-bold mb-2">15%</div>
+                <p className="text-muted-foreground mb-6">
+                  Service fee on completed tasks
+                </p>
+                <ul className="space-y-3 text-left">
+                  <li className="flex items-center">
+                    <CheckCircle className="w-5 h-5 text-success mr-3" />
+                    Access to all task categories
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle className="w-5 h-5 text-success mr-3" />
+                    Send unlimited proposals
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle className="w-5 h-5 text-success mr-3" />
+                    Instant payment upon completion
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle className="w-5 h-5 text-success mr-3" />
+                    Verified badge after 10 tasks
+                  </li>
+                </ul>
+                <Button className="w-full mt-6" asChild>
+                  <Link to="/register?role=tasker">Start Earning</Link>
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-center">Enterprise</CardTitle>
+              </CardHeader>
+              <CardContent className="text-center">
+                <div className="text-4xl font-bold mb-4">Custom</div>
+                <p className="text-muted-foreground mb-6">
+                  For large organizations and teams
+                </p>
+                <ul className="space-y-3 text-left">
+                  <li className="flex items-center">
+                    <CheckCircle className="w-5 h-5 text-success mr-3" />
+                    Volume discounts available
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle className="w-5 h-5 text-success mr-3" />
+                    Dedicated account manager
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle className="w-5 h-5 text-success mr-3" />
+                    Custom integrations
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle className="w-5 h-5 text-success mr-3" />
+                    Priority support
+                  </li>
+                </ul>
+                <Button variant="outline" className="w-full mt-6">
+                  Contact Sales
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="text-center mt-12">
+            <p className="text-muted-foreground">
+              All payments are secured and protected by our escrow system.
+              <a href="#" className="text-primary hover:underline ml-1">
+                Learn more about our security
+              </a>
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="py-12 bg-card border-t">
         <div className="container mx-auto px-4">
