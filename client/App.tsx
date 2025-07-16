@@ -15,6 +15,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import PaymentMethods from "./pages/PaymentMethods";
 import NotFound from "./pages/NotFound";
 import { AuthProvider } from "./contexts/AuthContext";
+import { NotificationProvider } from "./contexts/NotificationContext";
 
 export default function App() {
   return (
