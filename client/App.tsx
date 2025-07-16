@@ -23,9 +23,10 @@ import AIChatSupport from "./components/AIChatSupport";
 export default function App() {
   return (
     <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-      <AuthProvider>
+            <AuthProvider>
         <NotificationProvider>
-          <BrowserRouter>
+          <TaskProvider>
+            <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/login" element={<Login />} />
@@ -41,7 +42,7 @@ export default function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="*" element={<NotFound />} />
-            </Routes>
+                        </Routes>
             <Toaster />
             <AIChatSupport />
           </BrowserRouter>
