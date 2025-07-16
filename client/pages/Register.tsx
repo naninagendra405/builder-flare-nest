@@ -686,17 +686,62 @@ export default function Register() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="drivers_license">Driver's License</SelectItem>
+              <SelectItem value="commercial_license">
+                Commercial Driver's License (CDL)
+              </SelectItem>
               <SelectItem value="business_license">Business License</SelectItem>
-              <SelectItem value="trade_license">
-                Trade License (Plumbing, Electrical, etc.)
+              <SelectItem value="trade_license_plumbing">
+                Plumbing License
+              </SelectItem>
+              <SelectItem value="trade_license_electrical">
+                Electrical License
+              </SelectItem>
+              <SelectItem value="trade_license_hvac">HVAC License</SelectItem>
+              <SelectItem value="trade_license_contractor">
+                General Contractor License
               </SelectItem>
               <SelectItem value="professional_cert">
                 Professional Certification
               </SelectItem>
-              <SelectItem value="degree">Educational Degree</SelectItem>
-              <SelectItem value="insurance">Liability Insurance</SelectItem>
+              <SelectItem value="degree_bachelors">
+                Bachelor's Degree
+              </SelectItem>
+              <SelectItem value="degree_masters">Master's Degree</SelectItem>
+              <SelectItem value="degree_doctorate">Doctorate/PhD</SelectItem>
+              <SelectItem value="degree_associates">
+                Associate's Degree
+              </SelectItem>
+              <SelectItem value="insurance_liability">
+                General Liability Insurance
+              </SelectItem>
+              <SelectItem value="insurance_bonding">
+                Bonding Insurance
+              </SelectItem>
+              <SelectItem value="insurance_workers_comp">
+                Workers Compensation
+              </SelectItem>
               <SelectItem value="background_check">Background Check</SelectItem>
-              <SelectItem value="other">Other</SelectItem>
+              <SelectItem value="drug_test">Drug Screening</SelectItem>
+              <SelectItem value="first_aid">First Aid Certification</SelectItem>
+              <SelectItem value="cpr_cert">CPR Certification</SelectItem>
+              <SelectItem value="safety_cert">
+                Safety Certification (OSHA)
+              </SelectItem>
+              <SelectItem value="real_estate">Real Estate License</SelectItem>
+              <SelectItem value="notary">Notary Public</SelectItem>
+              <SelectItem value="food_safety">
+                Food Safety Certification
+              </SelectItem>
+              <SelectItem value="pet_cert">Pet Care Certification</SelectItem>
+              <SelectItem value="childcare_cert">
+                Childcare Certification
+              </SelectItem>
+              <SelectItem value="language_cert">
+                Language Proficiency Certificate
+              </SelectItem>
+              <SelectItem value="other">
+                Other Professional Credential
+              </SelectItem>
             </SelectContent>
           </Select>
           <Input
@@ -727,21 +772,45 @@ export default function Register() {
               key={index}
               className="flex items-center justify-between p-3 bg-muted/50 rounded-lg"
             >
-              <div>
+              <div className="flex-1">
                 <div className="font-medium text-sm">
                   {cred.type
-                    .replace("_", " ")
+                    .replace(/_/g, " ")
                     .replace(/\b\w/g, (l) => l.toUpperCase())}
                 </div>
                 <div className="text-xs text-muted-foreground">
                   {cred.description}
                 </div>
               </div>
-              <Badge variant={cred.verified ? "default" : "secondary"}>
-                {cred.verified ? "Verified" : "Pending"}
-              </Badge>
+              <div className="flex items-center space-x-2">
+                <Badge variant={cred.verified ? "default" : "secondary"}>
+                  {cred.verified ? "Verified" : "Pending"}
+                </Badge>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    setTaskerProfile((prev) => ({
+                      ...prev,
+                      professionalCredentials:
+                        prev.professionalCredentials.filter(
+                          (_, i) => i !== index,
+                        ),
+                    }));
+                  }}
+                  className="h-6 w-6 p-0 text-muted-foreground hover:text-destructive"
+                >
+                  <X className="w-3 h-3" />
+                </Button>
+              </div>
             </div>
           ))}
+          {taskerProfile.professionalCredentials.length === 0 && (
+            <div className="text-center py-4 text-muted-foreground text-sm">
+              No credentials added yet. Add your first credential above.
+            </div>
+          )}
         </div>
       </div>
 
