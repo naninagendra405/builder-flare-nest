@@ -257,24 +257,10 @@ export default function Dashboard() {
 
               {/* Mobile/Desktop Actions */}
               <div className="flex items-center space-x-2 lg:space-x-3">
-                {/* Mobile Menu Button */}
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="lg:hidden"
-                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                >
-                  {isMobileMenuOpen ? (
-                    <X className="w-5 h-5" />
-                  ) : (
-                    <Menu className="w-5 h-5" />
-                  )}
-                </Button>
-
                 {user.role === "customer" && (
                   <Button
                     size="sm"
-                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-xs lg:text-sm px-3 lg:px-4"
+                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-xs lg:text-sm px-3 lg:px-4 shadow-lg hover:shadow-xl transition-all duration-200"
                     asChild
                   >
                     <Link to="/create-task">
@@ -291,69 +277,86 @@ export default function Dashboard() {
                   <DropdownMenuTrigger asChild>
                     <Button
                       variant="ghost"
-                      className="relative h-8 w-8 lg:h-10 lg:w-10 rounded-full"
+                      className="relative h-9 w-9 lg:h-10 lg:w-10 rounded-full hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200"
                     >
-                      <Avatar className="h-8 w-8 lg:h-10 lg:w-10 ring-2 ring-blue-100 dark:ring-blue-900">
-                        <AvatarFallback className="bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm lg:text-base">
+                      <Avatar className="h-9 w-9 lg:h-10 lg:w-10 ring-2 ring-blue-100 dark:ring-blue-900 hover:ring-blue-200 dark:hover:ring-blue-800 transition-all duration-200">
+                        <AvatarFallback className="bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm lg:text-base font-semibold">
                           {user.name.charAt(0).toUpperCase()}
                         </AvatarFallback>
                       </Avatar>
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent
-                    className="w-56 lg:w-64"
+                    className="w-60 lg:w-64 shadow-lg border-0 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md"
                     align="end"
                     forceMount
                   >
-                    <div className="p-3 border-b border-gray-100 dark:border-gray-800">
-                      <p className="font-medium text-gray-900 dark:text-white text-sm lg:text-base">
+                    <div className="p-4 border-b border-gray-100 dark:border-gray-800">
+                      <p className="font-semibold text-gray-900 dark:text-white text-sm lg:text-base">
                         {user.name}
                       </p>
                       <p className="text-xs lg:text-sm text-gray-500 dark:text-gray-400">
                         {user.email}
                       </p>
+                      <p className="text-xs text-blue-600 dark:text-blue-400 capitalize mt-1">
+                        {user.role} Account
+                      </p>
                     </div>
 
                     {/* Mobile Navigation in Dropdown */}
-                    <div className="lg:hidden">
+                    <div className="lg:hidden py-2">
                       <DropdownMenuItem asChild>
-                        <Link to="/tasks" className="cursor-pointer">
-                          <Search className="w-4 h-4 mr-2" />
-                          Browse Tasks
+                        <Link
+                          to="/tasks"
+                          className="cursor-pointer py-3 px-4 hover:bg-blue-50 dark:hover:bg-blue-900/20"
+                        >
+                          <Search className="w-4 h-4 mr-3 text-blue-600 dark:text-blue-400" />
+                          <span className="font-medium">Browse Tasks</span>
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild>
-                        <Link to="/wallet" className="cursor-pointer">
-                          <Wallet className="w-4 h-4 mr-2" />
-                          Wallet
+                        <Link
+                          to="/wallet"
+                          className="cursor-pointer py-3 px-4 hover:bg-green-50 dark:hover:bg-green-900/20"
+                        >
+                          <Wallet className="w-4 h-4 mr-3 text-green-600 dark:text-green-400" />
+                          <span className="font-medium">Wallet</span>
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild>
-                        <Link to="/chat" className="cursor-pointer">
-                          <MessageSquare className="w-4 h-4 mr-2" />
-                          Messages
+                        <Link
+                          to="/chat"
+                          className="cursor-pointer py-3 px-4 hover:bg-purple-50 dark:hover:bg-purple-900/20"
+                        >
+                          <MessageSquare className="w-4 h-4 mr-3 text-purple-600 dark:text-purple-400" />
+                          <span className="font-medium">Messages</span>
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild>
-                        <Link to="/profile" className="cursor-pointer">
-                          <User className="w-4 h-4 mr-2" />
-                          Profile
+                        <Link
+                          to="/profile"
+                          className="cursor-pointer py-3 px-4 hover:bg-orange-50 dark:hover:bg-orange-900/20"
+                        >
+                          <User className="w-4 h-4 mr-3 text-orange-600 dark:text-orange-400" />
+                          <span className="font-medium">Profile</span>
                         </Link>
                       </DropdownMenuItem>
-                      <DropdownMenuSeparator />
+                      <DropdownMenuSeparator className="my-2" />
                     </div>
 
-                    <DropdownMenuItem>
-                      <Settings className="w-4 h-4 mr-2" />
-                      Settings
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={handleLogout}
-                      className="text-red-600 dark:text-red-400"
-                    >
-                      <LogOut className="w-4 h-4 mr-2" />
-                      Sign out
-                    </DropdownMenuItem>
+                    <div className="py-2">
+                      <DropdownMenuItem className="py-3 px-4 hover:bg-gray-50 dark:hover:bg-gray-800">
+                        <Settings className="w-4 h-4 mr-3 text-gray-600 dark:text-gray-400" />
+                        <span className="font-medium">Settings</span>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={handleLogout}
+                        className="py-3 px-4 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
+                      >
+                        <LogOut className="w-4 h-4 mr-3" />
+                        <span className="font-medium">Sign out</span>
+                      </DropdownMenuItem>
+                    </div>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
