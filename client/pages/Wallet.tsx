@@ -230,9 +230,10 @@ export default function Wallet() {
       setWithdrawAmount("");
     } catch (error) {
       addNotification({
-        type: "error",
+        type: "system",
         title: "Withdrawal Failed",
         message: "Failed to process withdrawal. Please try again.",
+        priority: "high",
       });
     } finally {
       setIsProcessing(false);
