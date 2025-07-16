@@ -814,6 +814,36 @@ export default function CreateTask() {
             </CardContent>
           </Card>
         )}
+
+        {/* Task Policy Notice */}
+        <Card className="mt-6 border-blue-200 bg-blue-50">
+          <CardContent className="p-6">
+            <div className="flex items-start space-x-4">
+              <AlertCircle className="w-6 h-6 text-blue-600 mt-1" />
+              <div>
+                <h3 className="font-semibold text-blue-800 mb-2">
+                  Task Management Policy
+                </h3>
+                <div className="text-sm text-blue-700 space-y-2">
+                  <p>
+                    <strong>Cancellation:</strong> You can cancel your task only
+                    if it hasn't received any bids yet. Once taskers start
+                    bidding, the task cannot be cancelled to ensure fairness.
+                  </p>
+                  <p>
+                    <strong>Editing:</strong> You can edit task details until
+                    someone accepts your offer or work begins.
+                  </p>
+                  <p>
+                    <strong>Deletion:</strong> Tasks cannot be permanently
+                    deleted from the system for record-keeping purposes, but
+                    cancelled tasks will no longer be visible to taskers.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
