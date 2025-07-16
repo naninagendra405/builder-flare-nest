@@ -7,6 +7,12 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -39,6 +45,8 @@ import {
   ChevronRight,
   Filter,
   Bell,
+  Menu,
+  X,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -47,6 +55,7 @@ export default function Dashboard() {
   const { user, logout } = useAuth();
   const { getTasksByUser, getAllTasks } = useTasks();
   const navigate = useNavigate();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   if (!user) {
     navigate("/login");
@@ -184,365 +193,463 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
-      {/* Enhanced Header */}
-      <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50 shadow-sm">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            {/* Logo and Welcome */}
-            <div className="flex items-center space-x-4">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                <Zap className="w-5 h-5 text-white" />
+    <TooltipProvider>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
+        {/* Enhanced Desktop/Mobile Header */}
+        <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50 shadow-sm">
+          <div className="container mx-auto px-4 py-3 lg:py-4">
+            <div className="flex items-center justify-between">
+              {/* Logo and Welcome */}
+              <div className="flex items-center space-x-3 lg:space-x-4">
+                <div className="w-9 h-9 lg:w-10 lg:h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <Zap className="w-4 h-4 lg:w-5 lg:h-5 text-white" />
+                </div>
+                <div className="hidden sm:block">
+                  <h1 className="text-lg lg:text-xl font-bold text-gray-900 dark:text-white leading-tight">
+                    Welcome back, {user.name}!
+                  </h1>
+                  <p className="text-xs lg:text-sm text-gray-500 dark:text-gray-400 capitalize">
+                    {user.role} Dashboard
+                  </p>
+                </div>
+                <div className="block sm:hidden">
+                  <h1 className="text-lg font-semibold text-gray-900 dark:text-white">
+                    TaskIt
+                  </h1>
+                </div>
               </div>
-              <div className="hidden sm:block">
-                <h1 className="text-xl font-bold text-gray-900 dark:text-white">
-                  Welcome back, {user.name}!
-                </h1>
-                <p className="text-sm text-gray-500 dark:text-gray-400 capitalize">
-                  {user.role} Dashboard
-                </p>
+
+              {/* Desktop Navigation */}
+              <div className="hidden lg:flex items-center space-x-6">
+                <Link
+                  to="/tasks"
+                  className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-600 hover:text-blue-600 hover:bg-blue-50 dark:text-gray-400 dark:hover:text-blue-400 dark:hover:bg-blue-900/20 transition-all duration-200"
+                >
+                  <Search className="w-4 h-4" />
+                  <span className="font-medium">Browse</span>
+                </Link>
+
+                <Link
+                  to="/wallet"
+                  className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-600 hover:text-green-600 hover:bg-green-50 dark:text-gray-400 dark:hover:text-green-400 dark:hover:bg-green-900/20 transition-all duration-200"
+                >
+                  <Wallet className="w-4 h-4" />
+                  <span className="font-medium">Wallet</span>
+                </Link>
+
+                <Link
+                  to="/chat"
+                  className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-600 hover:text-purple-600 hover:bg-purple-50 dark:text-gray-400 dark:hover:text-purple-400 dark:hover:bg-purple-900/20 transition-all duration-200"
+                >
+                  <MessageSquare className="w-4 h-4" />
+                  <span className="font-medium">Messages</span>
+                </Link>
+
+                <Link
+                  to="/profile"
+                  className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-600 hover:text-orange-600 hover:bg-orange-50 dark:text-gray-400 dark:hover:text-orange-400 dark:hover:bg-orange-900/20 transition-all duration-200"
+                >
+                  <User className="w-4 h-4" />
+                  <span className="font-medium">Profile</span>
+                </Link>
+              </div>
+
+              {/* Mobile/Desktop Actions */}
+              <div className="flex items-center space-x-2 lg:space-x-3">
+                {/* Mobile Menu Button */}
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="lg:hidden"
+                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                >
+                  {isMobileMenuOpen ? (
+                    <X className="w-5 h-5" />
+                  ) : (
+                    <Menu className="w-5 h-5" />
+                  )}
+                </Button>
+
+                {user.role === "customer" && (
+                  <Button
+                    size="sm"
+                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-xs lg:text-sm px-3 lg:px-4"
+                    asChild
+                  >
+                    <Link to="/create-task">
+                      <Plus className="w-3 h-3 lg:w-4 lg:h-4 mr-1 lg:mr-2" />
+                      <span className="hidden sm:inline">Post Task</span>
+                      <span className="sm:hidden">Post</span>
+                    </Link>
+                  </Button>
+                )}
+
+                <NotificationDropdown />
+
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      className="relative h-8 w-8 lg:h-10 lg:w-10 rounded-full"
+                    >
+                      <Avatar className="h-8 w-8 lg:h-10 lg:w-10 ring-2 ring-blue-100 dark:ring-blue-900">
+                        <AvatarFallback className="bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm lg:text-base">
+                          {user.name.charAt(0).toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent
+                    className="w-56 lg:w-64"
+                    align="end"
+                    forceMount
+                  >
+                    <div className="p-3 border-b border-gray-100 dark:border-gray-800">
+                      <p className="font-medium text-gray-900 dark:text-white text-sm lg:text-base">
+                        {user.name}
+                      </p>
+                      <p className="text-xs lg:text-sm text-gray-500 dark:text-gray-400">
+                        {user.email}
+                      </p>
+                    </div>
+
+                    {/* Mobile Navigation in Dropdown */}
+                    <div className="lg:hidden">
+                      <DropdownMenuItem asChild>
+                        <Link to="/tasks" className="cursor-pointer">
+                          <Search className="w-4 h-4 mr-2" />
+                          Browse Tasks
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link to="/wallet" className="cursor-pointer">
+                          <Wallet className="w-4 h-4 mr-2" />
+                          Wallet
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link to="/chat" className="cursor-pointer">
+                          <MessageSquare className="w-4 h-4 mr-2" />
+                          Messages
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link to="/profile" className="cursor-pointer">
+                          <User className="w-4 h-4 mr-2" />
+                          Profile
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                    </div>
+
+                    <DropdownMenuItem>
+                      <Settings className="w-4 h-4 mr-2" />
+                      Settings
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={handleLogout}
+                      className="text-red-600 dark:text-red-400"
+                    >
+                      <LogOut className="w-4 h-4 mr-2" />
+                      Sign out
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             </div>
 
-            {/* Actions */}
-            <div className="flex items-center space-x-2 md:space-x-4">
-              <Button
-                variant="outline"
-                size="sm"
-                className="hidden sm:flex"
-                asChild
-              >
-                <Link to="/tasks">
-                  <Search className="w-4 h-4 mr-2" />
-                  Browse Tasks
-                </Link>
-              </Button>
+            {/* Mobile Navigation Menu */}
+            {isMobileMenuOpen && (
+              <div className="lg:hidden mt-4 pb-4 border-t border-gray-200 dark:border-gray-800">
+                <div className="grid grid-cols-2 gap-3 mt-4">
+                  <Link
+                    to="/tasks"
+                    className="flex items-center space-x-3 p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <Search className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                    <span className="font-medium text-blue-900 dark:text-blue-100">
+                      Browse
+                    </span>
+                  </Link>
 
-              {user.role === "customer" && (
-                <Button
-                  size="sm"
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-                  asChild
+                  <Link
+                    to="/wallet"
+                    className="flex items-center space-x-3 p-3 rounded-lg bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/40 transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <Wallet className="w-5 h-5 text-green-600 dark:text-green-400" />
+                    <span className="font-medium text-green-900 dark:text-green-100">
+                      Wallet
+                    </span>
+                  </Link>
+
+                  <Link
+                    to="/chat"
+                    className="flex items-center space-x-3 p-3 rounded-lg bg-purple-50 dark:bg-purple-900/20 hover:bg-purple-100 dark:hover:bg-purple-900/40 transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <MessageSquare className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                    <span className="font-medium text-purple-900 dark:text-purple-100">
+                      Messages
+                    </span>
+                  </Link>
+
+                  <Link
+                    to="/profile"
+                    className="flex items-center space-x-3 p-3 rounded-lg bg-orange-50 dark:bg-orange-900/20 hover:bg-orange-100 dark:hover:bg-orange-900/40 transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <User className="w-5 h-5 text-orange-600 dark:text-orange-400" />
+                    <span className="font-medium text-orange-900 dark:text-orange-100">
+                      Profile
+                    </span>
+                  </Link>
+                </div>
+              </div>
+            )}
+          </div>
+        </header>
+
+        <div className="container mx-auto px-4 py-4 lg:py-6 space-y-6">
+          {/* Stats Grid - Mobile Optimized */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6">
+            {stats.map((stat, index) => {
+              const Icon = stat.icon;
+              return (
+                <Card
+                  key={index}
+                  className="bg-white dark:bg-gray-900 border-0 shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 cursor-pointer group"
                 >
-                  <Link to="/create-task">
-                    <Plus className="w-4 h-4 mr-1 sm:mr-2" />
-                    <span className="hidden sm:inline">Post Task</span>
-                    <span className="sm:hidden">Post</span>
+                  <CardContent className="p-3 lg:p-6">
+                    <div className="flex items-center space-x-2 lg:space-x-3">
+                      <div
+                        className={`w-10 h-10 lg:w-12 lg:h-12 rounded-xl ${stat.bg} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}
+                      >
+                        <Icon
+                          className={`w-5 h-5 lg:w-6 lg:h-6 ${stat.color} group-hover:animate-pulse`}
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs lg:text-sm font-medium text-gray-600 dark:text-gray-400 truncate">
+                          {stat.label}
+                        </p>
+                        <p className="text-xl lg:text-2xl font-bold text-gray-900 dark:text-white">
+                          {stat.value}
+                        </p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                          {stat.change}
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+
+          {/* Main Content Grid */}
+          <div className="grid lg:grid-cols-2 gap-4 lg:gap-6">
+            {/* Recent Tasks */}
+            <Card className="bg-white dark:bg-gray-900 border-0 shadow-lg">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 lg:pb-4">
+                <CardTitle className="text-base lg:text-lg font-semibold text-gray-900 dark:text-white">
+                  {user.role === "customer" ? "Your Tasks" : "Recent Work"}
+                </CardTitle>
+                <Button variant="ghost" size="sm" asChild>
+                  <Link
+                    to="/tasks"
+                    className="text-blue-600 hover:text-blue-700 text-sm"
+                  >
+                    View all
+                    <ChevronRight className="w-4 h-4 ml-1" />
                   </Link>
                 </Button>
-              )}
-
-              <NotificationDropdown />
-
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    className="relative h-10 w-10 rounded-full"
-                  >
-                    <Avatar className="h-10 w-10 ring-2 ring-blue-100 dark:ring-blue-900">
-                      <AvatarFallback className="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
-                        {user.name.charAt(0).toUpperCase()}
-                      </AvatarFallback>
-                    </Avatar>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-64" align="end" forceMount>
-                  <div className="p-3 border-b border-gray-100 dark:border-gray-800">
-                    <p className="font-medium text-gray-900 dark:text-white">
-                      {user.name}
-                    </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      {user.email}
-                    </p>
-                  </div>
-                  <DropdownMenuItem asChild>
-                    <Link to="/profile" className="cursor-pointer">
-                      <User className="w-4 h-4 mr-2" />
-                      Profile
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link to="/wallet" className="cursor-pointer">
-                      <Wallet className="w-4 h-4 mr-2" />
-                      Wallet
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link to="/chat" className="cursor-pointer">
-                      <MessageSquare className="w-4 h-4 mr-2" />
-                      Messages
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <Settings className="w-4 h-4 mr-2" />
-                    Settings
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={handleLogout}
-                    className="text-red-600 dark:text-red-400"
-                  >
-                    <LogOut className="w-4 h-4 mr-2" />
-                    Sign out
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <div className="container mx-auto px-4 py-6 space-y-6">
-        {/* Stats Grid - Mobile Optimized */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-          {stats.map((stat, index) => {
-            const Icon = stat.icon;
-            return (
-              <Card
-                key={index}
-                className="bg-white dark:bg-gray-900 border-0 shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 cursor-pointer group"
-              >
-                <CardContent className="p-4 md:p-6">
-                  <div className="flex items-center space-x-3">
-                    <div
-                      className={`w-12 h-12 rounded-xl ${stat.bg} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}
-                    >
-                      <Icon
-                        className={`w-6 h-6 ${stat.color} group-hover:animate-pulse`}
-                      />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-600 dark:text-gray-400 truncate">
-                        {stat.label}
-                      </p>
-                      <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                        {stat.value}
-                      </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
-                        {stat.change}
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
-
-        {/* Quick Actions - Mobile Optimized */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <Button
-            variant="outline"
-            className="h-20 flex flex-col items-center justify-center space-y-2 bg-white dark:bg-gray-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:border-blue-200 dark:hover:border-blue-800 border-0 shadow-lg hover:shadow-xl transition-all duration-300 group"
-            asChild
-          >
-            <Link to="/tasks">
-              <Search className="w-6 h-6 text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors" />
-              <span className="text-sm font-medium group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors">
-                Browse
-              </span>
-            </Link>
-          </Button>
-
-          <Button
-            variant="outline"
-            className="h-20 flex flex-col items-center justify-center space-y-2 bg-white dark:bg-gray-900 hover:bg-green-50 dark:hover:bg-green-900/30 hover:border-green-200 dark:hover:border-green-800 border-0 shadow-lg hover:shadow-xl transition-all duration-300 group"
-            asChild
-          >
-            <Link to="/wallet">
-              <Wallet className="w-6 h-6 text-green-600 dark:text-green-400 group-hover:text-green-700 dark:group-hover:text-green-300 transition-colors" />
-              <span className="text-sm font-medium group-hover:text-green-700 dark:group-hover:text-green-300 transition-colors">
-                Wallet
-              </span>
-            </Link>
-          </Button>
-
-          <Button
-            variant="outline"
-            className="h-20 flex flex-col items-center justify-center space-y-2 bg-white dark:bg-gray-900 hover:bg-purple-50 dark:hover:bg-purple-900/30 hover:border-purple-200 dark:hover:border-purple-800 border-0 shadow-lg hover:shadow-xl transition-all duration-300 group"
-            asChild
-          >
-            <Link to="/chat">
-              <MessageSquare className="w-6 h-6 text-purple-600 dark:text-purple-400 group-hover:text-purple-700 dark:group-hover:text-purple-300 transition-colors" />
-              <span className="text-sm font-medium group-hover:text-purple-700 dark:group-hover:text-purple-300 transition-colors">
-                Messages
-              </span>
-            </Link>
-          </Button>
-
-          <Button
-            variant="outline"
-            className="h-20 flex flex-col items-center justify-center space-y-2 bg-white dark:bg-gray-900 hover:bg-orange-50 dark:hover:bg-orange-900/30 hover:border-orange-200 dark:hover:border-orange-800 border-0 shadow-lg hover:shadow-xl transition-all duration-300 group"
-            asChild
-          >
-            <Link to="/profile">
-              <User className="w-6 h-6 text-orange-600 dark:text-orange-400 group-hover:text-orange-700 dark:group-hover:text-orange-300 transition-colors" />
-              <span className="text-sm font-medium group-hover:text-orange-700 dark:group-hover:text-orange-300 transition-colors">
-                Profile
-              </span>
-            </Link>
-          </Button>
-        </div>
-
-        {/* Main Content Grid */}
-        <div className="grid lg:grid-cols-2 gap-6">
-          {/* Recent Tasks */}
-          <Card className="bg-white dark:bg-gray-900 border-0 shadow-lg">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-              <CardTitle className="text-lg font-semibold text-gray-900 dark:text-white">
-                {user.role === "customer" ? "Your Tasks" : "Recent Work"}
-              </CardTitle>
-              <Button variant="ghost" size="sm" asChild>
-                <Link to="/tasks" className="text-blue-600 hover:text-blue-700">
-                  View all
-                  <ChevronRight className="w-4 h-4 ml-1" />
-                </Link>
-              </Button>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {recentTasks.length > 0 ? (
-                recentTasks.map((task) => (
-                  <div
-                    key={task.id}
-                    className="flex items-center justify-between p-4 rounded-lg border border-gray-100 dark:border-gray-800 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:border-blue-200 dark:hover:border-blue-800 transition-all duration-300 cursor-pointer group hover:shadow-md"
-                    onClick={() => navigate(`/task/${task.id}`)}
-                  >
-                    <div className="flex-1 min-w-0 space-y-1">
-                      <h4 className="font-medium text-gray-900 dark:text-white group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors truncate">
-                        {task.title}
-                      </h4>
-                      <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
-                        <span className="flex items-center">
-                          <MapPin className="w-3 h-3 mr-1" />
-                          {task.location}
-                        </span>
-                        <span className="flex items-center">
-                          <Clock className="w-3 h-3 mr-1" />
-                          {task.time}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <div className="text-right">
-                        <p className="font-semibold text-blue-600 dark:text-blue-400">
-                          {task.budget}
-                        </p>
-                        <Badge
-                          variant="outline"
-                          className={getStatusColor(task.status)}
+              </CardHeader>
+              <CardContent className="space-y-3 lg:space-y-4">
+                {recentTasks.length > 0 ? (
+                  recentTasks.map((task) => (
+                    <Tooltip key={task.id}>
+                      <TooltipTrigger asChild>
+                        <div
+                          className="flex items-center justify-between p-3 lg:p-4 rounded-lg border border-gray-100 dark:border-gray-800 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:border-blue-200 dark:hover:border-blue-800 transition-all duration-300 cursor-pointer group hover:shadow-md"
+                          onClick={() => navigate(`/task/${task.id}`)}
                         >
-                          {task.status}
-                        </Badge>
-                      </div>
-                      <ChevronRight className="w-4 h-4 text-gray-400" />
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="text-center py-8">
-                  <Briefcase className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-500 dark:text-gray-400 mb-4">
-                    {user.role === "customer"
-                      ? "No tasks posted yet"
-                      : "No tasks completed yet"}
-                  </p>
-                  <Button size="sm" asChild>
-                    <Link
-                      to={user.role === "customer" ? "/create-task" : "/tasks"}
-                    >
+                          <div className="flex-1 min-w-0 space-y-1">
+                            <h4 className="font-medium text-sm lg:text-base text-gray-900 dark:text-white group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors truncate">
+                              {task.title}
+                            </h4>
+                            <div className="flex items-center space-x-2 lg:space-x-4 text-xs lg:text-sm text-gray-500 dark:text-gray-400">
+                              <span className="flex items-center">
+                                <MapPin className="w-3 h-3 mr-1" />
+                                <span className="truncate max-w-20 lg:max-w-none">
+                                  {task.location}
+                                </span>
+                              </span>
+                              <span className="flex items-center">
+                                <Clock className="w-3 h-3 mr-1" />
+                                {task.time}
+                              </span>
+                            </div>
+                          </div>
+                          <div className="flex items-center space-x-2 lg:space-x-3">
+                            <div className="text-right">
+                              <p className="font-semibold text-sm lg:text-base text-blue-600 dark:text-blue-400">
+                                {task.budget}
+                              </p>
+                              <Badge
+                                variant="outline"
+                                className={`text-xs ${getStatusColor(task.status)}`}
+                              >
+                                {task.status}
+                              </Badge>
+                            </div>
+                            <ChevronRight className="w-4 h-4 text-gray-400" />
+                          </div>
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent side="top" className="max-w-sm">
+                        <p className="font-medium">{task.title}</p>
+                        <p className="text-sm text-gray-600">
+                          Location: {task.location}
+                        </p>
+                        <p className="text-sm text-gray-600">
+                          Posted: {task.time}
+                        </p>
+                      </TooltipContent>
+                    </Tooltip>
+                  ))
+                ) : (
+                  <div className="text-center py-6 lg:py-8">
+                    <Briefcase className="w-10 h-10 lg:w-12 lg:h-12 text-gray-400 mx-auto mb-3 lg:mb-4" />
+                    <p className="text-sm lg:text-base text-gray-500 dark:text-gray-400 mb-3 lg:mb-4">
                       {user.role === "customer"
-                        ? "Post Your First Task"
-                        : "Find Tasks"}
-                    </Link>
-                  </Button>
-                </div>
-              )}
-            </CardContent>
-          </Card>
+                        ? "No tasks posted yet"
+                        : "No tasks completed yet"}
+                    </p>
+                    <Button size="sm" asChild>
+                      <Link
+                        to={
+                          user.role === "customer" ? "/create-task" : "/tasks"
+                        }
+                      >
+                        {user.role === "customer"
+                          ? "Post Your First Task"
+                          : "Find Tasks"}
+                      </Link>
+                    </Button>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
 
-          {/* Available Tasks / Task Feed */}
-          <Card className="bg-white dark:bg-gray-900 border-0 shadow-lg">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-              <CardTitle className="text-lg font-semibold text-gray-900 dark:text-white">
-                {user.role === "customer" ? "Popular Tasks" : "Available Tasks"}
-              </CardTitle>
-              <Button variant="ghost" size="sm" asChild>
-                <Link to="/tasks" className="text-blue-600 hover:text-blue-700">
-                  View all
-                  <ChevronRight className="w-4 h-4 ml-1" />
-                </Link>
-              </Button>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {availableTasks.map((task) => (
-                <div
-                  key={task.id}
-                  className="flex items-center justify-between p-4 rounded-lg border border-gray-100 dark:border-gray-800 hover:bg-green-50 dark:hover:bg-green-900/20 hover:border-green-200 dark:hover:border-green-800 transition-all duration-300 cursor-pointer group hover:shadow-md"
-                  onClick={() => navigate(`/task/${task.id}`)}
-                >
-                  <div className="flex-1 min-w-0 space-y-1">
-                    <h4 className="font-medium text-gray-900 dark:text-white group-hover:text-green-700 dark:group-hover:text-green-300 transition-colors truncate">
-                      {task.title}
-                    </h4>
-                    <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
-                      <span className="flex items-center">
-                        <MapPin className="w-3 h-3 mr-1" />
-                        {task.location}
-                      </span>
-                      <span className="flex items-center">
-                        <Users className="w-3 h-3 mr-1" />
-                        {task.bids} bids
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <div className="text-right">
-                      <p className="font-semibold text-green-600 dark:text-green-400">
-                        {task.budget}
+            {/* Available Tasks / Task Feed */}
+            <Card className="bg-white dark:bg-gray-900 border-0 shadow-lg">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 lg:pb-4">
+                <CardTitle className="text-base lg:text-lg font-semibold text-gray-900 dark:text-white">
+                  {user.role === "customer"
+                    ? "Popular Tasks"
+                    : "Available Tasks"}
+                </CardTitle>
+                <Button variant="ghost" size="sm" asChild>
+                  <Link
+                    to="/tasks"
+                    className="text-blue-600 hover:text-blue-700 text-sm"
+                  >
+                    View all
+                    <ChevronRight className="w-4 h-4 ml-1" />
+                  </Link>
+                </Button>
+              </CardHeader>
+              <CardContent className="space-y-3 lg:space-y-4">
+                {availableTasks.map((task) => (
+                  <Tooltip key={task.id}>
+                    <TooltipTrigger asChild>
+                      <div
+                        className="flex items-center justify-between p-3 lg:p-4 rounded-lg border border-gray-100 dark:border-gray-800 hover:bg-green-50 dark:hover:bg-green-900/20 hover:border-green-200 dark:hover:border-green-800 transition-all duration-300 cursor-pointer group hover:shadow-md"
+                        onClick={() => navigate(`/task/${task.id}`)}
+                      >
+                        <div className="flex-1 min-w-0 space-y-1">
+                          <h4 className="font-medium text-sm lg:text-base text-gray-900 dark:text-white group-hover:text-green-700 dark:group-hover:text-green-300 transition-colors truncate">
+                            {task.title}
+                          </h4>
+                          <div className="flex items-center space-x-2 lg:space-x-4 text-xs lg:text-sm text-gray-500 dark:text-gray-400">
+                            <span className="flex items-center">
+                              <MapPin className="w-3 h-3 mr-1" />
+                              <span className="truncate max-w-20 lg:max-w-none">
+                                {task.location}
+                              </span>
+                            </span>
+                            <span className="flex items-center">
+                              <Users className="w-3 h-3 mr-1" />
+                              {task.bids} bids
+                            </span>
+                          </div>
+                        </div>
+                        <div className="flex items-center space-x-2 lg:space-x-3">
+                          <div className="text-right">
+                            <p className="font-semibold text-sm lg:text-base text-green-600 dark:text-green-400">
+                              {task.budget}
+                            </p>
+                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                              {task.time}
+                            </p>
+                          </div>
+                          <ChevronRight className="w-4 h-4 text-gray-400" />
+                        </div>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent side="top" className="max-w-sm">
+                      <p className="font-medium">{task.title}</p>
+                      <p className="text-sm text-gray-600">
+                        Location: {task.location}
                       </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
-                        {task.time}
+                      <p className="text-sm text-gray-600">
+                        Budget: {task.budget}
                       </p>
-                    </div>
-                    <ChevronRight className="w-4 h-4 text-gray-400" />
-                  </div>
+                      <p className="text-sm text-gray-600">
+                        {task.bids} people have bid on this task
+                      </p>
+                    </TooltipContent>
+                  </Tooltip>
+                ))}
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Bottom CTA */}
+          <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0 shadow-xl">
+            <CardContent className="p-4 lg:p-8">
+              <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
+                <div className="text-center md:text-left">
+                  <h3 className="text-lg lg:text-xl font-bold mb-2">
+                    {user.role === "customer"
+                      ? "Need something done?"
+                      : "Ready to earn more?"}
+                  </h3>
+                  <p className="text-sm lg:text-base text-blue-100">
+                    {user.role === "customer"
+                      ? "Post a task and get it done by skilled professionals in your area."
+                      : "Browse available tasks and start earning money today."}
+                  </p>
                 </div>
-              ))}
+                <Button
+                  size="lg"
+                  className="bg-white text-blue-600 hover:bg-gray-100 font-semibold text-sm lg:text-base px-4 lg:px-6"
+                  asChild
+                >
+                  <Link
+                    to={user.role === "customer" ? "/create-task" : "/tasks"}
+                  >
+                    {user.role === "customer" ? "Post a Task" : "Browse Tasks"}
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Link>
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </div>
-
-        {/* Bottom CTA */}
-        <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0 shadow-xl">
-          <CardContent className="p-6 md:p-8">
-            <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
-              <div className="text-center md:text-left">
-                <h3 className="text-xl font-bold mb-2">
-                  {user.role === "customer"
-                    ? "Need something done?"
-                    : "Ready to earn more?"}
-                </h3>
-                <p className="text-blue-100">
-                  {user.role === "customer"
-                    ? "Post a task and get it done by skilled professionals in your area."
-                    : "Browse available tasks and start earning money today."}
-                </p>
-              </div>
-              <Button
-                size="lg"
-                className="bg-white text-blue-600 hover:bg-gray-100 font-semibold"
-                asChild
-              >
-                <Link to={user.role === "customer" ? "/create-task" : "/tasks"}>
-                  {user.role === "customer" ? "Post a Task" : "Browse Tasks"}
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Link>
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
       </div>
-    </div>
+    </TooltipProvider>
   );
 }
