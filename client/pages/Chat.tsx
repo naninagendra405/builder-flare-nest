@@ -403,7 +403,7 @@ export default function Chat() {
 
         {/* Main Chat Area */}
         {selectedChat ? (
-          <div className="flex-1 flex flex-col">
+          <div className="flex-1 flex flex-col hidden md:flex">
             {/* Chat Header */}
             <div className="p-4 border-b bg-background/80 backdrop-blur-sm">
               <div className="flex items-center justify-between">
