@@ -2,7 +2,14 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 
 export interface Notification {
   id: string;
-  type: "bid" | "message" | "payment" | "task_update" | "system";
+  type:
+    | "bid"
+    | "bid_received"
+    | "bid_placed"
+    | "message"
+    | "payment"
+    | "task_update"
+    | "system";
   title: string;
   message: string;
   timestamp: string;
