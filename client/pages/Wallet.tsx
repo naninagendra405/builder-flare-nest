@@ -174,11 +174,11 @@ export default function Wallet() {
       case "escrow_release":
         return <CheckCircle className="w-4 h-4 text-green-600" />;
       case "payment":
-        return <DollarSign className="w-4 h-4 text-blue-600" />;
+        return <RupeeIcon className="w-4 h-4 text-blue-600" />;
       case "refund":
         return <TrendingUp className="w-4 h-4 text-green-600" />;
       default:
-        return <DollarSign className="w-4 h-4" />;
+        return <RupeeIcon className="w-4 h-4" />;
     }
   };
 
