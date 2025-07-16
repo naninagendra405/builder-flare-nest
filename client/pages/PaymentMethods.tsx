@@ -73,6 +73,11 @@ export default function PaymentMethods() {
     },
   ]);
 
+  if (!user) {
+    navigate("/login");
+    return null;
+  }
+
   const setAsDefault = (id: string) => {
     setPaymentMethods((prev) =>
       prev.map((method) => ({
