@@ -345,7 +345,7 @@ export default function Wallet() {
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-blue-600">
-                ${pendingBalance.toFixed(2)}
+                ₹{pendingBalance.toFixed(2)}
               </div>
               <p className="text-sm text-muted-foreground mt-2">Processing</p>
             </CardContent>
