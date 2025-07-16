@@ -33,6 +33,7 @@ import { useState } from "react";
 
 export default function Dashboard() {
   const { user, logout } = useAuth();
+  const { getTasksByUser, getAllTasks } = useTasks();
   const navigate = useNavigate();
 
   if (!user) {
