@@ -26,7 +26,7 @@ import {
   ArrowLeft,
   MapPin,
   Clock,
-  DollarSign,
+  IndianRupee,
   Star,
   Calendar,
   Users,
