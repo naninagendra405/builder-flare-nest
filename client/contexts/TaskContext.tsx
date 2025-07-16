@@ -59,6 +59,13 @@ interface TaskContextType {
     taskerName: string,
   ) => void;
   getTasksByTasker: (taskerId: string) => Task[];
+  approveTaskAndHoldEscrow: (taskId: string) => void;
+  markTaskCompleted: (
+    taskId: string,
+    userId: string,
+    userRole: "customer" | "tasker",
+  ) => void;
+  releasePayment: (taskId: string) => void;
 }
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
