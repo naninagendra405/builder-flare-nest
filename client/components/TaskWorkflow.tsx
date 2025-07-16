@@ -282,7 +282,11 @@ export default function TaskWorkflow({ task }: TaskWorkflowProps) {
                 <Button
                   onClick={handleMarkCompleted}
                   className="w-full"
-                  disabled={task.status === "completed"}
+                  disabled={
+                    task.status === "completed" ||
+                    (isCustomer && task.customerCompleted) ||
+                    (isTasker && task.taskerCompleted)
+                  }
                 >
                   <CheckCircle className="w-4 h-4 mr-2" />
                   Mark as Completed
