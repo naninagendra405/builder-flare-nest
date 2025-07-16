@@ -58,7 +58,7 @@ export default function Dashboard() {
     {
       label: "Total Spent",
       value: "₹1,03,968",
-      icon: DollarSign,
+      icon: Wallet,
       color: "text-purple-600",
     },
     { label: "Avg Rating", value: "4.9", icon: Star, color: "text-yellow-600" },
@@ -80,7 +80,7 @@ export default function Dashboard() {
     {
       label: "Total Earned",
       value: "₹2,88,074",
-      icon: DollarSign,
+      icon: Wallet,
       color: "text-purple-600",
     },
     {
