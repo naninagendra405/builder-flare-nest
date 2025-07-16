@@ -35,6 +35,7 @@ export default function App() {
               <Route path="/chat/:chatId?" element={<Chat />} />
               <Route path="/wallet" element={<Wallet />} />
               <Route path="/payment-methods" element={<PaymentMethods />} />
+              <Route path="/notifications" element={<Notifications />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="*" element={<NotFound />} />
