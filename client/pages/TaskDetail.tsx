@@ -281,8 +281,8 @@ export default function TaskDetail() {
         </div>
       </nav>
 
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
-        <div className="grid lg:grid-cols-3 gap-8">
+      <div className="container mx-auto px-4 py-4 md:py-8 max-w-6xl">
+        <div className="grid lg:grid-cols-3 gap-4 md:gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
             {/* Task Header */}
