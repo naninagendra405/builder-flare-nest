@@ -217,11 +217,11 @@ export default function TaskFeed() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
-      {/* Enhanced Header */}
+      {/* Enhanced Mobile-Optimized Header */}
       <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50 shadow-sm">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center space-x-4">
+        <div className="container mx-auto px-4 py-3 lg:py-4">
+          <div className="flex items-center justify-between mb-3 lg:mb-4">
+            <div className="flex items-center space-x-3 lg:space-x-4">
               <Button
                 variant="ghost"
                 size="icon"
@@ -232,27 +232,27 @@ export default function TaskFeed() {
                     navigate("/dashboard");
                   }
                 }}
-                className="hover:bg-gray-100 dark:hover:bg-gray-800"
+                className="hover:bg-gray-100 dark:hover:bg-gray-800 h-9 w-9 lg:h-10 lg:w-10"
               >
-                <ArrowLeft className="w-5 h-5" />
+                <ArrowLeft className="w-4 h-4 lg:w-5 lg:h-5" />
               </Button>
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                  <Search className="w-5 h-5 text-white" />
+              <div className="flex items-center space-x-2 lg:space-x-3">
+                <div className="w-8 h-8 lg:w-10 lg:h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <Search className="w-4 h-4 lg:w-5 lg:h-5 text-white" />
                 </div>
-                <div className="hidden sm:block">
-                  <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                <div>
+                  <h1 className="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white leading-tight">
                     Browse Tasks
                   </h1>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                  <p className="text-xs lg:text-sm text-gray-500 dark:text-gray-400">
                     {sortedTasks.length} tasks available
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* View Mode Toggle - Desktop */}
-            <div className="hidden md:flex items-center space-x-2 bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
+            {/* View Mode Toggle - Desktop Only */}
+            <div className="hidden lg:flex items-center space-x-2 bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
               <Button
                 variant={viewMode === "grid" ? "default" : "ghost"}
                 size="sm"
