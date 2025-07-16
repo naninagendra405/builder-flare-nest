@@ -345,12 +345,14 @@ export default function Dashboard() {
 
           <Button
             variant="outline"
-            className="h-20 flex flex-col items-center justify-center space-y-2 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 border-0 shadow-lg"
+            className="h-20 flex flex-col items-center justify-center space-y-2 bg-white dark:bg-gray-900 hover:bg-green-50 dark:hover:bg-green-900/30 hover:border-green-200 dark:hover:border-green-800 border-0 shadow-lg hover:shadow-xl transition-all duration-300 group"
             asChild
           >
             <Link to="/wallet">
-              <Wallet className="w-6 h-6 text-green-600 dark:text-green-400" />
-              <span className="text-sm font-medium">Wallet</span>
+              <Wallet className="w-6 h-6 text-green-600 dark:text-green-400 group-hover:text-green-700 dark:group-hover:text-green-300 transition-colors" />
+              <span className="text-sm font-medium group-hover:text-green-700 dark:group-hover:text-green-300 transition-colors">
+                Wallet
+              </span>
             </Link>
           </Button>
 
