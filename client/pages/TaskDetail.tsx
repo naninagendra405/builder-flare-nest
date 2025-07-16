@@ -114,7 +114,6 @@ export default function TaskDetail() {
   }
 
   // Get real task data from context
-  const { getAllTasks } = useTasks();
   const allTasks = getAllTasks();
   const task = allTasks.find((t) => t.id === id);
 
