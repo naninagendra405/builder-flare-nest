@@ -66,6 +66,7 @@ interface TaskContextType {
     userRole: "customer" | "tasker",
   ) => void;
   releasePayment: (taskId: string) => void;
+  placeBid: (taskId: string) => void;
 }
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
@@ -374,6 +375,19 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
     return tasks.filter((task) => task.assignedTaskerId === taskerId);
   };
 
+  const placeBid = (taskId: string) => {
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === taskId
+          ? {
+              ...task,
+              bidsCount: task.bidsCount + 1,
+            }
+          : task,
+      ),
+    );
+  };
+
   return (
     <TaskContext.Provider
       value={{
@@ -387,6 +401,7 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
         approveTaskAndHoldEscrow,
         markTaskCompleted,
         releasePayment,
+        placeBid,
       }}
     >
       {children}
