@@ -403,7 +403,7 @@ export default function Dashboard() {
                 recentTasks.map((task) => (
                   <div
                     key={task.id}
-                    className="flex items-center justify-between p-4 rounded-lg border border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
+                    className="flex items-center justify-between p-4 rounded-lg border border-gray-100 dark:border-gray-800 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:border-blue-200 dark:hover:border-blue-800 transition-all duration-300 cursor-pointer group hover:shadow-md"
                     onClick={() => navigate(`/task/${task.id}`)}
                   >
                     <div className="flex-1 min-w-0 space-y-1">
