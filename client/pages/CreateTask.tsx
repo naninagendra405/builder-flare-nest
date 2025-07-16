@@ -785,7 +785,7 @@ export default function CreateTask() {
                   )}
                   {form.budget && (
                     <Badge variant="secondary">
-                      ${form.budget}{" "}
+                      {formatCurrency(parseFloat(form.budget) || 0)}{" "}
                       {form.budgetType === "hourly" ? "/hour" : "fixed"}
                     </Badge>
                   )}
