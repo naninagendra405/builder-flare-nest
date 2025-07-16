@@ -645,7 +645,7 @@ export default function TaskDetail() {
             <div className="p-4 bg-muted/50 rounded-lg">
               <h3 className="font-semibold mb-2">{task.title}</h3>
               <div className="flex items-center justify-between text-sm">
-                <span>Budget: ${task.budget}</span>
+                <span>Budget: ₹{task.budget}</span>
                 <span>Current bids: {bids.length}</span>
               </div>
             </div>
