@@ -286,7 +286,7 @@ export default function TaskDetail() {
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
             {/* Task Header */}
-            <Card className="animate-in slide-in-from-left duration-700 delay-200 hover:shadow-lg transition-all duration-300">
+            <Card>
               <CardContent className="p-6">
                 <div className="flex flex-col lg:flex-row lg:items-start justify-between mb-4 space-y-4 lg:space-y-0">
                   <div className="flex-1">
