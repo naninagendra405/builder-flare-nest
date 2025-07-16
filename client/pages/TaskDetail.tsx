@@ -428,8 +428,8 @@ export default function TaskDetail() {
                       key={bid.id}
                       className="border rounded-lg p-4 hover:bg-muted/50 transition-colors"
                     >
-                      <div className="flex items-start justify-between mb-3">
-                        <div className="flex items-center space-x-3">
+                      <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-3 space-y-3 sm:space-y-0">
+                        <div className="flex items-center space-x-3 flex-1">
                           <Avatar className="w-12 h-12">
                             <AvatarFallback>
                               {bid.bidderName
@@ -438,7 +438,7 @@ export default function TaskDetail() {
                                 .join("")}
                             </AvatarFallback>
                           </Avatar>
-                          <div>
+                          <div className="flex-1 min-w-0">
                             <div className="flex items-center space-x-2">
                               <h4 className="font-semibold">
                                 {bid.bidderName}
@@ -447,7 +447,7 @@ export default function TaskDetail() {
                                 <CheckCircle className="w-4 h-4 text-green-600" />
                               )}
                             </div>
-                            <div className="flex items-center space-x-4 text-sm text-muted-foreground">
+                            <div className="flex flex-wrap items-center gap-2 md:gap-4 text-sm text-muted-foreground">
                               <span className="flex items-center">
                                 <Star className="w-3 h-3 mr-1 text-yellow-500" />
                                 {bid.bidderRating} ({bid.bidderCompletedTasks}{" "}
@@ -460,7 +460,7 @@ export default function TaskDetail() {
                             </div>
                           </div>
                         </div>
-                        <div className="text-right">
+                        <div className="text-left sm:text-right">
                           <div className="text-2xl font-bold text-primary">
                             ${bid.amount}
                           </div>
