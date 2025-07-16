@@ -113,33 +113,24 @@ export default function TaskDetail() {
     return null;
   }
 
-  // Mock task data
-  const task: TaskData = {
-    id: id || "1",
-    title: "Fix kitchen sink leak",
-    description:
-      "My kitchen sink has been leaking for a week now and it's getting worse. The leak appears to be coming from under the sink, possibly from the pipes or connections. I need an experienced plumber to diagnose and fix the issue quickly. I have some basic tools available but the plumber should bring any specialized equipment needed. The kitchen is easily accessible and I can provide parking. This is urgent as the leak is causing water damage to the cabinet below.",
-    category: "Home Repair",
-    budget: 75,
-    budgetType: "fixed",
-    location: "Manhattan, NY",
-    isRemote: false,
-    customerName: "Sarah Johnson",
-    customerId: "customer_1",
-    customerRating: 4.8,
-    customerVerified: true,
-    postedAt: "2024-01-15T10:30:00Z",
-    deadline: "2024-01-18T17:00:00Z",
-    urgency: "high",
-    skillsRequired: ["Plumbing", "Repair", "Tools"],
-    bidsCount: 12,
-    viewsCount: 67,
-    images: ["/placeholder.svg"],
-    timeEstimate: "2-3 hours",
-    status: "open",
-    instructions:
-      "Please text me when you arrive. The building entrance is on 5th Street. Ring apartment 4B.",
-  };
+  // Get real task data from context
+  const { getAllTasks } = useTasks();
+  const allTasks = getAllTasks();
+  const task = allTasks.find((t) => t.id === id);
+
+  if (!task) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold mb-4">Task Not Found</h2>
+          <p className="text-muted-foreground mb-4">
+            The task you're looking for doesn't exist.
+          </p>
+          <Button onClick={() => navigate("/tasks")}>Browse Tasks</Button>
+        </div>
+      </div>
+    );
+  }
 
   const bids: Bid[] = [
     {
