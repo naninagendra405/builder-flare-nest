@@ -265,9 +265,6 @@ export default function TaskDetail() {
       alert(
         `🎉 Bid accepted! ${acceptedBid.bidderName} has been assigned to this task. Please approve the task to start work and secure payment.`,
       );
-
-      // Reload page to show new workflow
-      window.location.reload();
     }
   };
 
