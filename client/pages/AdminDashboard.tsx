@@ -112,7 +112,7 @@ export default function AdminDashboard() {
     { label: "Active Tasks", value: "3,456", icon: Briefcase, change: "+8%" },
     {
       label: "Revenue",
-      value: "$89,456",
+      value: "₹74,67,648",
       icon: DollarSign,
       change: "+15%",
     },
@@ -676,19 +676,21 @@ export default function AdminDashboard() {
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
                       <span>Total Revenue</span>
-                      <span className="font-bold">$89,456</span>
+                      <span className="font-bold">₹74,67,648</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span>Platform Fees</span>
-                      <span className="font-bold">$8,945</span>
+                      <span className="font-bold">₹7,46,765</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span>Processing Fees</span>
-                      <span className="font-bold">$2,234</span>
+                      <span className="font-bold">₹1,86,537</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span>Net Revenue</span>
-                      <span className="font-bold text-green-600">$78,277</span>
+                      <span className="font-bold text-green-600">
+                        ₹65,34,346
+                      </span>
                     </div>
                   </div>
                 </CardContent>
