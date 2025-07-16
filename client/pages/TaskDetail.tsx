@@ -474,11 +474,11 @@ export default function TaskDetail() {
                         {bid.message}
                       </p>
 
-                      <div className="flex items-center justify-between">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between space-y-2 sm:space-y-0">
                         <span className="text-sm text-muted-foreground">
                           {getTimeAgo(bid.submittedAt)}
                         </span>
-                        <div className="flex space-x-2">
+                        <div className="flex flex-wrap gap-2">
                           <Button size="sm" variant="outline">
                             View Profile
                           </Button>
