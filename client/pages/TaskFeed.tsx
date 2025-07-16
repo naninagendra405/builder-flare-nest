@@ -558,10 +558,10 @@ export default function TaskFeed() {
                       className="flex-1"
                       onClick={(e) => {
                         e.stopPropagation();
-                        navigate(`/task/${task.id}?action=bid`);
+                        navigate("/task-suggestions");
                       }}
                     >
-                      Place Bid
+                      Get Task Ideas
                     </Button>
                     <Button
                       size="sm"
