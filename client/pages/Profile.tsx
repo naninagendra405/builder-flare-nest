@@ -378,7 +378,7 @@ export default function Profile() {
                         />
                       ) : (
                         <span className="font-semibold">
-                          ${profile.hourlyRate}/hr
+                          ₹{profile.hourlyRate}/hr
                         </span>
                       )}
                     </div>
@@ -580,7 +580,8 @@ export default function Profile() {
                     <div>
                       <h4 className="font-medium mb-2">Hourly Rate</h4>
                       <div className="text-lg font-semibold">
-                        ${user.taskerProfile.hourlyRate}/hr
+                        {" "}
+                        ₹{user.taskerProfile.hourlyRate}/hr
                       </div>
                     </div>
                     <div>
