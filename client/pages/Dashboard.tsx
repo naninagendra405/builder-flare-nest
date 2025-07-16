@@ -151,6 +151,10 @@ export default function Dashboard() {
         return "bg-green-100 text-green-800";
       case "in_progress":
         return "bg-blue-100 text-blue-800";
+      case "approved":
+        return "bg-emerald-100 text-emerald-800";
+      case "bid_accepted":
+        return "bg-purple-100 text-purple-800";
       case "open":
         return "bg-yellow-100 text-yellow-800";
       default:
@@ -161,8 +165,12 @@ export default function Dashboard() {
   const getStatusText = (status: string, role: string) => {
     if (role === "tasker") {
       switch (status) {
+        case "bid_accepted":
+          return "Bid Accepted";
+        case "approved":
+          return "Approved - Payment Secured";
         case "in_progress":
-          return "Assigned to You";
+          return "In Progress";
         case "open":
           return "Available";
         case "completed":
@@ -172,6 +180,10 @@ export default function Dashboard() {
       }
     } else {
       switch (status) {
+        case "bid_accepted":
+          return "Awaiting Your Approval";
+        case "approved":
+          return "Approved - Payment in Escrow";
         case "in_progress":
           return "In Progress";
         case "open":
