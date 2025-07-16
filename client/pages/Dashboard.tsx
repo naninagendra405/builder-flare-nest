@@ -211,7 +211,7 @@ export default function Dashboard() {
                           .join("")}
                       </AvatarFallback>
                     </Avatar>
-                    <div className="text-left hidden sm:block">
+                    <div className="text-left hidden md:block">
                       <div className="text-sm font-medium">{user.name}</div>
                       <div className="text-xs text-muted-foreground capitalize">
                         {user.role}
