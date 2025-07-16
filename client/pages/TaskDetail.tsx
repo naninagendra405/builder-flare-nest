@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import { useTasks } from "../contexts/TaskContext";
+import { useBids } from "../contexts/BidContext";
+import { useNotifications } from "../contexts/NotificationContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -26,7 +29,7 @@ import {
   ArrowLeft,
   MapPin,
   Clock,
-  DollarSign,
+  IndianRupee,
   Star,
   Calendar,
   Users,
@@ -95,6 +98,9 @@ export default function TaskDetail() {
   const { id } = useParams();
   const [searchParams] = useSearchParams();
   const shouldShowBidDialog = searchParams.get("action") === "bid";
+  const { updateTask, getAllTasks } = useTasks();
+  const { addBid, getBidsByTask, acceptBid: acceptBidInContext } = useBids();
+  const { addNotification } = useNotifications();
 
   const [showBidDialog, setShowBidDialog] = useState(shouldShowBidDialog);
   const [showContactDialog, setShowContactDialog] = useState(false);
@@ -109,78 +115,23 @@ export default function TaskDetail() {
     return null;
   }
 
-  // Mock task data
-  const task: TaskData = {
-    id: id || "1",
-    title: "Fix kitchen sink leak",
-    description:
-      "My kitchen sink has been leaking for a week now and it's getting worse. The leak appears to be coming from under the sink, possibly from the pipes or connections. I need an experienced plumber to diagnose and fix the issue quickly. I have some basic tools available but the plumber should bring any specialized equipment needed. The kitchen is easily accessible and I can provide parking. This is urgent as the leak is causing water damage to the cabinet below.",
-    category: "Home Repair",
-    budget: 75,
-    budgetType: "fixed",
-    location: "Manhattan, NY",
-    isRemote: false,
-    customerName: "Sarah Johnson",
-    customerId: "customer_1",
-    customerRating: 4.8,
-    customerVerified: true,
-    postedAt: "2024-01-15T10:30:00Z",
-    deadline: "2024-01-18T17:00:00Z",
-    urgency: "high",
-    skillsRequired: ["Plumbing", "Repair", "Tools"],
-    bidsCount: 12,
-    viewsCount: 67,
-    images: ["/placeholder.svg"],
-    timeEstimate: "2-3 hours",
-    status: "open",
-    instructions:
-      "Please text me when you arrive. The building entrance is on 5th Street. Ring apartment 4B.",
-  };
+  // Get task data from context
+  const allTasks = getAllTasks();
+  const task = allTasks.find((t) => t.id === id);
 
-  const bids: Bid[] = [
-    {
-      id: "bid_1",
-      bidderId: "tasker_1",
-      bidderName: "Mike Wilson",
-      bidderRating: 4.9,
-      bidderCompletedTasks: 127,
-      amount: 70,
-      message:
-        "I have 15+ years of plumbing experience and can fix this today. I carry all necessary tools and parts.",
-      deliveryTime: "Same day",
-      submittedAt: "2024-01-15T11:15:00Z",
-      bidderVerified: true,
-      bidderResponse: "under 1 hour",
-    },
-    {
-      id: "bid_2",
-      bidderId: "tasker_2",
-      bidderName: "John Smith",
-      bidderRating: 4.7,
-      bidderCompletedTasks: 89,
-      amount: 65,
-      message:
-        "Experienced plumber available this afternoon. I guarantee my work and provide 30-day warranty.",
-      deliveryTime: "Today",
-      submittedAt: "2024-01-15T12:30:00Z",
-      bidderVerified: true,
-      bidderResponse: "under 2 hours",
-    },
-    {
-      id: "bid_3",
-      bidderId: "tasker_3",
-      bidderName: "David Brown",
-      bidderRating: 4.6,
-      bidderCompletedTasks: 45,
-      amount: 80,
-      message:
-        "I can fix this properly with quality parts. Available tomorrow morning.",
-      deliveryTime: "1-2 days",
-      submittedAt: "2024-01-15T14:45:00Z",
-      bidderVerified: false,
-      bidderResponse: "under 4 hours",
-    },
-  ];
+  if (!task) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">Task not found</h1>
+          <Button onClick={() => navigate("/tasks")}>Browse Tasks</Button>
+        </div>
+      </div>
+    );
+  }
+
+  // Get bids for this task
+  const bids = getBidsByTask(task.id);
 
   const getUrgencyColor = (urgency: string) => {
     switch (urgency) {
@@ -212,14 +163,31 @@ export default function TaskDetail() {
   };
 
   const submitBid = () => {
-    if (!bidAmount || !bidMessage) return;
+    if (!bidAmount || !bidMessage || !user) return;
 
-    // TODO: Submit bid to backend
-    console.log("Submitting bid:", {
+    const bidData = {
       taskId: task.id,
-      amount: bidAmount,
+      bidderId: user.id,
+      bidderName: user.name,
+      bidderRating: user.rating || 4.5,
+      bidderCompletedTasks: user.completedTasks || 0,
+      amount: parseFloat(bidAmount),
       message: bidMessage,
       deliveryTime,
+      bidderVerified: user.verified || false,
+      bidderResponse: "under 2 hours",
+    };
+
+    addBid(bidData);
+
+    // Update task bids count
+    updateTask(task.id, { bidsCount: task.bidsCount + 1 });
+
+    // Add notification
+    addNotification({
+      type: "bid",
+      title: "Bid Submitted",
+      message: `Your bid of ₹${bidAmount} for "${task.title}" has been submitted successfully.`,
     });
 
     setShowBidDialog(false);
@@ -228,8 +196,24 @@ export default function TaskDetail() {
   };
 
   const acceptBid = (bidId: string) => {
-    // TODO: Accept bid
-    console.log("Accepting bid:", bidId);
+    if (!user || user.id !== task.customerId) return;
+
+    acceptBidInContext(bidId, task.id);
+
+    // Update task status
+    updateTask(task.id, { status: "in_progress" });
+
+    // Find the accepted bid
+    const acceptedBid = bids.find((bid) => bid.id === bidId);
+
+    if (acceptedBid) {
+      // Add notification for bid acceptance
+      addNotification({
+        type: "task_update",
+        title: "Bid Accepted",
+        message: `You accepted ${acceptedBid.bidderName}'s bid of ₹${acceptedBid.amount} for "${task.title}".`,
+      });
+    }
   };
 
   const contactCustomer = () => {
