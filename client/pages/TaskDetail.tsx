@@ -528,6 +528,12 @@ export default function TaskDetail() {
                 </div>
               </CardContent>
             </Card>
+
+            {/* Task Workflow */}
+            {(task.status === "bid_accepted" ||
+              task.status === "approved" ||
+              task.status === "in_progress" ||
+              task.status === "completed") && <TaskWorkflow task={task} />}
           </div>
 
           {/* Sidebar */}
