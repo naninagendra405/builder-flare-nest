@@ -518,7 +518,10 @@ export default function TaskDetail() {
                             Message
                           </Button>
                           {isTaskOwner && (
-                            <Button size="sm" onClick={() => acceptBid(bid.id)}>
+                            <Button
+                              size="sm"
+                              onClick={() => acceptBidHandler(bid.id)}
+                            >
                               Accept Bid
                             </Button>
                           )}
