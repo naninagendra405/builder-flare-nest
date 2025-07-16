@@ -11,7 +11,7 @@ import {
   Bell,
   CheckCircle,
   Clock,
-  DollarSign,
+  IndianRupee,
   MessageSquare,
   Briefcase,
   Shield,
