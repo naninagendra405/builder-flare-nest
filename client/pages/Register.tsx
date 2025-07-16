@@ -29,7 +29,6 @@ import {
   Award,
   Car,
   Wrench,
-  Home,
   Laptop,
   Camera,
   Truck,
