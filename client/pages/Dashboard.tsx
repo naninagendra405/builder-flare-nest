@@ -42,6 +42,7 @@ import {
   Edit,
   Trash2,
   AlertTriangle,
+  Eye,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
