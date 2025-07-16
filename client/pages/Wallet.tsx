@@ -26,47 +26,71 @@ import {
   ArrowLeft,
   Plus,
   CreditCard,
-  DollarSign,
+  IndianRupee,
   TrendingUp,
   TrendingDown,
   Clock,
+  Download,
+  Upload,
+  MoreHorizontal,
+  Wallet,
+  Lock,
+  Eye,
+  EyeOff,
+  Zap,
+  Shield,
+  DollarSign,
+  ArrowUpRight,
+  ArrowDownLeft,
   CheckCircle,
   AlertCircle,
-  Download,
-  Filter,
-  MoreHorizontal,
-  Wallet as WalletIcon,
-  Shield,
-  Zap,
+  Info,
 } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface Transaction {
   id: string;
-  type:
-    | "payment"
-    | "deposit"
-    | "withdrawal"
-    | "escrow_hold"
-    | "escrow_release"
-    | "refund";
+  type: "credit" | "debit";
   amount: number;
   description: string;
-  status: "completed" | "pending" | "failed";
   date: string;
-  taskId?: string;
-  taskTitle?: string;
-  counterparty?: string;
+  status: "completed" | "pending" | "failed";
 }
 
-interface PaymentMethod {
-  id: string;
-  type: "card" | "bank" | "paypal";
-  name: string;
-  last4?: string;
-  expiryDate?: string;
-  isDefault: boolean;
-}
+const mockTransactions: Transaction[] = [
+  {
+    id: "txn_1",
+    type: "credit",
+    amount: 500,
+    description: "Payment from John Smith",
+    date: "2024-01-15T10:30:00Z",
+    status: "completed",
+  },
+  {
+    id: "txn_2",
+    type: "debit",
+    amount: 75,
+    description: "Task: Fix kitchen sink",
+    date: "2024-01-14T15:45:00Z",
+    status: "completed",
+  },
+  {
+    id: "txn_3",
+    type: "credit",
+    amount: 250,
+    description: "Added funds via Credit Card",
+    date: "2024-01-13T09:20:00Z",
+    status: "completed",
+  },
+  {
+    id: "txn_4",
+    type: "debit",
+    amount: 125,
+    description: "Withdrawn to bank account",
+    date: "2024-01-12T14:10:00Z",
+    status: "completed",
+  },
+];
 
 export default function Wallet() {
   const { user } = useAuth();
@@ -82,119 +106,12 @@ export default function Wallet() {
   const [withdrawAmount, setWithdrawAmount] = useState("");
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("1");
   const [isProcessing, setIsProcessing] = useState(false);
+  const [showBalance, setShowBalance] = useState(true);
 
   if (!user) {
     navigate("/login");
     return null;
   }
-
-  const transactions: Transaction[] = [
-    {
-      id: "1",
-      type: "escrow_release",
-      amount: 75.0,
-      description: "Payment released for kitchen sink repair",
-      status: "completed",
-      date: "2024-01-15",
-      taskId: "task_123",
-      taskTitle: "Fix kitchen sink leak",
-      counterparty: "John Smith",
-    },
-    {
-      id: "2",
-      type: "escrow_hold",
-      amount: -120.0,
-      description: "Funds held in escrow for moving help",
-      status: "pending",
-      date: "2024-01-14",
-      taskId: "task_124",
-      taskTitle: "Help with moving",
-      counterparty: "Sarah Johnson",
-    },
-    {
-      id: "3",
-      type: "deposit",
-      amount: 200.0,
-      description: "Added funds via Credit Card ****1234",
-      status: "completed",
-      date: "2024-01-13",
-    },
-    {
-      id: "4",
-      type: "payment",
-      amount: -45.0,
-      description: "Payment for logo design work",
-      status: "completed",
-      date: "2024-01-12",
-      taskId: "task_122",
-      taskTitle: "Logo design for startup",
-      counterparty: "Mike Wilson",
-    },
-    {
-      id: "5",
-      type: "withdrawal",
-      amount: -150.0,
-      description: "Withdrawal to Bank Account ****5678",
-      status: "completed",
-      date: "2024-01-11",
-    },
-  ];
-
-  const paymentMethods: PaymentMethod[] = [
-    {
-      id: "1",
-      type: "card",
-      name: "Visa ending in 1234",
-      last4: "1234",
-      expiryDate: "12/26",
-      isDefault: true,
-    },
-    {
-      id: "2",
-      type: "bank",
-      name: "Chase Bank ****5678",
-      last4: "5678",
-      isDefault: false,
-    },
-    {
-      id: "3",
-      type: "paypal",
-      name: "PayPal Account",
-      isDefault: false,
-    },
-  ];
-
-  const getTransactionIcon = (type: string) => {
-    switch (type) {
-      case "deposit":
-        return <TrendingUp className="w-4 h-4 text-green-600" />;
-      case "withdrawal":
-        return <TrendingDown className="w-4 h-4 text-red-600" />;
-      case "escrow_hold":
-        return <Shield className="w-4 h-4 text-yellow-600" />;
-      case "escrow_release":
-        return <CheckCircle className="w-4 h-4 text-green-600" />;
-      case "payment":
-        return <DollarSign className="w-4 h-4 text-blue-600" />;
-      case "refund":
-        return <TrendingUp className="w-4 h-4 text-green-600" />;
-      default:
-        return <DollarSign className="w-4 h-4" />;
-    }
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "completed":
-        return "bg-green-100 text-green-800";
-      case "pending":
-        return "bg-yellow-100 text-yellow-800";
-      case "failed":
-        return "bg-red-100 text-red-800";
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
-  };
 
   const formatAmount = (amount: number, type: string) => {
     const sign = amount >= 0 ? "+" : "";
@@ -316,297 +233,252 @@ export default function Wallet() {
     }
   };
 
+  const getTimeAgo = (dateString: string) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInMinutes = Math.floor(
+      (now.getTime() - date.getTime()) / (1000 * 60),
+    );
+
+    if (diffInMinutes < 60) {
+      return `${diffInMinutes}m ago`;
+    } else if (diffInMinutes < 1440) {
+      return `${Math.floor(diffInMinutes / 60)}h ago`;
+    } else {
+      return `${Math.floor(diffInMinutes / 1440)}d ago`;
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "completed":
+        return "bg-green-100 text-green-800 border-green-200";
+      case "pending":
+        return "bg-yellow-100 text-yellow-800 border-yellow-200";
+      case "failed":
+        return "bg-red-100 text-red-800 border-red-200";
+      default:
+        return "bg-gray-100 text-gray-800 border-gray-200";
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/5">
-      {/* Navigation */}
-      <nav className="border-b bg-background/80 backdrop-blur-md sticky top-0 z-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
+      {/* Enhanced Navigation */}
+      <nav className="border-b bg-white/80 dark:bg-gray-900/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => navigate("/dashboard")}
+                onClick={() => navigate(-1)}
+                className="hover:bg-gray-100 dark:hover:bg-gray-800"
               >
                 <ArrowLeft className="w-5 h-5" />
               </Button>
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                  <Zap className="w-5 h-5 text-primary-foreground" />
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <Wallet className="w-5 h-5 text-white" />
                 </div>
-                <span className="text-2xl font-bold text-primary">TaskIt</span>
+                <div>
+                  <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                    Wallet
+                  </h1>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    Manage your funds securely
+                  </p>
+                </div>
               </div>
             </div>
-            <div className="flex items-center space-x-2">
-              <Avatar className="w-8 h-8">
-                <AvatarFallback>
-                  {user.name
-                    .split(" ")
-                    .map((n) => n[0])
-                    .join("")}
-                </AvatarFallback>
-              </Avatar>
-              <span className="font-medium">{user.name}</span>
-            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="hover:bg-gray-100 dark:hover:bg-gray-800"
+                >
+                  <MoreHorizontal className="w-5 h-5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuItem>
+                  <Download className="w-4 h-4 mr-2" />
+                  Export Transactions
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <CreditCard className="w-4 h-4 mr-2" />
+                  Payment Methods
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <Shield className="w-4 h-4 mr-2" />
+                  Security Settings
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
       </nav>
 
-      <div className="container mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold flex items-center">
-            <WalletIcon className="w-8 h-8 mr-3 text-primary" />
-            Wallet
-          </h1>
-          <p className="text-muted-foreground">
-            Manage your funds and transactions
-          </p>
-        </div>
-
-        {/* Balance Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
-          <Card className="border-2 border-primary/20">
-            <CardHeader>
-              <CardTitle className="text-lg flex items-center">
-                <WalletIcon className="w-5 h-5 mr-2 text-primary" />
-                Available Balance
-              </CardTitle>
+      <div className="container mx-auto px-4 py-6 max-w-4xl">
+        {/* Balance Cards - Mobile Optimized */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8">
+          {/* Main Balance */}
+          <Card className="col-span-1 md:col-span-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0 shadow-xl">
+            <CardHeader className="pb-3">
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-white/90 text-sm font-medium">
+                  Available Balance
+                </CardTitle>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setShowBalance(!showBalance)}
+                  className="text-white/80 hover:text-white hover:bg-white/20 h-8 w-8"
+                >
+                  {showBalance ? (
+                    <Eye className="w-4 h-4" />
+                  ) : (
+                    <EyeOff className="w-4 h-4" />
+                  )}
+                </Button>
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-primary">
-                ₹{balance.toFixed(2)}
+              <div className="text-3xl md:text-4xl font-bold mb-4">
+                {showBalance ? `₹${balance.toFixed(2)}` : "₹****"}
               </div>
-              <p className="text-sm text-muted-foreground mt-2">Ready to use</p>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Dialog open={showAddFunds} onOpenChange={setShowAddFunds}>
+                  <DialogTrigger asChild>
+                    <Button className="flex-1 bg-white text-blue-600 hover:bg-gray-100 font-semibold">
+                      <Plus className="w-4 h-4 mr-2" />
+                      Add Funds
+                    </Button>
+                  </DialogTrigger>
+                </Dialog>
+                <Dialog open={showWithdraw} onOpenChange={setShowWithdraw}>
+                  <DialogTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="flex-1 border-white/30 text-white hover:bg-white/20"
+                    >
+                      <Download className="w-4 h-4 mr-2" />
+                      Withdraw
+                    </Button>
+                  </DialogTrigger>
+                </Dialog>
+              </div>
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg flex items-center">
-                <Shield className="w-5 h-5 mr-2 text-yellow-600" />
-                In Escrow
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-yellow-600">
-                ₹{escrowBalance.toFixed(2)}
-              </div>
-              <p className="text-sm text-muted-foreground mt-2">
-                Held for active tasks
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg flex items-center">
-                <Clock className="w-5 h-5 mr-2 text-blue-600" />
-                Pending
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-blue-600">
-                ₹{pendingBalance.toFixed(2)}
-              </div>
-              <p className="text-sm text-muted-foreground mt-2">Processing</p>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Quick Actions */}
-        <div className="flex flex-wrap gap-4 mb-8">
-          <Dialog open={showAddFunds} onOpenChange={setShowAddFunds}>
-            <DialogTrigger asChild>
-              <Button className="flex items-center">
-                <Plus className="w-4 h-4 mr-2" />
-                Add Funds
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Add Funds to Wallet</DialogTitle>
-              </DialogHeader>
-              <div className="space-y-4">
-                <div>
-                  <Label htmlFor="amount">Amount</Label>
-                  <Input
-                    id="amount"
-                    type="number"
-                    placeholder="0.00"
-                    value={addAmount}
-                    onChange={(e) => setAddAmount(e.target.value)}
-                    className="text-lg"
-                  />
-                </div>
-                <div>
-                  <Label>Payment Method</Label>
-                  <div className="space-y-2 mt-2">
-                    {paymentMethods.map((method) => (
-                      <div
-                        key={method.id}
-                        className={`flex items-center space-x-2 p-3 border rounded-lg cursor-pointer hover:bg-muted/50 transition-colors ${
-                          selectedPaymentMethod === method.id
-                            ? "border-primary bg-primary/10"
-                            : ""
-                        }`}
-                        onClick={() => setSelectedPaymentMethod(method.id)}
-                      >
-                        <input
-                          type="radio"
-                          name="payment-method"
-                          checked={selectedPaymentMethod === method.id}
-                          onChange={() => setSelectedPaymentMethod(method.id)}
-                          className="sr-only"
-                        />
-                        <CreditCard className="w-4 h-4" />
-                        <span>{method.name}</span>
-                        {method.isDefault && (
-                          <Badge variant="secondary">Default</Badge>
-                        )}
-                      </div>
-                    ))}
+          {/* Quick Stats */}
+          <div className="space-y-4">
+            <Card className="bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800">
+              <CardContent className="p-4">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-yellow-100 dark:bg-yellow-800 rounded-lg flex items-center justify-center">
+                    <Lock className="w-5 h-5 text-yellow-600 dark:text-yellow-400" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-yellow-700 dark:text-yellow-300">
+                      Escrow
+                    </p>
+                    <p className="text-lg font-bold text-yellow-800 dark:text-yellow-200">
+                      ₹{escrowBalance.toFixed(2)}
+                    </p>
                   </div>
                 </div>
+              </CardContent>
+            </Card>
 
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                  <p className="text-sm text-blue-800">
-                    💡 <strong>Processing Time:</strong> Funds are typically
-                    available within 1-2 business days.
-                  </p>
+            <Card className="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
+              <CardContent className="p-4">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-blue-100 dark:bg-blue-800 rounded-lg flex items-center justify-center">
+                    <Clock className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-blue-700 dark:text-blue-300">
+                      Pending
+                    </p>
+                    <p className="text-lg font-bold text-blue-800 dark:text-blue-200">
+                      ₹{pendingBalance.toFixed(2)}
+                    </p>
+                  </div>
                 </div>
-
-                <Button
-                  className="w-full"
-                  onClick={handleAddFunds}
-                  disabled={
-                    !addAmount || parseFloat(addAmount) <= 0 || isProcessing
-                  }
-                >
-                  {isProcessing
-                    ? "Processing..."
-                    : `Add ₹${addAmount || "0.00"}`}
-                </Button>
-              </div>
-            </DialogContent>
-          </Dialog>
-
-          <Dialog open={showWithdraw} onOpenChange={setShowWithdraw}>
-            <DialogTrigger asChild>
-              <Button variant="outline">
-                <TrendingDown className="w-4 h-4 mr-2" />
-                Withdraw
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Withdraw Funds</DialogTitle>
-              </DialogHeader>
-              <div className="space-y-4">
-                <div>
-                  <Label htmlFor="withdraw-amount">Amount</Label>
-                  <Input
-                    id="withdraw-amount"
-                    type="number"
-                    placeholder="0.00"
-                    value={withdrawAmount}
-                    onChange={(e) => setWithdrawAmount(e.target.value)}
-                    className="text-lg"
-                  />
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Available: ₹{balance.toFixed(2)}
-                  </p>
-                </div>
-
-                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
-                  <p className="text-sm text-yellow-800">
-                    ⚠️ <strong>Withdrawal Processing:</strong> Funds will be
-                    transferred to your default payment method within 3-5
-                    business days.
-                  </p>
-                </div>
-
-                <Button
-                  className="w-full"
-                  onClick={handleWithdraw}
-                  disabled={
-                    !withdrawAmount ||
-                    parseFloat(withdrawAmount) <= 0 ||
-                    parseFloat(withdrawAmount) > balance ||
-                    isProcessing
-                  }
-                >
-                  {isProcessing
-                    ? "Processing..."
-                    : `Withdraw ₹${withdrawAmount || "0.00"}`}
-                </Button>
-              </div>
-            </DialogContent>
-          </Dialog>
-
-          <Button variant="outline" asChild>
-            <Link to="/payment-methods">
-              <CreditCard className="w-4 h-4 mr-2" />
-              Payment Methods
-            </Link>
-          </Button>
+              </CardContent>
+            </Card>
+          </div>
         </div>
 
-        {/* Transactions */}
-        <Card>
+        {/* Recent Activity */}
+        <Card className="shadow-lg border-0">
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle>Transaction History</CardTitle>
-              <div className="flex items-center space-x-2">
-                <Button variant="outline" size="sm">
-                  <Filter className="w-4 h-4 mr-2" />
-                  Filter
-                </Button>
-                <Button variant="outline" size="sm">
-                  <Download className="w-4 h-4 mr-2" />
-                  Export
-                </Button>
-              </div>
+              <CardTitle className="flex items-center text-gray-900 dark:text-white">
+                <TrendingUp className="w-5 h-5 mr-2 text-blue-600" />
+                Recent Activity
+              </CardTitle>
+              <Button variant="outline" size="sm" className="text-xs">
+                View All
+              </Button>
             </div>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {transactions.map((transaction) => (
+          <CardContent className="p-0">
+            <div className="space-y-0">
+              {transactions.slice(0, 6).map((transaction, index) => (
                 <div
                   key={transaction.id}
-                  className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors space-y-3 sm:space-y-0"
+                  className={`p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors ${
+                    index !== transactions.length - 1
+                      ? "border-b border-gray-100 dark:border-gray-800"
+                      : ""
+                  }`}
                 >
-                  <div className="flex items-center space-x-4 flex-1">
-                    <div className="w-10 h-10 bg-muted rounded-full flex items-center justify-center">
-                      {getTransactionIcon(transaction.type)}
+                  <div className="flex items-center space-x-4">
+                    <div
+                      className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                        transaction.type === "credit"
+                          ? "bg-green-100 dark:bg-green-900/30"
+                          : "bg-red-100 dark:bg-red-900/30"
+                      }`}
+                    >
+                      {transaction.type === "credit" ? (
+                        <ArrowDownLeft className="w-5 h-5 text-green-600 dark:text-green-400" />
+                      ) : (
+                        <ArrowUpRight className="w-5 h-5 text-red-600 dark:text-red-400" />
+                      )}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-medium">{transaction.description}</h4>
-                      <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-sm text-muted-foreground">
-                        <span>
-                          {new Date(transaction.date).toLocaleDateString()}
-                        </span>
-                        {transaction.counterparty && (
-                          <span>• {transaction.counterparty}</span>
-                        )}
-                        {transaction.taskTitle && (
-                          <span className="hidden sm:inline">
-                            • {transaction.taskTitle}
-                          </span>
-                        )}
+                      <p className="font-medium text-gray-900 dark:text-white truncate">
+                        {transaction.description}
+                      </p>
+                      <div className="flex items-center space-x-2 mt-1">
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                          {getTimeAgo(transaction.date)}
+                        </p>
+                        <Badge
+                          variant="outline"
+                          className={`text-xs ${getStatusColor(transaction.status)}`}
+                        >
+                          {transaction.status}
+                        </Badge>
                       </div>
                     </div>
                   </div>
-                  <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center text-left sm:text-right">
-                    <div className="text-lg font-semibold">
-                      {formatAmount(transaction.amount, transaction.type)}
-                    </div>
-                    <Badge
-                      className={`mt-0 sm:mt-1 ${getStatusColor(transaction.status)}`}
-                      variant="secondary"
+                  <div className="text-right">
+                    <p
+                      className={`font-semibold ${
+                        transaction.type === "credit"
+                          ? "text-green-600 dark:text-green-400"
+                          : "text-red-600 dark:text-red-400"
+                      }`}
                     >
-                      {transaction.status}
-                    </Badge>
+                      {transaction.type === "credit" ? "+" : "-"}₹
+                      {transaction.amount.toFixed(2)}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -614,24 +486,178 @@ export default function Wallet() {
           </CardContent>
         </Card>
 
-        {/* Security Notice */}
-        <Card className="mt-8 border-accent/20 bg-accent/5">
-          <CardContent className="p-6">
-            <div className="flex items-start space-x-4">
-              <Shield className="w-6 h-6 text-accent mt-1" />
-              <div>
-                <h3 className="font-semibold text-accent mb-2">
-                  Your Money is Protected
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  All transactions are secured with bank-level encryption. Funds
-                  are held in escrow until task completion is confirmed by both
-                  parties. TaskIt never has access to your payment information.
+        {/* Add Funds Dialog */}
+        <Dialog open={showAddFunds} onOpenChange={setShowAddFunds}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle className="flex items-center">
+                <Plus className="w-5 h-5 mr-2 text-blue-600" />
+                Add Funds to Wallet
+              </DialogTitle>
+            </DialogHeader>
+            <div className="space-y-6">
+              <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+                <div className="flex items-center space-x-2 mb-2">
+                  <Info className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                  <p className="text-sm font-medium text-blue-900 dark:text-blue-100">
+                    Current Balance
+                  </p>
+                </div>
+                <p className="text-2xl font-bold text-blue-900 dark:text-blue-100">
+                  ₹{balance.toFixed(2)}
                 </p>
               </div>
+
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="addAmount" className="text-sm font-medium">
+                    Amount to Add
+                  </Label>
+                  <div className="relative mt-1">
+                    <IndianRupee className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                    <Input
+                      id="addAmount"
+                      type="number"
+                      placeholder="0.00"
+                      value={addAmount}
+                      onChange={(e) => setAddAmount(e.target.value)}
+                      className="pl-10 text-lg h-12"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-3 gap-2">
+                  {[500, 1000, 2000].map((amount) => (
+                    <Button
+                      key={amount}
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setAddAmount(amount.toString())}
+                      className="text-sm"
+                    >
+                      ₹{amount}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex space-x-3">
+                <Button
+                  variant="outline"
+                  className="flex-1"
+                  onClick={() => setShowAddFunds(false)}
+                  disabled={isProcessing}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  className="flex-1 bg-blue-600 hover:bg-blue-700"
+                  onClick={handleAddFunds}
+                  disabled={!addAmount || isProcessing}
+                >
+                  {isProcessing ? (
+                    <div className="flex items-center">
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                      Processing...
+                    </div>
+                  ) : (
+                    `Add ₹${addAmount || "0.00"}`
+                  )}
+                </Button>
+              </div>
             </div>
-          </CardContent>
-        </Card>
+          </DialogContent>
+        </Dialog>
+
+        {/* Withdraw Dialog */}
+        <Dialog open={showWithdraw} onOpenChange={setShowWithdraw}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle className="flex items-center">
+                <Download className="w-5 h-5 mr-2 text-red-600" />
+                Withdraw Funds
+              </DialogTitle>
+            </DialogHeader>
+            <div className="space-y-6">
+              <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-600 dark:text-gray-400">
+                    Available Balance
+                  </span>
+                  <span className="text-lg font-semibold text-gray-900 dark:text-white">
+                    ₹{balance.toFixed(2)}
+                  </span>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <Label
+                    htmlFor="withdrawAmount"
+                    className="text-sm font-medium"
+                  >
+                    Amount to Withdraw
+                  </Label>
+                  <div className="relative mt-1">
+                    <IndianRupee className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                    <Input
+                      id="withdrawAmount"
+                      type="number"
+                      placeholder="0.00"
+                      value={withdrawAmount}
+                      onChange={(e) => setWithdrawAmount(e.target.value)}
+                      className="pl-10 text-lg h-12"
+                      max={balance}
+                    />
+                  </div>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                    Available: ₹{balance.toFixed(2)}
+                  </p>
+                </div>
+
+                <div className="bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded-lg border border-yellow-200 dark:border-yellow-800">
+                  <div className="flex items-start space-x-2">
+                    <AlertCircle className="w-4 h-4 text-yellow-600 dark:text-yellow-400 mt-0.5" />
+                    <div>
+                      <p className="text-sm font-medium text-yellow-800 dark:text-yellow-200">
+                        Processing Time
+                      </p>
+                      <p className="text-xs text-yellow-700 dark:text-yellow-300">
+                        Withdrawals typically take 1-3 business days to process.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex space-x-3">
+                <Button
+                  variant="outline"
+                  className="flex-1"
+                  onClick={() => setShowWithdraw(false)}
+                  disabled={isProcessing}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  variant="destructive"
+                  className="flex-1"
+                  onClick={handleWithdraw}
+                  disabled={!withdrawAmount || isProcessing}
+                >
+                  {isProcessing ? (
+                    <div className="flex items-center">
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                      Processing...
+                    </div>
+                  ) : (
+                    `Withdraw ₹${withdrawAmount || "0.00"}`
+                  )}
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
