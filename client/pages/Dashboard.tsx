@@ -34,7 +34,6 @@ import { useState } from "react";
 export default function Dashboard() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const [notifications] = useState(3);
 
   if (!user) {
     navigate("/login");
