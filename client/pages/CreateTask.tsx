@@ -248,29 +248,27 @@ export default function CreateTask() {
         </div>
 
         {/* Progress Steps */}
-        <div className="flex items-center justify-center mb-8 animate-in slide-in-from-top duration-700 delay-300">
+        <div className="flex items-center justify-center mb-8">
           <div className="flex items-center space-x-4">
             {[1, 2, 3].map((step) => (
               <div key={step} className="flex items-center">
                 <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-all duration-500 ${
+                  className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-colors duration-300 ${
                     currentStep >= step
-                      ? "bg-primary text-primary-foreground scale-110 shadow-lg animate-pulse"
-                      : "bg-muted text-muted-foreground hover:scale-105"
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-muted text-muted-foreground"
                   }`}
                 >
                   {currentStep > step ? (
-                    <CheckCircle className="w-5 h-5 animate-in zoom-in duration-300" />
+                    <CheckCircle className="w-5 h-5" />
                   ) : (
                     step
                   )}
                 </div>
                 {step < 3 && (
                   <div
-                    className={`w-16 h-1 mx-2 transition-all duration-700 ${
-                      currentStep > step
-                        ? "bg-primary animate-pulse"
-                        : "bg-muted"
+                    className={`w-16 h-1 mx-2 transition-colors duration-300 ${
+                      currentStep > step ? "bg-primary" : "bg-muted"
                     }`}
                   />
                 )}
