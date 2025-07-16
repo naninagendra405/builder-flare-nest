@@ -30,6 +30,7 @@ import {
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { formatCurrency } from "@/lib/currency";
 
 export default function Dashboard() {
   const { user, logout } = useAuth();
@@ -100,7 +101,7 @@ export default function Dashboard() {
     id: task.id,
     title: task.title,
     status: task.status,
-    budget: `$${task.budget}`,
+    budget: formatCurrency(task.budget),
     location: task.location,
     time: getTimeAgo(task.postedAt),
     customer: task.customerName,
@@ -109,7 +110,7 @@ export default function Dashboard() {
   const availableTasks = allTasks.slice(0, 3).map((task) => ({
     id: task.id,
     title: task.title,
-    budget: `$${task.budget}`,
+    budget: formatCurrency(task.budget),
     location: task.location,
     time: getTimeAgo(task.postedAt),
     bids: task.bidsCount,
