@@ -108,7 +108,7 @@ export default function Register() {
     {
       id: "handyman",
       name: "Home & Handyman",
-      icon: Tool,
+      icon: Wrench,
       subcategories: [
         "Plumbing",
         "Electrical",
