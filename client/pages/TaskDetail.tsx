@@ -465,8 +465,8 @@ export default function TaskDetail() {
                 <CardTitle className="flex items-center justify-between">
                   Bids ({bids.length})
                   {canUserBid && (
-                    <Button onClick={() => setShowBidDialog(true)}>
-                      Place Bid
+                    <Button onClick={() => navigate("/task-suggestions")}>
+                      Get Task Ideas
                     </Button>
                   )}
                 </CardTitle>
