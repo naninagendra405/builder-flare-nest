@@ -361,57 +361,6 @@ export default function Dashboard() {
                 </DropdownMenu>
               </div>
             </div>
-
-            {/* Mobile Navigation Menu */}
-            {isMobileMenuOpen && (
-              <div className="lg:hidden mt-4 pb-4 border-t border-gray-200 dark:border-gray-800">
-                <div className="grid grid-cols-2 gap-3 mt-4">
-                  <Link
-                    to="/tasks"
-                    className="flex items-center space-x-3 p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <Search className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-                    <span className="font-medium text-blue-900 dark:text-blue-100">
-                      Browse
-                    </span>
-                  </Link>
-
-                  <Link
-                    to="/wallet"
-                    className="flex items-center space-x-3 p-3 rounded-lg bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/40 transition-colors"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <Wallet className="w-5 h-5 text-green-600 dark:text-green-400" />
-                    <span className="font-medium text-green-900 dark:text-green-100">
-                      Wallet
-                    </span>
-                  </Link>
-
-                  <Link
-                    to="/chat"
-                    className="flex items-center space-x-3 p-3 rounded-lg bg-purple-50 dark:bg-purple-900/20 hover:bg-purple-100 dark:hover:bg-purple-900/40 transition-colors"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <MessageSquare className="w-5 h-5 text-purple-600 dark:text-purple-400" />
-                    <span className="font-medium text-purple-900 dark:text-purple-100">
-                      Messages
-                    </span>
-                  </Link>
-
-                  <Link
-                    to="/profile"
-                    className="flex items-center space-x-3 p-3 rounded-lg bg-orange-50 dark:bg-orange-900/20 hover:bg-orange-100 dark:hover:bg-orange-900/40 transition-colors"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <User className="w-5 h-5 text-orange-600 dark:text-orange-400" />
-                    <span className="font-medium text-orange-900 dark:text-orange-100">
-                      Profile
-                    </span>
-                  </Link>
-                </div>
-              </div>
-            )}
           </div>
         </header>
 
