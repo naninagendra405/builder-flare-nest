@@ -305,8 +305,8 @@ export default function TaskFeed() {
                             className="mb-2"
                           />
                           <div className="flex justify-between text-sm text-muted-foreground">
-                            <span>${filters.minBudget}</span>
-                            <span>${filters.maxBudget}</span>
+                            <span>₹{filters.minBudget}</span>
+                            <span>₹{filters.maxBudget}</span>
                           </div>
                         </div>
                       </div>
