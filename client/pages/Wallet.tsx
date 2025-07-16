@@ -191,9 +191,10 @@ export default function Wallet() {
     const amount = parseFloat(withdrawAmount);
     if (amount > balance) {
       addNotification({
-        type: "error",
+        type: "system",
         title: "Insufficient Funds",
         message: `You only have ₹${balance.toFixed(2)} available in your wallet.`,
+        priority: "medium",
       });
       return;
     }
