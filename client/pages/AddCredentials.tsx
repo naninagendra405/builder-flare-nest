@@ -121,7 +121,7 @@ export default function AddCredentials() {
           <CardHeader className="text-center">
             <div className="flex items-center justify-center space-x-2 mb-4">
               <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                <Zap className="w-6 h-6 text-primary-foreground" />
+                <Home className="w-6 h-6 text-primary-foreground" />
               </div>
               <span className="text-2xl font-bold text-primary">TaskIt</span>
             </div>
