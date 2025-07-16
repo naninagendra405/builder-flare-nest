@@ -530,6 +530,35 @@ export default function Dashboard() {
           </Card>
         </div>
       </div>
+
+      {/* Task Cancellation Confirmation Dialog */}
+      <AlertDialog
+        open={!!taskToCancel}
+        onOpenChange={() => setTaskToCancel(null)}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              <AlertTriangle className="w-5 h-5 text-destructive" />
+              Cancel Task
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to cancel this task? This action cannot be
+              undone. The task will be removed from the platform and taskers
+              will no longer be able to bid on it.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Keep Task</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => taskToCancel && handleCancelTask(taskToCancel)}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              Cancel Task
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
