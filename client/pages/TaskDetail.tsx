@@ -93,7 +93,7 @@ interface TaskData {
 
 export default function TaskDetail() {
   const { user } = useAuth();
-  const { acceptBid } = useTasks();
+  const { acceptBid, getAllTasks } = useTasks();
   const { addNotification } = useNotifications();
   const navigate = useNavigate();
   const { id } = useParams();
