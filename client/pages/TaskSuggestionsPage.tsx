@@ -254,7 +254,7 @@ export default function TaskSuggestionsPage() {
       </nav>
 
       <div className="container mx-auto px-4 py-8">
-        <TaskSuggestions />
+        {user.role === "customer" ? <TaskSuggestions /> : <TaskerTaskFeed />}
       </div>
     </div>
   );
