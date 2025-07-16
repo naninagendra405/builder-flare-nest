@@ -478,7 +478,7 @@ export default function Dashboard() {
                         navigate(
                           user.role === "customer"
                             ? `/task/${task.id}`
-                            : `/task/${task.id}?action=bid`,
+                            : "/task-suggestions",
                         );
                       }}
                     >
