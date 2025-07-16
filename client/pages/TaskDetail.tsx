@@ -466,7 +466,9 @@ export default function TaskDetail() {
                   Bids ({bids.length})
                   {canUserBid && (
                     <Button onClick={() => navigate("/task-suggestions")}>
-                      Get Task Ideas
+                      {user.role === "customer"
+                        ? "Get Task Ideas"
+                        : "Find Work"}
                     </Button>
                   )}
                 </CardTitle>
@@ -645,7 +647,7 @@ export default function TaskDetail() {
                     onClick={() => navigate("/task-suggestions")}
                   >
                     <IndianRupee className="w-4 h-4 mr-2" />
-                    Get Task Ideas
+                    {user.role === "customer" ? "Get Task Ideas" : "Find Work"}
                   </Button>
                 )}
                 <Button variant="outline" className="w-full">
