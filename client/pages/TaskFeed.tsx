@@ -225,7 +225,13 @@ export default function TaskFeed() {
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => navigate(-1)}
+                onClick={() => {
+                  if (window.history.length > 1) {
+                    navigate(-1);
+                  } else {
+                    navigate("/dashboard");
+                  }
+                }}
                 className="hover:bg-gray-100 dark:hover:bg-gray-800"
               >
                 <ArrowLeft className="w-5 h-5" />
