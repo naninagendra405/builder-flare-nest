@@ -37,6 +37,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { getAIPricingSuggestion } from "../utils/aiPricing";
 import { useTasks } from "../contexts/TaskContext";
+import { formatCurrency } from "@/lib/currency";
 
 interface TaskForm {
   title: string;
@@ -493,7 +494,7 @@ export default function CreateTask() {
                             <div className="text-center">
                               <div className="text-sm text-blue-600">Min</div>
                               <div className="font-bold text-blue-800">
-                                ${aiPricingSuggestion.min}
+                                {formatCurrency(aiPricingSuggestion.min)}
                               </div>
                             </div>
                             <div className="text-center">
@@ -501,13 +502,15 @@ export default function CreateTask() {
                                 Recommended
                               </div>
                               <div className="font-bold text-blue-800 text-lg">
-                                ${aiPricingSuggestion.recommended}
+                                {formatCurrency(
+                                  aiPricingSuggestion.recommended,
+                                )}
                               </div>
                             </div>
                             <div className="text-center">
                               <div className="text-sm text-blue-600">Max</div>
                               <div className="font-bold text-blue-800">
-                                ${aiPricingSuggestion.max}
+                                {formatCurrency(aiPricingSuggestion.max)}
                               </div>
                             </div>
                           </div>
