@@ -150,7 +150,7 @@ export default function TaskDetail() {
       deliveryTime: "Same day",
       submittedAt: "2024-01-15T11:15:00Z",
       bidderVerified: true,
-      bidderResponse: "< 1 hour",
+      bidderResponse: "under 1 hour",
     },
     {
       id: "bid_2",
@@ -164,7 +164,7 @@ export default function TaskDetail() {
       deliveryTime: "Today",
       submittedAt: "2024-01-15T12:30:00Z",
       bidderVerified: true,
-      bidderResponse: "< 2 hours",
+      bidderResponse: "under 2 hours",
     },
     {
       id: "bid_3",
@@ -173,11 +173,12 @@ export default function TaskDetail() {
       bidderRating: 4.6,
       bidderCompletedTasks: 45,
       amount: 80,
-      message: "I can fix this properly with quality parts. Available tomorrow morning.",
+      message:
+        "I can fix this properly with quality parts. Available tomorrow morning.",
       deliveryTime: "1-2 days",
       submittedAt: "2024-01-15T14:45:00Z",
       bidderVerified: false,
-      bidderResponse: "< 4 hours",
+      bidderResponse: "under 4 hours",
     },
   ];
 
@@ -212,7 +213,7 @@ export default function TaskDetail() {
 
   const submitBid = () => {
     if (!bidAmount || !bidMessage) return;
-    
+
     // TODO: Submit bid to backend
     console.log("Submitting bid:", {
       taskId: task.id,
@@ -220,7 +221,7 @@ export default function TaskDetail() {
       message: bidMessage,
       deliveryTime,
     });
-    
+
     setShowBidDialog(false);
     setBidAmount("");
     setBidMessage("");
@@ -248,11 +249,7 @@ export default function TaskDetail() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => navigate(-1)}
-              >
+              <Button variant="ghost" size="icon" onClick={() => navigate(-1)}>
                 <ArrowLeft className="w-5 h-5" />
               </Button>
               <div className="flex items-center space-x-2">
@@ -360,8 +357,12 @@ export default function TaskDetail() {
                   {/* Special Instructions */}
                   {task.instructions && (
                     <div>
-                      <h3 className="font-semibold mb-2">Special Instructions</h3>
-                      <p className="text-muted-foreground">{task.instructions}</p>
+                      <h3 className="font-semibold mb-2">
+                        Special Instructions
+                      </h3>
+                      <p className="text-muted-foreground">
+                        {task.instructions}
+                      </p>
                     </div>
                   )}
 
@@ -396,7 +397,9 @@ export default function TaskDetail() {
                         key={index}
                         className="aspect-video bg-muted rounded-lg flex items-center justify-center"
                       >
-                        <span className="text-muted-foreground">Image {index + 1}</span>
+                        <span className="text-muted-foreground">
+                          Image {index + 1}
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -435,7 +438,9 @@ export default function TaskDetail() {
                           </Avatar>
                           <div>
                             <div className="flex items-center space-x-2">
-                              <h4 className="font-semibold">{bid.bidderName}</h4>
+                              <h4 className="font-semibold">
+                                {bid.bidderName}
+                              </h4>
                               {bid.bidderVerified && (
                                 <CheckCircle className="w-4 h-4 text-green-600" />
                               )}
@@ -443,7 +448,8 @@ export default function TaskDetail() {
                             <div className="flex items-center space-x-4 text-sm text-muted-foreground">
                               <span className="flex items-center">
                                 <Star className="w-3 h-3 mr-1 text-yellow-500" />
-                                {bid.bidderRating} ({bid.bidderCompletedTasks} tasks)
+                                {bid.bidderRating} ({bid.bidderCompletedTasks}{" "}
+                                tasks)
                               </span>
                               <span className="flex items-center">
                                 <Clock className="w-3 h-3 mr-1" />
@@ -462,7 +468,9 @@ export default function TaskDetail() {
                         </div>
                       </div>
 
-                      <p className="text-muted-foreground mb-3">{bid.message}</p>
+                      <p className="text-muted-foreground mb-3">
+                        {bid.message}
+                      </p>
 
                       <div className="flex items-center justify-between">
                         <span className="text-sm text-muted-foreground">
@@ -531,12 +539,15 @@ export default function TaskDetail() {
                   </div>
                   <div className="flex items-center justify-between text-sm">
                     <span>Avg Response:</span>
-                    <span className="font-medium">< 2 hours</span>
+                    <span className="font-medium">under 2 hours</span>
                   </div>
                 </div>
 
                 <div className="flex space-x-2 mt-4">
-                  <Dialog open={showContactDialog} onOpenChange={setShowContactDialog}>
+                  <Dialog
+                    open={showContactDialog}
+                    onOpenChange={setShowContactDialog}
+                  >
                     <DialogTrigger asChild>
                       <Button variant="outline" className="flex-1">
                         <MessageSquare className="w-4 h-4 mr-2" />
@@ -682,7 +693,9 @@ export default function TaskDetail() {
             </div>
 
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <h4 className="font-semibold text-blue-800 mb-2">💡 Bidding Tips</h4>
+              <h4 className="font-semibold text-blue-800 mb-2">
+                💡 Bidding Tips
+              </h4>
               <ul className="text-sm text-blue-700 space-y-1">
                 <li>• Be competitive but fair with your pricing</li>
                 <li>• Highlight your relevant experience</li>
