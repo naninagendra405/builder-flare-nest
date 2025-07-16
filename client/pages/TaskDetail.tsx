@@ -92,6 +92,7 @@ interface TaskData {
 
 export default function TaskDetail() {
   const { user } = useAuth();
+  const { acceptBid } = useTasks();
   const navigate = useNavigate();
   const { id } = useParams();
   const [searchParams] = useSearchParams();
