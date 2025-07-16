@@ -113,7 +113,7 @@ export default function AdminDashboard() {
     {
       label: "Revenue",
       value: "₹74,67,648",
-      icon: DollarSign,
+      icon: IndianRupee,
       change: "+15%",
     },
     {
