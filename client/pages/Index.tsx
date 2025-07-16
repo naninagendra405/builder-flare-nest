@@ -32,8 +32,16 @@ export default function Index() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
+      // Navigate to task feed with search query
       navigate(`/tasks?search=${encodeURIComponent(searchQuery)}`);
+    } else {
+      // If no search query, just go to tasks page
+      navigate("/tasks");
     }
+  };
+
+  const handleQuickSearch = (category: string) => {
+    navigate(`/tasks?category=${encodeURIComponent(category)}`);
   };
 
   const featuredTasks = [
