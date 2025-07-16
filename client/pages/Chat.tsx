@@ -43,6 +43,7 @@ import {
 } from "lucide-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { formatCurrency } from "@/lib/currency";
+import { RupeeIcon } from "@/components/ui/rupee-icon";
 
 interface Message {
   id: string;
@@ -481,7 +482,7 @@ export default function Chat() {
                   </div>
                   <div className="flex items-center space-x-4 text-sm">
                     <span className="flex items-center text-primary font-semibold">
-                      <DollarSign className="w-4 h-4 mr-1" />
+                      <RupeeIcon className="w-4 h-4 mr-1" />
                       {formatCurrency(selectedChat.taskBudget)}
                     </span>
                     <Button size="sm" onClick={() => setShowTaskDetails(true)}>
@@ -608,7 +609,7 @@ export default function Chat() {
                     {selectedChat.taskStatus.replace("_", " ")}
                   </Badge>
                   <span className="flex items-center">
-                    <DollarSign className="w-4 h-4 mr-1" />
+                    <RupeeIcon className="w-4 h-4 mr-1" />
                     {formatCurrency(selectedChat.taskBudget)}
                   </span>
                 </div>
