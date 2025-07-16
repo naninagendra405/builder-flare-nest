@@ -393,39 +393,84 @@ export default function Dashboard() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              {recentTasks.map((task) => (
-                <div
-                  key={task.id}
-                  className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors cursor-pointer space-y-3 sm:space-y-0"
-                >
-                  <div className="flex-1">
-                    <h4 className="font-medium">{task.title}</h4>
-                    <div className="flex flex-wrap items-center gap-2 sm:gap-4 mt-2 text-sm text-muted-foreground">
-                      <span className="flex items-center">
-                        <MapPin className="w-3 h-3 mr-1" />
-                        {task.location}
-                      </span>
-                      <span>{task.time}</span>
+              {recentTasks.map((task) => {
+                const originalTask = getTasksByUser(user.id || "").find(
+                  (t) => t.id === task.id,
+                );
+                const canCancel =
+                  originalTask &&
+                  originalTask.status === "open" &&
+                  originalTask.bidsCount === 0;
+
+                return (
+                  <div
+                    key={task.id}
+                    className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors space-y-3 sm:space-y-0"
+                  >
+                    <div className="flex-1">
+                      <h4 className="font-medium">{task.title}</h4>
+                      <div className="flex flex-wrap items-center gap-2 sm:gap-4 mt-2 text-sm text-muted-foreground">
+                        <span className="flex items-center">
+                          <MapPin className="w-3 h-3 mr-1" />
+                          {task.location}
+                        </span>
+                        <span>{task.time}</span>
+                      </div>
+                      {user.role === "customer" && (
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Tasker: {task.customer}
+                        </p>
+                      )}
                     </div>
-                    {user.role === "customer" && (
-                      <p className="text-sm text-muted-foreground mt-1">
-                        Tasker: {task.customer}
-                      </p>
-                    )}
-                  </div>
-                  <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center text-right">
-                    <div className="text-lg font-semibold text-primary">
-                      {task.budget}
+                    <div className="flex items-center gap-3">
+                      <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center text-right">
+                        <div className="text-lg font-semibold text-primary">
+                          {task.budget}
+                        </div>
+                        <Badge
+                          className={`mt-0 sm:mt-2 ${getStatusColor(task.status)}`}
+                          variant="secondary"
+                        >
+                          {task.status.replace("_", " ")}
+                        </Badge>
+                      </div>
+                      {user.role === "customer" && (
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="icon">
+                              <MoreHorizontal className="w-4 h-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuItem
+                              onClick={() => navigate(`/task/${task.id}`)}
+                            >
+                              <Eye className="w-4 h-4 mr-2" />
+                              View Details
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              onClick={() => navigate(`/task/${task.id}/edit`)}
+                              disabled={task.status !== "open"}
+                            >
+                              <Edit className="w-4 h-4 mr-2" />
+                              Edit Task
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem
+                              onClick={() => setTaskToCancel(task.id)}
+                              disabled={!canCancel}
+                              className="text-destructive focus:text-destructive"
+                            >
+                              <Trash2 className="w-4 h-4 mr-2" />
+                              Cancel Task
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      )}
                     </div>
-                    <Badge
-                      className={`mt-0 sm:mt-2 ${getStatusColor(task.status)}`}
-                      variant="secondary"
-                    >
-                      {task.status.replace("_", " ")}
-                    </Badge>
                   </div>
-                </div>
-              ))}
+                );
+              })}
               <Button variant="outline" className="w-full" asChild>
                 <Link to={user.role === "customer" ? "/tasks" : "/tasks"}>
                   View All Tasks
