@@ -109,7 +109,7 @@ export default function Dashboard() {
   const availableTasks = allTasks.slice(0, 3).map((task) => ({
     id: task.id,
     title: task.title,
-    budget: `$${task.budget}`,
+    budget: `₹${task.budget}`,
     location: task.location,
     time: getTimeAgo(task.postedAt),
     bids: task.bidsCount,
