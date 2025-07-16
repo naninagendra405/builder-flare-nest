@@ -33,7 +33,7 @@ import {
   Download,
   Upload,
   MoreHorizontal,
-  Wallet,
+  Wallet as WalletIcon,
   Lock,
   Eye,
   EyeOff,
