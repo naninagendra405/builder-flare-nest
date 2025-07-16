@@ -100,7 +100,7 @@ export default function Dashboard() {
     id: task.id,
     title: task.title,
     status: task.status,
-    budget: `$${task.budget}`,
+    budget: `₹${task.budget}`,
     location: task.location,
     time: getTimeAgo(task.postedAt),
     customer: task.customerName,
