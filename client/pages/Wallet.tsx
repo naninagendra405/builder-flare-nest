@@ -444,7 +444,7 @@ export default function Wallet() {
               {transactions.slice(0, 6).map((transaction, index) => (
                 <div
                   key={transaction.id}
-                  className={`p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors ${
+                  className={`p-4 flex items-center justify-between hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:shadow-sm transition-all duration-300 cursor-pointer group ${
                     index !== transactions.length - 1
                       ? "border-b border-gray-100 dark:border-gray-800"
                       : ""
