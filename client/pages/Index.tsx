@@ -1,62 +1,407 @@
-import { DemoResponse } from "@shared/api";
-import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import {
+  Search,
+  MapPin,
+  Star,
+  Clock,
+  Users,
+  CheckCircle,
+  TrendingUp,
+  Zap,
+  Shield,
+  CreditCard,
+} from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { useState, useEffect } from "react";
 
 export default function Index() {
-  const [exampleFromServer, setExampleFromServer] = useState("");
-  // Fetch users on component mount
-  useEffect(() => {
-    fetchDemo();
-  }, []);
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
 
-  // Example of how to fetch data from the server (if needed)
-  const fetchDemo = async () => {
-    try {
-      const response = await fetch("/api/demo");
-      const data = (await response.json()) as DemoResponse;
-      setExampleFromServer(data.message);
-    } catch (error) {
-      console.error("Error fetching hello:", error);
+  useEffect(() => {
+    if (user) {
+      navigate("/dashboard");
+    }
+  }, [user, navigate]);
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/tasks?search=${encodeURIComponent(searchQuery)}`);
     }
   };
 
+  const featuredTasks = [
+    {
+      id: 1,
+      title: "Fix my kitchen sink",
+      category: "Home Repair",
+      budget: "$75",
+      location: "Manhattan, NY",
+      time: "2 hours ago",
+      bids: 12,
+      rating: 4.9,
+    },
+    {
+      id: 2,
+      title: "Logo design for startup",
+      category: "Digital Services",
+      budget: "$250",
+      location: "Remote",
+      time: "1 hour ago",
+      bids: 8,
+      rating: 4.8,
+    },
+    {
+      id: 3,
+      title: "Help moving furniture",
+      category: "Emergency Help",
+      budget: "$120",
+      location: "Brooklyn, NY",
+      time: "30 min ago",
+      bids: 5,
+      rating: 4.7,
+    },
+  ];
+
+  const stats = [
+    { label: "Active Tasks", value: "12,847", icon: TrendingUp },
+    { label: "Completed Jobs", value: "98,234", icon: CheckCircle },
+    { label: "Happy Customers", value: "45,678", icon: Users },
+    { label: "Average Rating", value: "4.9/5", icon: Star },
+  ];
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200">
-      <div className="text-center">
-        {/* TODO: FUSION_GENERATION_APP_PLACEHOLDER replace everything here with the actual app! */}
-        <h1 className="text-2xl font-semibold text-slate-800 flex items-center justify-center gap-3">
-          <svg
-            className="animate-spin h-8 w-8 text-slate-400"
-            viewBox="0 0 50 50"
-          >
-            <circle
-              className="opacity-30"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
-            />
-            <circle
-              className="text-slate-600"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
-              strokeDasharray="100"
-              strokeDashoffset="75"
-            />
-          </svg>
-          Generating your app...
-        </h1>
-        <p className="mt-4 text-slate-600 max-w-md">
-          Watch the chat on the left for updates that might need your attention
-          to finish generating
-        </p>
-        <p className="mt-4 hidden max-w-md">{exampleFromServer}</p>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/5">
+      {/* Navigation */}
+      <nav className="border-b bg-background/80 backdrop-blur-md sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                <Zap className="w-5 h-5 text-primary-foreground" />
+              </div>
+              <span className="text-2xl font-bold text-primary">TaskIt</span>
+            </div>
+            <div className="hidden md:flex items-center space-x-6">
+              <a
+                href="#how-it-works"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                How it works
+              </a>
+              <a
+                href="#features"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Features
+              </a>
+              <a
+                href="#pricing"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Pricing
+              </a>
+            </div>
+            <div className="flex items-center space-x-3">
+              <Button variant="ghost" asChild>
+                <Link to="/login">Sign In</Link>
+              </Button>
+              <Button asChild>
+                <Link to="/register">Get Started</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto text-center max-w-4xl">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            Get Things Done,
+            <br />
+            The Smart Way
+          </h1>
+          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Connect with skilled taskers in your area or work remotely. Post
+            tasks, get bids, and get quality work done quickly and securely.
+          </p>
+
+          {/* Search Bar */}
+          <form onSubmit={handleSearch} className="max-w-2xl mx-auto mb-12">
+            <div className="relative">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
+              <Input
+                placeholder="What do you need help with?"
+                className="pl-12 pr-32 py-6 text-lg rounded-full border-2 focus:border-primary"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <Button
+                type="submit"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 rounded-full px-8"
+              >
+                Search Tasks
+              </Button>
+            </div>
+          </form>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button size="lg" className="text-lg px-8 py-6" asChild>
+              <Link to="/register?role=customer">I need something done</Link>
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="text-lg px-8 py-6"
+              asChild
+            >
+              <Link to="/register?role=tasker">I want to earn money</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-16 bg-card/50">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {stats.map((stat, index) => {
+              const Icon = stat.icon;
+              return (
+                <div key={index} className="text-center">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Icon className="w-8 h-8 text-primary" />
+                  </div>
+                  <div className="text-3xl font-bold mb-2">{stat.value}</div>
+                  <div className="text-muted-foreground">{stat.label}</div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Tasks */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">Recent Tasks</h2>
+            <p className="text-xl text-muted-foreground">
+              See what people are looking for help with right now
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {featuredTasks.map((task) => (
+              <Card
+                key={task.id}
+                className="hover:shadow-lg transition-shadow cursor-pointer"
+              >
+                <CardHeader>
+                  <div className="flex items-start justify-between">
+                    <Badge variant="secondary">{task.category}</Badge>
+                    <div className="text-2xl font-bold text-primary">
+                      {task.budget}
+                    </div>
+                  </div>
+                  <CardTitle className="text-lg line-clamp-2">
+                    {task.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    <div className="flex items-center text-sm text-muted-foreground">
+                      <MapPin className="w-4 h-4 mr-2" />
+                      {task.location}
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <div className="flex items-center text-muted-foreground">
+                        <Clock className="w-4 h-4 mr-2" />
+                        {task.time}
+                      </div>
+                      <div className="flex items-center">
+                        <Star className="w-4 h-4 text-yellow-500 mr-1" />
+                        {task.rating}
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-muted-foreground">
+                        {task.bids} bids
+                      </span>
+                      <Button size="sm">View Details</Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section id="features" className="py-20 bg-card/30">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">Why Choose TaskIt?</h2>
+            <p className="text-xl text-muted-foreground">
+              The most trusted platform for getting things done
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="text-center p-6">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Shield className="w-8 h-8 text-primary" />
+              </div>
+              <h3 className="text-xl font-semibold mb-4">Secure & Protected</h3>
+              <p className="text-muted-foreground">
+                Your payments are held in escrow until work is completed. Full
+                protection for both parties.
+              </p>
+            </div>
+
+            <div className="text-center p-6">
+              <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Users className="w-8 h-8 text-accent" />
+              </div>
+              <h3 className="text-xl font-semibold mb-4">Vetted Taskers</h3>
+              <p className="text-muted-foreground">
+                All taskers are background-checked and rated by the community
+                for your peace of mind.
+              </p>
+            </div>
+
+            <div className="text-center p-6">
+              <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <CreditCard className="w-8 h-8 text-success" />
+              </div>
+              <h3 className="text-xl font-semibold mb-4">Easy Payments</h3>
+              <p className="text-muted-foreground">
+                Simple, transparent pricing with multiple payment options. Pay
+                only when satisfied.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-12 bg-card border-t">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div>
+              <div className="flex items-center space-x-2 mb-4">
+                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                  <Zap className="w-5 h-5 text-primary-foreground" />
+                </div>
+                <span className="text-xl font-bold text-primary">TaskIt</span>
+              </div>
+              <p className="text-muted-foreground">
+                The smartest way to get things done. Connect, collaborate, and
+                complete tasks efficiently.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Platform</h4>
+              <ul className="space-y-2 text-muted-foreground">
+                <li>
+                  <a
+                    href="#"
+                    className="hover:text-foreground transition-colors"
+                  >
+                    How it works
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="hover:text-foreground transition-colors"
+                  >
+                    Safety
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="hover:text-foreground transition-colors"
+                  >
+                    Pricing
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Support</h4>
+              <ul className="space-y-2 text-muted-foreground">
+                <li>
+                  <a
+                    href="#"
+                    className="hover:text-foreground transition-colors"
+                  >
+                    Help Center
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="hover:text-foreground transition-colors"
+                  >
+                    Contact Us
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="hover:text-foreground transition-colors"
+                  >
+                    Community
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Company</h4>
+              <ul className="space-y-2 text-muted-foreground">
+                <li>
+                  <a
+                    href="#"
+                    className="hover:text-foreground transition-colors"
+                  >
+                    About
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="hover:text-foreground transition-colors"
+                  >
+                    Careers
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="hover:text-foreground transition-colors"
+                  >
+                    Press
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t mt-8 pt-8 text-center text-muted-foreground">
+            <p>&copy; 2024 TaskIt. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
