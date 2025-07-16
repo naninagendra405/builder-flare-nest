@@ -203,6 +203,57 @@ export default function Wallet() {
     );
   };
 
+  const handleAddFunds = async () => {
+    if (!addAmount || parseFloat(addAmount) <= 0) return;
+
+    setIsProcessing(true);
+    try {
+      // TODO: Call actual payment processing API
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      console.log("Adding funds:", {
+        amount: parseFloat(addAmount),
+        paymentMethod: selectedPaymentMethod,
+      });
+
+      // Mock success
+      alert(`Successfully added $${addAmount} to your wallet!`);
+      setShowAddFunds(false);
+      setAddAmount("");
+    } catch (error) {
+      alert("Failed to add funds. Please try again.");
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const handleWithdraw = async () => {
+    if (!withdrawAmount || parseFloat(withdrawAmount) <= 0) return;
+    if (parseFloat(withdrawAmount) > balance) {
+      alert("Insufficient funds");
+      return;
+    }
+
+    setIsProcessing(true);
+    try {
+      // TODO: Call actual withdrawal API
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      console.log("Withdrawing funds:", {
+        amount: parseFloat(withdrawAmount),
+      });
+
+      // Mock success
+      alert(`Successfully withdrew $${withdrawAmount}!`);
+      setShowWithdraw(false);
+      setWithdrawAmount("");
+    } catch (error) {
+      alert("Failed to withdraw funds. Please try again.");
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/5">
       {/* Navigation */}
