@@ -371,12 +371,14 @@ export default function Dashboard() {
 
           <Button
             variant="outline"
-            className="h-20 flex flex-col items-center justify-center space-y-2 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 border-0 shadow-lg"
+            className="h-20 flex flex-col items-center justify-center space-y-2 bg-white dark:bg-gray-900 hover:bg-orange-50 dark:hover:bg-orange-900/30 hover:border-orange-200 dark:hover:border-orange-800 border-0 shadow-lg hover:shadow-xl transition-all duration-300 group"
             asChild
           >
             <Link to="/profile">
-              <User className="w-6 h-6 text-orange-600 dark:text-orange-400" />
-              <span className="text-sm font-medium">Profile</span>
+              <User className="w-6 h-6 text-orange-600 dark:text-orange-400 group-hover:text-orange-700 dark:group-hover:text-orange-300 transition-colors" />
+              <span className="text-sm font-medium group-hover:text-orange-700 dark:group-hover:text-orange-300 transition-colors">
+                Profile
+              </span>
             </Link>
           </Button>
         </div>
