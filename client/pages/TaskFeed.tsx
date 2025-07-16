@@ -280,17 +280,17 @@ export default function TaskFeed() {
         </div>
 
         {/* Search and Filters */}
-        <Card className="mb-6 animate-in slide-in-from-bottom duration-700 delay-300 hover:shadow-lg transition-all duration-300">
+        <Card className="mb-6">
           <CardContent className="p-4 md:p-6">
             <div className="space-y-4">
               {/* Search */}
-              <div className="relative group">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5 transition-colors duration-200 group-focus-within:text-primary" />
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
                 <Input
                   placeholder="Search tasks..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-12 transition-all duration-200 focus:scale-[1.02] focus:shadow-md"
+                  className="pl-12"
                 />
               </div>
 
