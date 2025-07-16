@@ -452,6 +452,60 @@ export default function CreateTask() {
                     </div>
                   </div>
 
+                  {aiPricingSuggestion && (
+                    <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
+                      <div className="flex items-start space-x-3">
+                        <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                          <span className="text-blue-600 text-sm font-bold">
+                            AI
+                          </span>
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-blue-800 mb-2">
+                            💡 AI Pricing Suggestion
+                          </h4>
+                          <div className="grid grid-cols-3 gap-3 mb-2">
+                            <div className="text-center">
+                              <div className="text-sm text-blue-600">Min</div>
+                              <div className="font-bold text-blue-800">
+                                ${aiPricingSuggestion.min}
+                              </div>
+                            </div>
+                            <div className="text-center">
+                              <div className="text-sm text-blue-600">
+                                Recommended
+                              </div>
+                              <div className="font-bold text-blue-800 text-lg">
+                                ${aiPricingSuggestion.recommended}
+                              </div>
+                            </div>
+                            <div className="text-center">
+                              <div className="text-sm text-blue-600">Max</div>
+                              <div className="font-bold text-blue-800">
+                                ${aiPricingSuggestion.max}
+                              </div>
+                            </div>
+                          </div>
+                          <p className="text-sm text-blue-700">
+                            {aiPricingSuggestion.reasoning}
+                          </p>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              updateForm(
+                                "budget",
+                                aiPricingSuggestion.recommended.toString(),
+                              )
+                            }
+                            className="mt-2 text-sm text-blue-600 hover:text-blue-800 underline"
+                          >
+                            Use recommended price
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
                   <div className="bg-muted/50 p-4 rounded-lg">
                     <p className="text-sm text-muted-foreground">
                       💡 <strong>Tip:</strong> Tasks with clear, fair budgets
