@@ -41,6 +41,7 @@ import {
   AlertCircle,
   CheckCircle,
   TrendingUp,
+  Plus,
 } from "lucide-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
