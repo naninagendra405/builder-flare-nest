@@ -275,7 +275,7 @@ export default function Dashboard() {
                       0 && (
                       <Button variant="outline" size="sm">
                         <Link
-                          to="/register?step=3"
+                          to="/add-credentials"
                           className="flex items-center"
                         >
                           Add More Credentials
