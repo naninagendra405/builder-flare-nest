@@ -223,6 +223,7 @@ export default function Wallet() {
         type: "payment",
         title: "Withdrawal Successful",
         message: `₹${withdrawAmount} has been withdrawn from your wallet.`,
+        priority: "high",
       });
 
       setShowWithdraw(false);
