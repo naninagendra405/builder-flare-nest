@@ -58,6 +58,7 @@ export default function CreateTask() {
   const navigate = useNavigate();
 
   const [currentStep, setCurrentStep] = useState(1);
+  const [aiPricingSuggestion, setAiPricingSuggestion] = useState<any>(null);
   const [form, setForm] = useState<TaskForm>({
     title: "",
     description: "",
