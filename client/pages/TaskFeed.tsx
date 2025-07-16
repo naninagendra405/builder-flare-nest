@@ -351,12 +351,12 @@ export default function TaskFeed() {
           </p>
         </div>
 
-        {/* Search and Filters */}
+                {/* Search and Filters */}
         <Card className="mb-6">
-          <CardContent className="p-6">
-            <div className="flex flex-col md:flex-row gap-4">
+          <CardContent className="p-4 md:p-6">
+            <div className="flex flex-col gap-4">
               {/* Search */}
-              <div className="flex-1 relative">
+              <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
                 <Input
                   placeholder="Search tasks..."
@@ -366,24 +366,26 @@ export default function TaskFeed() {
                 />
               </div>
 
-              {/* Category Filter */}
-              <Select
-                value={filters.category}
-                onValueChange={(value) =>
-                  setFilters((prev) => ({ ...prev, category: value }))
-                }
-              >
-                <SelectTrigger className="w-48">
-                  <SelectValue placeholder="All Categories" />
-                </SelectTrigger>
-                <SelectContent>
-                  {categories.map((category) => (
-                    <SelectItem key={category} value={category}>
-                      {category}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              {/* Filters Row */}
+              <div className="flex flex-col sm:flex-row gap-3">
+                {/* Category Filter */}
+                <Select
+                  value={filters.category}
+                  onValueChange={(value) =>
+                    setFilters((prev) => ({ ...prev, category: value }))
+                  }
+                >
+                  <SelectTrigger className="w-full sm:w-48">
+                    <SelectValue placeholder="All Categories" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {categories.map((category) => (
+                      <SelectItem key={category} value={category}>
+                        {category}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
 
               {/* Advanced Filters */}
               <Dialog>
