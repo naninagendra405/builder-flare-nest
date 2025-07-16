@@ -96,52 +96,7 @@ export default function TaskFeed() {
     return null;
   }
 
-  const tasks: Task[] = [
-    {
-      id: "1",
-      title: "Fix leaky kitchen sink",
-      description:
-        "My kitchen sink has been leaking for a week. Need someone experienced with plumbing to fix it. All necessary tools provided.",
-      category: "Home Repair",
-      budget: 75,
-      budgetType: "fixed",
-      location: "Manhattan, NY",
-      isRemote: false,
-      customerName: "Sarah Johnson",
-      customerRating: 4.8,
-      postedAt: "2024-01-15T10:30:00Z",
-      deadline: "2024-01-18",
-      urgency: "high",
-      skillsRequired: ["Plumbing", "Repair"],
-      bidsCount: 12,
-      viewsCount: 67,
-      images: [],
-      timeEstimate: "2-3 hours",
-      customerVerified: true,
-      distance: 2.3,
-    },
-    {
-      id: "2",
-      title: "Logo design for tech startup",
-      description:
-        "Looking for a creative designer to create a modern logo for our AI startup. Need vector files and multiple variations.",
-      category: "Digital Services",
-      budget: 250,
-      budgetType: "fixed",
-      location: "Remote",
-      isRemote: true,
-      customerName: "TechCorp Inc.",
-      customerRating: 4.9,
-      postedAt: "2024-01-14T14:15:00Z",
-      urgency: "medium",
-      skillsRequired: ["Graphic Design", "Branding", "Adobe Illustrator"],
-      bidsCount: 24,
-      viewsCount: 156,
-      images: [],
-      timeEstimate: "3-5 days",
-      customerVerified: true,
-    },
-  ];
+  const tasks = getAllTasks();
 
   const categories = [
     "All",
