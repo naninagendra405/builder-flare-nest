@@ -301,10 +301,21 @@ export default function CreateTask() {
       <div className="container mx-auto px-4 py-4 md:py-8 max-w-4xl">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold">Post a New Task</h1>
+          <h1 className="text-3xl font-bold">
+            {suggestedTask ? "Create Task from Suggestion" : "Post a New Task"}
+          </h1>
           <p className="text-muted-foreground">
-            Tell us what you need done and connect with skilled taskers
+            {suggestedTask
+              ? "We've pre-filled some details based on your selection. Feel free to customize them!"
+              : "Tell us what you need done and connect with skilled taskers"}
           </p>
+          {suggestedTask && (
+            <div className="mt-3 p-3 bg-primary/10 border border-primary/20 rounded-lg">
+              <p className="text-sm text-primary font-medium">
+                💡 Task suggestion: {suggestedTask.title}
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Progress Steps */}
