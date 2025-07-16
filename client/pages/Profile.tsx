@@ -41,7 +41,7 @@ import {
   Plus,
   Award,
   Calendar,
-  DollarSign,
+  IndianRupee,
   Users,
   Clock,
   Zap,
