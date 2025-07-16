@@ -383,12 +383,19 @@ export default function Wallet() {
                     {paymentMethods.map((method) => (
                       <div
                         key={method.id}
-                        className="flex items-center space-x-2 p-3 border rounded-lg cursor-pointer hover:bg-muted/50"
+                        className={`flex items-center space-x-2 p-3 border rounded-lg cursor-pointer hover:bg-muted/50 transition-colors ${
+                          selectedPaymentMethod === method.id
+                            ? "border-primary bg-primary/10"
+                            : ""
+                        }`}
+                        onClick={() => setSelectedPaymentMethod(method.id)}
                       >
                         <input
                           type="radio"
                           name="payment-method"
-                          defaultChecked={method.isDefault}
+                          checked={selectedPaymentMethod === method.id}
+                          onChange={() => setSelectedPaymentMethod(method.id)}
+                          className="sr-only"
                         />
                         <CreditCard className="w-4 h-4" />
                         <span>{method.name}</span>
@@ -399,7 +406,25 @@ export default function Wallet() {
                     ))}
                   </div>
                 </div>
-                <Button className="w-full">Add ${addAmount || "0.00"}</Button>
+
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                  <p className="text-sm text-blue-800">
+                    💡 <strong>Processing Time:</strong> Funds are typically
+                    available within 1-2 business days.
+                  </p>
+                </div>
+
+                <Button
+                  className="w-full"
+                  onClick={handleAddFunds}
+                  disabled={
+                    !addAmount || parseFloat(addAmount) <= 0 || isProcessing
+                  }
+                >
+                  {isProcessing
+                    ? "Processing..."
+                    : `Add $${addAmount || "0.00"}`}
+                </Button>
               </div>
             </DialogContent>
           </Dialog>
