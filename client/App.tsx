@@ -19,27 +19,28 @@ import { NotificationProvider } from "./contexts/NotificationContext";
 
 export default function App() {
   return (
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+    <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
       <AuthProvider>
         <NotificationProvider>
           <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/create-task" element={<CreateTask />} />
-            <Route path="/tasks" element={<TaskFeed />} />
-            <Route path="/task/:id" element={<TaskDetail />} />
-            <Route path="/chat/:chatId?" element={<Chat />} />
-                        <Route path="/wallet" element={<Wallet />} />
-            <Route path="/payment-methods" element={<PaymentMethods />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-          <Toaster />
-        </BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/create-task" element={<CreateTask />} />
+              <Route path="/tasks" element={<TaskFeed />} />
+              <Route path="/task/:id" element={<TaskDetail />} />
+              <Route path="/chat/:chatId?" element={<Chat />} />
+              <Route path="/wallet" element={<Wallet />} />
+              <Route path="/payment-methods" element={<PaymentMethods />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+            <Toaster />
+          </BrowserRouter>
+        </NotificationProvider>
       </AuthProvider>
     </ThemeProvider>
   );
