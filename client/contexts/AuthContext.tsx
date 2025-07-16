@@ -94,7 +94,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             ],
             categories: ["handyman", "transport"],
             experience: "expert",
-            hourlyRate: "45",
+            hourlyRate: "3750",
             availability: "flexible",
             serviceArea: "New York City and surrounding areas",
             professionalCredentials: [
