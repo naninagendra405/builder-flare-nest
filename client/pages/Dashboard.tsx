@@ -209,18 +209,14 @@ export default function Dashboard() {
                 <div className="w-9 h-9 lg:w-10 lg:h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
                   <Zap className="w-4 h-4 lg:w-5 lg:h-5 text-white" />
                 </div>
-                <div className="hidden sm:block">
+                <div>
                   <h1 className="text-lg lg:text-xl font-bold text-gray-900 dark:text-white leading-tight">
-                    Welcome back, {user.name}!
+                    <span className="hidden sm:inline">Welcome back, </span>
+                    {getUserNickname(user.name)}!
                   </h1>
                   <p className="text-xs lg:text-sm text-gray-500 dark:text-gray-400 capitalize">
                     {user.role} Dashboard
                   </p>
-                </div>
-                <div className="block sm:hidden">
-                  <h1 className="text-lg font-semibold text-gray-900 dark:text-white">
-                    TaskIt
-                  </h1>
                 </div>
               </div>
 
