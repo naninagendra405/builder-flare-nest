@@ -48,6 +48,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { formatCurrency } from "@/lib/currency";
 
 interface Bid {
   id: string;
@@ -324,7 +325,7 @@ export default function TaskDetail() {
                   </div>
                   <div className="text-left lg:text-right">
                     <div className="text-2xl md:text-3xl font-bold text-primary mb-2">
-                      ${task.budget}
+                      {formatCurrency(task.budget)}
                       {task.budgetType === "hourly" ? "/hr" : ""}
                     </div>
                     <div className="text-sm text-muted-foreground">
@@ -462,7 +463,7 @@ export default function TaskDetail() {
                         </div>
                         <div className="text-left sm:text-right">
                           <div className="text-2xl font-bold text-primary">
-                            ${bid.amount}
+                            {formatCurrency(bid.amount)}
                           </div>
                           <div className="text-sm text-muted-foreground">
                             {bid.deliveryTime}
@@ -645,7 +646,7 @@ export default function TaskDetail() {
             <div className="p-4 bg-muted/50 rounded-lg">
               <h3 className="font-semibold mb-2">{task.title}</h3>
               <div className="flex items-center justify-between text-sm">
-                <span>Budget: ${task.budget}</span>
+                <span>Budget: {formatCurrency(task.budget)}</span>
                 <span>Current bids: {bids.length}</span>
               </div>
             </div>
