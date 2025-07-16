@@ -32,7 +32,7 @@ import {
   ArrowLeft,
   Users,
   Briefcase,
-  DollarSign,
+  IndianRupee,
   TrendingUp,
   AlertTriangle,
   Search,
