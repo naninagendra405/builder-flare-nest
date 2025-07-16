@@ -45,7 +45,7 @@ export default function Notifications() {
   const getNotificationIcon = (type: string) => {
     switch (type) {
       case "bid":
-        return <DollarSign className="w-5 h-5 text-green-600" />;
+        return <IndianRupee className="w-5 h-5 text-green-600" />;
       case "message":
         return <MessageSquare className="w-5 h-5 text-blue-600" />;
       case "payment":
