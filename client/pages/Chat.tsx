@@ -607,7 +607,7 @@ export default function Chat() {
                     {selectedChat.taskStatus.replace("_", " ")}
                   </Badge>
                   <span className="flex items-center">
-                    <DollarSign className="w-4 h-4 mr-1" />
+                    <IndianRupee className="w-4 h-4 mr-1" />
                     {selectedChat.taskBudget}
                   </span>
                 </div>
