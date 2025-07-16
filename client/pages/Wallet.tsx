@@ -160,6 +160,7 @@ export default function Wallet() {
         type: "payment",
         title: "Funds Added Successfully",
         message: `₹${addAmount} has been added to your wallet.`,
+        priority: "high",
       });
 
       setShowAddFunds(false);
