@@ -437,13 +437,14 @@ export default function Dashboard() {
                     <Button
                       size="sm"
                       className="mt-2"
-                      onClick={() =>
+                      onClick={(e) => {
+                        e.stopPropagation();
                         navigate(
                           user.role === "customer"
                             ? `/task/${task.id}`
                             : `/task/${task.id}?action=bid`,
-                        )
-                      }
+                        );
+                      }}
                     >
                       {user.role === "customer" ? "View" : "Bid Now"}
                     </Button>
