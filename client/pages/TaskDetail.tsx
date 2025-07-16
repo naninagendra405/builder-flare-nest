@@ -446,7 +446,7 @@ export default function TaskDetail() {
                         </div>
                         <div className="text-left sm:text-right">
                           <div className="text-2xl font-bold text-primary">
-                            ${bid.amount}
+                            ₹{bid.amount}
                           </div>
                           <div className="text-sm text-muted-foreground">
                             {bid.deliveryTime}
