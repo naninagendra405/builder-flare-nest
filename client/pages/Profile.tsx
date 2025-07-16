@@ -715,12 +715,7 @@ export default function Profile() {
                       </div>
                       <div className="text-right">
                         <div className="text-2xl font-bold text-primary">
-                          {user.taskerProfile.professionalCredentials?.filter(
-                            (c) => c.verified,
-                          ).length *
-                            20 +
-                            60}
-                          %
+                          100%
                         </div>
                         <div className="text-xs text-muted-foreground">
                           Verified Professional
