@@ -67,8 +67,8 @@ export default function TaskSuggestions() {
           <h2 className="text-2xl font-bold">Task Suggestions</h2>
         </div>
         <p className="text-muted-foreground max-w-md mx-auto">
-          Can't find what you're looking for? Here are some popular tasks that
-          others are hiring for
+          Not sure what task to post? Here are some popular tasks that others
+          are hiring for
         </p>
         <Button
           variant="outline"
