@@ -482,7 +482,7 @@ export default function Dashboard() {
                         );
                       }}
                     >
-                      {user.role === "customer" ? "View" : "Get Ideas"}
+                      {user.role === "customer" ? "View" : "Find Work"}
                     </Button>
                   </div>
                 </div>
