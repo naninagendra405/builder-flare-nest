@@ -302,14 +302,14 @@ export default function Wallet() {
         </div>
       </nav>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold flex items-center">
-            <RupeeIcon className="w-8 h-8 mr-3 text-primary" />
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold flex items-center">
+            <RupeeIcon className="w-6 h-6 sm:w-8 sm:h-8 mr-2 sm:mr-3 text-primary" />
             Wallet
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground text-sm sm:text-base mt-1">
             Manage your funds and transactions
           </p>
         </div>
