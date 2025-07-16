@@ -169,12 +169,12 @@ export default function TaskDetail() {
       taskId: task.id,
       bidderId: user.id,
       bidderName: user.name,
-      bidderRating: user.rating || 4.5,
-      bidderCompletedTasks: user.completedTasks || 0,
+      bidderRating: 4.5, // Default rating for new users
+      bidderCompletedTasks: 0, // Default for new users
       amount: parseFloat(bidAmount),
       message: bidMessage,
       deliveryTime,
-      bidderVerified: user.verified || false,
+      bidderVerified: false, // Default verification status
       bidderResponse: "under 2 hours",
     };
 
@@ -188,6 +188,7 @@ export default function TaskDetail() {
       type: "bid",
       title: "Bid Submitted",
       message: `Your bid of ₹${bidAmount} for "${task.title}" has been submitted successfully.`,
+      priority: "medium",
     });
 
     setShowBidDialog(false);
@@ -212,6 +213,7 @@ export default function TaskDetail() {
         type: "task_update",
         title: "Bid Accepted",
         message: `You accepted ${acceptedBid.bidderName}'s bid of ₹${acceptedBid.amount} for "${task.title}".`,
+        priority: "high",
       });
     }
   };
