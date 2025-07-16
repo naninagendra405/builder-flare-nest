@@ -24,6 +24,9 @@ export interface Task {
   status: "open" | "in_progress" | "completed" | "cancelled";
   instructions?: string;
   distance?: number;
+  assignedTaskerId?: string;
+  assignedTaskerName?: string;
+  acceptedBidId?: string;
 }
 
 interface TaskContextType {
