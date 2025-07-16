@@ -55,6 +55,7 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { formatCurrency } from "@/lib/currency";
+import { RupeeIcon } from "@/components/ui/rupee-icon";
 
 interface User {
   id: string;
@@ -114,7 +115,7 @@ export default function AdminDashboard() {
     {
       label: "Revenue",
       value: "₹74,67,648",
-      icon: DollarSign,
+      icon: RupeeIcon,
       change: "+15%",
     },
     {
