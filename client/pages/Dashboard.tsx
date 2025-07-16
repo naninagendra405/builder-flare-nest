@@ -90,62 +90,46 @@ export default function Dashboard() {
     },
   ];
 
-  const recentTasks = [
-    {
-      id: 1,
-      title: "Fix kitchen sink leak",
-      status: "in_progress",
-      budget: "$75",
-      location: "Manhattan, NY",
-      time: "2 hours ago",
-      customer: "Sarah M.",
-    },
-    {
-      id: 2,
-      title: "Logo design for startup",
-      status: "pending",
-      budget: "$250",
-      location: "Remote",
-      time: "1 day ago",
-      customer: "TechCorp Inc.",
-    },
-    {
-      id: 3,
-      title: "Help with moving",
-      status: "completed",
-      budget: "$120",
-      location: "Brooklyn, NY",
-      time: "3 days ago",
-      customer: "Mike R.",
-    },
-  ];
+  // Get user's tasks if customer, or available tasks if tasker
+  const userTasks =
+    user.role === "customer" ? getTasksByUser(user.id || "") : [];
+  const allTasks = getAllTasks();
 
-  const availableTasks = [
-    {
-      id: 4,
-      title: "Assembly IKEA furniture",
-      budget: "$60",
-      location: "Queens, NY",
-      time: "30 min ago",
-      bids: 5,
-    },
-    {
-      id: 5,
-      title: "Website bug fixes",
-      budget: "$150",
-      location: "Remote",
-      time: "1 hour ago",
-      bids: 8,
-    },
-    {
-      id: 6,
-      title: "Garden cleanup",
-      budget: "$80",
-      location: "Staten Island, NY",
-      time: "2 hours ago",
-      bids: 3,
-    },
-  ];
+  // Format tasks for display
+  const recentTasks = userTasks.slice(0, 3).map((task) => ({
+    id: task.id,
+    title: task.title,
+    status: task.status,
+    budget: `$${task.budget}`,
+    location: task.location,
+    time: getTimeAgo(task.postedAt),
+    customer: task.customerName,
+  }));
+
+  const availableTasks = allTasks.slice(0, 3).map((task) => ({
+    id: task.id,
+    title: task.title,
+    budget: `$${task.budget}`,
+    location: task.location,
+    time: getTimeAgo(task.postedAt),
+    bids: task.bidsCount,
+  }));
+
+  function getTimeAgo(dateString: string) {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInMinutes = Math.floor(
+      (now.getTime() - date.getTime()) / (1000 * 60),
+    );
+
+    if (diffInMinutes < 60) {
+      return `${diffInMinutes}m ago`;
+    } else if (diffInMinutes < 1440) {
+      return `${Math.floor(diffInMinutes / 60)}h ago`;
+    } else {
+      return `${Math.floor(diffInMinutes / 1440)}d ago`;
+    }
+  }
 
   const getStatusColor = (status: string) => {
     switch (status) {
