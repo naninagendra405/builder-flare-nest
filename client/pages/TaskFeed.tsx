@@ -71,6 +71,7 @@ interface Task {
 
 export default function TaskFeed() {
   const { user } = useAuth();
+  const { getAllTasks } = useTasks();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
