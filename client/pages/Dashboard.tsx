@@ -373,7 +373,7 @@ export default function Dashboard() {
         )}
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mb-6 sm:mb-8">
           {stats.map((stat, index) => {
             const Icon = stat.icon;
             return (
@@ -381,15 +381,19 @@ export default function Dashboard() {
                 key={index}
                 className="hover:shadow-md transition-shadow duration-200"
               >
-                <CardContent className="p-6">
+                <CardContent className="p-3 sm:p-4 lg:p-6">
                   <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-muted-foreground">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs sm:text-sm text-muted-foreground truncate">
                         {stat.label}
                       </p>
-                      <p className="text-2xl font-bold">{stat.value}</p>
+                      <p className="text-lg sm:text-xl lg:text-2xl font-bold truncate">
+                        {stat.value}
+                      </p>
                     </div>
-                    <Icon className={`w-8 h-8 ${stat.color}`} />
+                    <Icon
+                      className={`w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 ${stat.color} flex-shrink-0 ml-2`}
+                    />
                   </div>
                 </CardContent>
               </Card>
