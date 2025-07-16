@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {
   Bell,
-  DollarSign,
+  IndianRupee,
   MessageSquare,
   Briefcase,
   Shield,
@@ -35,11 +35,11 @@ export default function NotificationDropdown() {
   const getNotificationIcon = (type: string) => {
     switch (type) {
       case "bid":
-        return <DollarSign className="w-4 h-4 text-green-600" />;
+        return <IndianRupee className="w-4 h-4 text-green-600" />;
       case "message":
         return <MessageSquare className="w-4 h-4 text-blue-600" />;
       case "payment":
-        return <DollarSign className="w-4 h-4 text-purple-600" />;
+        return <IndianRupee className="w-4 h-4 text-purple-600" />;
       case "task_update":
         return <Briefcase className="w-4 h-4 text-orange-600" />;
       case "system":
