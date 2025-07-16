@@ -251,6 +251,82 @@ export default function Dashboard() {
           </div>
         </div>
 
+        {/* Verification Status Alert for Taskers */}
+        {user.role === "tasker" && user.verificationStatus === "pending" && (
+          <Card className="mb-8 border-yellow-200 bg-yellow-50 dark:bg-yellow-950/20">
+            <CardContent className="p-6">
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0">
+                  <Clock className="w-6 h-6 text-yellow-600" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-yellow-900 dark:text-yellow-100">
+                    Verification in Progress
+                  </h3>
+                  <p className="text-sm text-yellow-700 dark:text-yellow-200 mt-1">
+                    We're reviewing your professional credentials and documents.
+                    This usually takes 24-48 hours.
+                  </p>
+                  <div className="mt-4 flex flex-col sm:flex-row gap-3">
+                    <Button variant="outline" size="sm" asChild>
+                      <Link to="/profile">View Verification Status</Link>
+                    </Button>
+                    {user.taskerProfile?.professionalCredentials?.length ===
+                      0 && (
+                      <Button variant="outline" size="sm">
+                        <Link
+                          to="/register?step=3"
+                          className="flex items-center"
+                        >
+                          Add More Credentials
+                        </Link>
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {user.role === "tasker" && user.verificationStatus === "verified" && (
+          <Card className="mb-8 border-green-200 bg-green-50 dark:bg-green-950/20">
+            <CardContent className="p-6">
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0">
+                  <CheckCircle className="w-6 h-6 text-green-600" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-green-900 dark:text-green-100">
+                    🎉 You're Verified!
+                  </h3>
+                  <p className="text-sm text-green-700 dark:text-green-200 mt-1">
+                    Your professional credentials have been verified. You now
+                    get priority placement in search results and higher customer
+                    trust.
+                  </p>
+                  {user.taskerProfile && (
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      <Badge variant="default" className="bg-green-600">
+                        ✓ Professional Verified
+                      </Badge>
+                      <Badge variant="outline">
+                        Trust Score:{" "}
+                        {user.taskerProfile.professionalCredentials?.filter(
+                          (c) => c.verified,
+                        ).length *
+                          20 +
+                          60}
+                        %
+                      </Badge>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
         {/* Stats Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
           {stats.map((stat, index) => {
