@@ -39,7 +39,8 @@ export function NotificationProvider({
       id: "1",
       type: "bid",
       title: "New Bid Received",
-      message: "Mike Wilson placed a $70 bid on your kitchen sink repair task",
+      message:
+        "Mike Wilson placed a ₹5,833 bid on your kitchen sink repair task",
       timestamp: "2024-01-15T15:30:00Z",
       read: false,
       actionUrl: "/task/123",
@@ -62,7 +63,7 @@ export function NotificationProvider({
       id: "3",
       type: "payment",
       title: "Payment Released",
-      message: "$75 has been released for the completed kitchen sink repair",
+      message: "₹6,250 has been released for the completed kitchen sink repair",
       timestamp: "2024-01-15T13:20:00Z",
       read: true,
       actionUrl: "/wallet",
