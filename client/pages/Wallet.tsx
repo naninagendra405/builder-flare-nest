@@ -452,7 +452,7 @@ export default function Wallet() {
                     className="text-lg"
                   />
                   <p className="text-sm text-muted-foreground mt-1">
-                    Available: ${balance.toFixed(2)}
+                    Available: ₹{balance.toFixed(2)}
                   </p>
                 </div>
 
