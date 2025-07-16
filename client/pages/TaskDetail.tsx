@@ -256,6 +256,16 @@ export default function TaskDetail() {
       // Use context to accept bid and assign task
       acceptBid(task.id, bidId, acceptedBid.bidderId, acceptedBid.bidderName);
 
+      // Add notification for the tasker
+      addNotification({
+        type: "task_update",
+        title: "Task Assigned!",
+        message: `Your bid for "${task.title}" has been accepted. The task is now assigned to you.`,
+        priority: "high",
+        taskId: task.id,
+        fromUser: user.name,
+      });
+
       // Show success message
       alert(
         `🎉 Bid accepted! ${acceptedBid.bidderName} has been assigned to this task. The order is now in progress and they will be notified immediately.`,
