@@ -198,7 +198,7 @@ export default function Wallet() {
     const color = amount >= 0 ? "text-green-600" : "text-red-600";
     return (
       <span className={color}>
-        {sign}${Math.abs(amount).toFixed(2)}
+        {sign}₹{Math.abs(amount).toFixed(2)}
       </span>
     );
   };
