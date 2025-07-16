@@ -591,7 +591,7 @@ export default function TaskDetail() {
                     className="w-full"
                     onClick={() => setShowBidDialog(true)}
                   >
-                    <DollarSign className="w-4 h-4 mr-2" />
+                    <IndianRupee className="w-4 h-4 mr-2" />
                     Place Bid
                   </Button>
                 )}
