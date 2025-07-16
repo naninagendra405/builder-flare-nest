@@ -172,9 +172,21 @@ export default function CreateTask() {
   };
 
   const handleSubmit = async () => {
-    // TODO: Submit task to backend
-    console.log("Submitting task:", form);
-    navigate("/dashboard");
+    try {
+      // TODO: Submit task to backend
+      console.log("Submitting task:", form);
+
+      // Mock API call
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
+      // Show success message
+      alert("🎉 Task posted successfully! You'll start receiving bids soon.");
+
+      // Navigate to tasks page to see the posted task
+      navigate("/tasks");
+    } catch (error) {
+      alert("Failed to post task. Please try again.");
+    }
   };
 
   const isStepValid = (step: number) => {
