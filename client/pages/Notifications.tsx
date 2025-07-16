@@ -148,24 +148,32 @@ export default function Notifications() {
 
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0 mb-6 md:mb-8">
           <div>
-            <h1 className="text-3xl font-bold flex items-center">
-              <Bell className="w-8 h-8 mr-3 text-primary" />
+            <h1 className="text-2xl md:text-3xl font-bold flex items-center">
+              <Bell className="w-6 md:w-8 h-6 md:h-8 mr-2 md:mr-3 text-primary" />
               Notifications
             </h1>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground text-sm md:text-base">
               Stay updated with your tasks and messages
             </p>
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             {unreadCount > 0 && (
-              <Button variant="outline" onClick={markAllAsRead}>
+              <Button
+                variant="outline"
+                onClick={markAllAsRead}
+                className="w-full sm:w-auto"
+              >
                 <CheckCheck className="w-4 h-4 mr-2" />
                 Mark All Read ({unreadCount})
               </Button>
             )}
-            <Button variant="outline" onClick={clearAll}>
+            <Button
+              variant="outline"
+              onClick={clearAll}
+              className="w-full sm:w-auto"
+            >
               Clear All
             </Button>
           </div>
