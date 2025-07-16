@@ -13,6 +13,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import {
   Plus,
   Search,
   Settings,
@@ -27,6 +38,10 @@ import {
   MapPin,
   Star,
   Zap,
+  MoreHorizontal,
+  Edit,
+  Trash2,
+  AlertTriangle,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -35,8 +50,9 @@ import { RupeeIcon } from "@/components/ui/rupee-icon";
 
 export default function Dashboard() {
   const { user, logout } = useAuth();
-  const { getTasksByUser, getAllTasks } = useTasks();
+  const { getTasksByUser, getAllTasks, cancelTask } = useTasks();
   const navigate = useNavigate();
+  const [taskToCancel, setTaskToCancel] = useState<string | null>(null);
 
   if (!user) {
     navigate("/login");
