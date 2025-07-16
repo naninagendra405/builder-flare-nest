@@ -310,7 +310,7 @@ export default function TaskFeed() {
 
       {/* Category Pills - Mobile Optimized */}
       <div className="container mx-auto px-4 py-4">
-        <div className="flex overflow-x-auto space-x-3 pb-2 scrollbar-hide">
+        <div className="flex overflow-x-auto space-x-3 pb-2">
           {categories.map((category) => (
             <Button
               key={category}
