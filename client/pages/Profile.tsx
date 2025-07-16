@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import { RupeeIcon } from "@/components/ui/rupee-icon";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -367,7 +368,7 @@ export default function Profile() {
                 {user.role === "tasker" && (
                   <div className="mt-4 flex items-center space-x-4">
                     <div className="flex items-center">
-                      <DollarSign className="w-4 h-4 mr-1" />
+                      <RupeeIcon className="w-4 h-4 mr-1" />
                       {isEditing ? (
                         <Input
                           value={profile.hourlyRate}
