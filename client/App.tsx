@@ -15,6 +15,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import PaymentMethods from "./pages/PaymentMethods";
 import Notifications from "./pages/Notifications";
 import AddCredentials from "./pages/AddCredentials";
+import TaskSuggestionsPage from "./pages/TaskSuggestionsPage";
 import NotFound from "./pages/NotFound";
 import { AuthProvider } from "./contexts/AuthContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
