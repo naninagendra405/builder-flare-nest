@@ -494,7 +494,7 @@ export default function Dashboard() {
                         }
                       }}
                     >
-                      {user.role === "customer" ? "View" : "Find Work"}
+                      {user.role === "customer" ? "View" : "View & Bid"}
                     </Button>
                   </div>
                 </div>
