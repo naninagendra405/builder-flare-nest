@@ -31,6 +31,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { formatCurrency } from "@/lib/currency";
+import { RupeeIcon } from "@/components/ui/rupee-icon";
 
 export default function Dashboard() {
   const { user, logout } = useAuth();
@@ -58,7 +59,7 @@ export default function Dashboard() {
     {
       label: "Total Spent",
       value: "₹1,03,968",
-      icon: Wallet,
+      icon: RupeeIcon,
       color: "text-purple-600",
     },
     { label: "Avg Rating", value: "4.9", icon: Star, color: "text-yellow-600" },
@@ -80,7 +81,7 @@ export default function Dashboard() {
     {
       label: "Total Earned",
       value: "₹2,88,074",
-      icon: Wallet,
+      icon: RupeeIcon,
       color: "text-purple-600",
     },
     {
@@ -194,7 +195,7 @@ export default function Dashboard() {
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link to="/wallet">
-                      <Wallet className="w-4 h-4 mr-2" />
+                      <RupeeIcon className="w-4 h-4 mr-2" />
                       Wallet
                     </Link>
                   </DropdownMenuItem>
