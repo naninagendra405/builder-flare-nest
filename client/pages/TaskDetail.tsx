@@ -490,9 +490,14 @@ export default function TaskDetail() {
                           <Button size="sm" variant="outline">
                             Message
                           </Button>
-                          {isTaskOwner && (
+                          {isTaskOwner && !bid.isAccepted && (
                             <Button size="sm" onClick={() => acceptBid(bid.id)}>
                               Accept Bid
+                            </Button>
+                          )}
+                          {isTaskOwner && bid.isAccepted && (
+                            <Button size="sm" variant="outline" disabled>
+                              Accepted
                             </Button>
                           )}
                         </div>
