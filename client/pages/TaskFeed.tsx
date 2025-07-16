@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import { useTasks } from "../contexts/TaskContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -21,6 +22,13 @@ import {
 } from "@/components/ui/dialog";
 import { Slider } from "@/components/ui/slider";
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
   ArrowLeft,
   Search,
   Filter,
@@ -29,22 +37,22 @@ import {
   IndianRupee,
   Star,
   Users,
+  Heart,
+  Grid3X3,
+  List,
+  SlidersHorizontal,
+  Eye,
+  TrendingUp,
+  Zap,
+  CheckCircle,
+  AlertCircle,
   Bookmark,
   BookmarkCheck,
-  Eye,
-  MessageSquare,
-  Calendar,
-  Zap,
-  SlidersHorizontal,
-  Grid,
-  List,
-  AlertCircle,
-  CheckCircle,
-  TrendingUp,
-  Plus,
+  ChevronDown,
+  ChevronRight,
+  X,
 } from "lucide-react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { useTasks } from "../contexts/TaskContext";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 interface Task {
   id: string;
@@ -80,6 +88,7 @@ export default function TaskFeed() {
   );
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [savedTasks, setSavedTasks] = useState<string[]>([]);
+  const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState({
     category: searchParams.get("category") || "",
     minBudget: 0,
@@ -112,13 +121,13 @@ export default function TaskFeed() {
   const getUrgencyColor = (urgency: string) => {
     switch (urgency) {
       case "high":
-        return "bg-red-100 text-red-800";
+        return "bg-red-100 text-red-800 border-red-200 dark:bg-red-900/30 dark:text-red-400 dark:border-red-800";
       case "medium":
-        return "bg-yellow-100 text-yellow-800";
+        return "bg-yellow-100 text-yellow-800 border-yellow-200 dark:bg-yellow-900/30 dark:text-yellow-400 dark:border-yellow-800";
       case "low":
-        return "bg-green-100 text-green-800";
+        return "bg-green-100 text-green-800 border-green-200 dark:bg-green-900/30 dark:text-green-400 dark:border-green-800";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-gray-100 text-gray-800 border-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700";
     }
   };
 
@@ -150,10 +159,14 @@ export default function TaskFeed() {
     if (
       searchQuery &&
       !task.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
-      !task.description.toLowerCase().includes(searchQuery.toLowerCase())
+      !task.description.toLowerCase().includes(searchQuery.toLowerCase()) &&
+      !task.skillsRequired.some((skill) =>
+        skill.toLowerCase().includes(searchQuery.toLowerCase()),
+      )
     ) {
       return false;
     }
+
     if (
       filters.category &&
       filters.category !== "All" &&
@@ -161,15 +174,19 @@ export default function TaskFeed() {
     ) {
       return false;
     }
+
     if (task.budget < filters.minBudget || task.budget > filters.maxBudget) {
       return false;
     }
+
     if (filters.urgency && task.urgency !== filters.urgency) {
       return false;
     }
-    if (!filters.isRemote && task.distance && task.distance > filters.radius) {
+
+    if (filters.isRemote && !task.isRemote) {
       return false;
     }
+
     return true;
   });
 
@@ -179,356 +196,236 @@ export default function TaskFeed() {
         return b.budget - a.budget;
       case "budget-low":
         return a.budget - b.budget;
-      case "deadline":
-        if (!a.deadline) return 1;
-        if (!b.deadline) return -1;
-        return new Date(a.deadline).getTime() - new Date(b.deadline).getTime();
-      case "distance":
-        return (a.distance || 0) - (b.distance || 0);
-      default: // newest
+      case "popular":
+        return b.bidsCount - a.bidsCount;
+      case "urgent":
+        const urgencyOrder = { high: 3, medium: 2, low: 1 };
+        return urgencyOrder[b.urgency] - urgencyOrder[a.urgency];
+      default:
         return new Date(b.postedAt).getTime() - new Date(a.postedAt).getTime();
     }
   });
 
+  const activeFiltersCount = Object.values(filters).filter(
+    (value) =>
+      value !== "" &&
+      value !== 0 &&
+      value !== false &&
+      value !== 25 &&
+      value !== 1000,
+  ).length;
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/5">
-      {/* Navigation */}
-      <nav className="border-b bg-background/80 backdrop-blur-md sticky top-0 z-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
+      {/* Enhanced Header */}
+      <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50 shadow-sm">
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between mb-4">
             <div className="flex items-center space-x-4">
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => navigate("/dashboard")}
+                onClick={() => navigate(-1)}
+                className="hover:bg-gray-100 dark:hover:bg-gray-800"
               >
                 <ArrowLeft className="w-5 h-5" />
               </Button>
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                  <Zap className="w-5 h-5 text-primary-foreground" />
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <Search className="w-5 h-5 text-white" />
                 </div>
-                <span className="text-xl md:text-2xl font-bold text-primary">
-                  TaskIt
-                </span>
+                <div className="hidden sm:block">
+                  <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                    Browse Tasks
+                  </h1>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    {sortedTasks.length} tasks available
+                  </p>
+                </div>
               </div>
             </div>
-            <div className="flex items-center space-x-2">
-              <Avatar className="w-8 h-8">
-                <AvatarFallback>
-                  {user.name
-                    ?.split(" ")
-                    .map((n) => n[0])
-                    .join("") || "U"}
-                </AvatarFallback>
-              </Avatar>
-              <span className="font-medium hidden sm:block">{user.name}</span>
+
+            {/* View Mode Toggle - Desktop */}
+            <div className="hidden md:flex items-center space-x-2 bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
+              <Button
+                variant={viewMode === "grid" ? "default" : "ghost"}
+                size="sm"
+                onClick={() => setViewMode("grid")}
+                className="h-8 w-8 p-0"
+              >
+                <Grid3X3 className="w-4 h-4" />
+              </Button>
+              <Button
+                variant={viewMode === "list" ? "default" : "ghost"}
+                size="sm"
+                onClick={() => setViewMode("list")}
+                className="h-8 w-8 p-0"
+              >
+                <List className="w-4 h-4" />
+              </Button>
             </div>
           </div>
-        </div>
-      </nav>
 
-      <div className="container mx-auto px-4 py-4 md:py-8">
-        {/* Header */}
-        <div className="mb-6 md:mb-8">
-          <h1 className="text-2xl md:text-3xl font-bold">Find Tasks</h1>
-          <p className="text-muted-foreground text-sm md:text-base">
-            Discover opportunities that match your skills and schedule
-          </p>
-        </div>
-
-        {/* Search and Filters */}
-        <Card className="mb-6">
-          <CardContent className="p-4 md:p-6">
-            <div className="space-y-4">
-              {/* Search */}
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
-                <Input
-                  placeholder="Search tasks..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-12"
-                />
-              </div>
-
-              {/* Filters Row */}
-              <div className="flex flex-col sm:flex-row gap-3">
-                {/* Category Filter */}
-                <Select
-                  value={filters.category}
-                  onValueChange={(value) =>
-                    setFilters((prev) => ({ ...prev, category: value }))
-                  }
-                >
-                  <SelectTrigger className="w-full sm:w-48">
-                    <SelectValue placeholder="All Categories" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categories.map((category) => (
-                      <SelectItem key={category} value={category}>
-                        {category}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-
-                {/* Advanced Filters */}
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button variant="outline" className="w-full sm:w-auto">
-                      <SlidersHorizontal className="w-4 h-4 mr-2" />
-                      Filters
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>Advanced Filters</DialogTitle>
-                    </DialogHeader>
-                    <div className="space-y-6">
-                      <div>
-                        <label className="text-sm font-medium mb-2 block">
-                          Budget Range
-                        </label>
-                        <div className="px-3">
-                          <Slider
-                            value={[filters.minBudget, filters.maxBudget]}
-                            onValueChange={([min, max]) =>
-                              setFilters((prev) => ({
-                                ...prev,
-                                minBudget: min,
-                                maxBudget: max,
-                              }))
-                            }
-                            max={1000}
-                            step={10}
-                            className="mb-2"
-                          />
-                          <div className="flex justify-between text-sm text-muted-foreground">
-                            <span>₹{filters.minBudget}</span>
-                            <span>₹{filters.maxBudget}</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="text-sm font-medium mb-2 block">
-                          Urgency
-                        </label>
-                        <Select
-                          value={filters.urgency}
-                          onValueChange={(value) =>
-                            setFilters((prev) => ({ ...prev, urgency: value }))
-                          }
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder="Any urgency" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="">Any urgency</SelectItem>
-                            <SelectItem value="high">High</SelectItem>
-                            <SelectItem value="medium">Medium</SelectItem>
-                            <SelectItem value="low">Low</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div>
-                        <label className="text-sm font-medium mb-2 block">
-                          Distance ({filters.radius} miles)
-                        </label>
-                        <Slider
-                          value={[filters.radius]}
-                          onValueChange={([value]) =>
-                            setFilters((prev) => ({ ...prev, radius: value }))
-                          }
-                          max={50}
-                          step={5}
-                        />
-                      </div>
-                    </div>
-                  </DialogContent>
-                </Dialog>
-
-                {/* Sort */}
-                <Select value={sortBy} onValueChange={setSortBy}>
-                  <SelectTrigger className="w-full sm:w-40">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="newest">Newest</SelectItem>
-                    <SelectItem value="budget-high">
-                      Budget: High to Low
-                    </SelectItem>
-                    <SelectItem value="budget-low">
-                      Budget: Low to High
-                    </SelectItem>
-                    <SelectItem value="deadline">Deadline</SelectItem>
-                    <SelectItem value="distance">Distance</SelectItem>
-                  </SelectContent>
-                </Select>
-
-                {/* View Mode - Hidden on mobile */}
-                <div className="hidden sm:flex border rounded-lg p-1">
-                  <Button
-                    variant={viewMode === "grid" ? "default" : "ghost"}
-                    size="sm"
-                    onClick={() => setViewMode("grid")}
-                  >
-                    <Grid className="w-4 h-4" />
-                  </Button>
-                  <Button
-                    variant={viewMode === "list" ? "default" : "ghost"}
-                    size="sm"
-                    onClick={() => setViewMode("list")}
-                  >
-                    <List className="w-4 h-4" />
-                  </Button>
-                </div>
-              </div>
+          {/* Search and Filter Bar */}
+          <div className="flex items-center space-x-3">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <Input
+                placeholder="Search tasks, skills, or keywords..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 h-12 bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800"
+              />
             </div>
-          </CardContent>
-        </Card>
 
-        {/* Results Count */}
-        <div className="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <p className="text-muted-foreground">
-            {sortedTasks.length} tasks found
-          </p>
-          {user.role === "customer" && (
-            <Button variant="outline" onClick={() => navigate("/create-task")}>
-              <Plus className="w-4 h-4 mr-2" />
-              Post a Task
+            <Button
+              variant="outline"
+              onClick={() => setShowFilters(true)}
+              className="h-12 px-4 bg-white dark:bg-gray-900 relative"
+            >
+              <Filter className="w-4 h-4 mr-2" />
+              <span className="hidden sm:inline">Filters</span>
+              {activeFiltersCount > 0 && (
+                <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs bg-blue-600">
+                  {activeFiltersCount}
+                </Badge>
+              )}
             </Button>
-          )}
-        </div>
 
-        {/* Tasks Grid/List - Always grid on mobile */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-          {sortedTasks.map((task, index) => (
+            <Select value={sortBy} onValueChange={setSortBy}>
+              <SelectTrigger className="w-32 sm:w-40 h-12 bg-white dark:bg-gray-900">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="newest">Newest</SelectItem>
+                <SelectItem value="budget-high">Budget: High</SelectItem>
+                <SelectItem value="budget-low">Budget: Low</SelectItem>
+                <SelectItem value="popular">Most Popular</SelectItem>
+                <SelectItem value="urgent">Most Urgent</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+      </header>
+
+      {/* Category Pills - Mobile Optimized */}
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex overflow-x-auto space-x-3 pb-2 scrollbar-hide">
+          {categories.map((category) => (
+            <Button
+              key={category}
+              variant={
+                filters.category === category ||
+                (category === "All" && !filters.category)
+                  ? "default"
+                  : "outline"
+              }
+              size="sm"
+              onClick={() =>
+                setFilters((prev) => ({
+                  ...prev,
+                  category: category === "All" ? "" : category,
+                }))
+              }
+              className="whitespace-nowrap h-8 text-sm bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800"
+            >
+              {category}
+            </Button>
+          ))}
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 pb-8">
+        {/* Task Grid/List */}
+        <div
+          className={`${
+            viewMode === "grid"
+              ? "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"
+              : "space-y-4"
+          }`}
+        >
+          {sortedTasks.map((task) => (
             <Card
               key={task.id}
-              className="hover:shadow-md transition-shadow duration-200 cursor-pointer"
+              className="bg-white dark:bg-gray-900 border-0 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group"
               onClick={() => navigate(`/task/${task.id}`)}
             >
               <CardHeader className="pb-3">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex flex-wrap items-center gap-2 mb-2">
-                      <Badge
-                        variant="outline"
-                        className="text-xs transition-all duration-200 hover:scale-105 hover:shadow-sm"
-                      >
-                        {task.category}
-                      </Badge>
-                      <Badge
-                        className={`text-xs ${getUrgencyColor(task.urgency)} transition-all duration-200 hover:scale-105`}
-                        variant="secondary"
-                      >
-                        {task.urgency}
-                      </Badge>
-                      {task.customerVerified && (
-                        <CheckCircle className="w-4 h-4 text-green-600" />
-                      )}
-                    </div>
-                    <CardTitle className="text-base md:text-lg line-clamp-2 mb-2">
-                      {task.title}
-                    </CardTitle>
-                    <p className="text-muted-foreground text-sm line-clamp-2">
-                      {task.description}
-                    </p>
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex flex-wrap gap-2">
+                    <Badge variant="secondary" className="text-xs">
+                      {task.category}
+                    </Badge>
+                    <Badge
+                      variant="outline"
+                      className={`text-xs ${getUrgencyColor(task.urgency)}`}
+                    >
+                      {task.urgency} priority
+                    </Badge>
                   </div>
                   <Button
                     variant="ghost"
-                    size="sm"
+                    size="icon"
                     onClick={(e) => {
                       e.stopPropagation();
                       toggleSaveTask(task.id);
                     }}
-                    className="ml-2 p-2"
+                    className="h-8 w-8 opacity-60 group-hover:opacity-100 transition-opacity"
                   >
                     {savedTasks.includes(task.id) ? (
-                      <BookmarkCheck className="w-4 h-4 text-primary" />
+                      <BookmarkCheck className="w-4 h-4 text-blue-600" />
                     ) : (
                       <Bookmark className="w-4 h-4" />
                     )}
                   </Button>
                 </div>
+                <CardTitle className="text-lg line-clamp-2 group-hover:text-blue-600 transition-colors">
+                  {task.title}
+                </CardTitle>
               </CardHeader>
 
-              <CardContent className="pt-0">
+              <CardContent className="space-y-4">
+                <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-2">
+                  {task.description}
+                </p>
+
+                {/* Skills */}
+                {task.skillsRequired.length > 0 && (
+                  <div className="flex flex-wrap gap-1">
+                    {task.skillsRequired.slice(0, 3).map((skill) => (
+                      <Badge
+                        key={skill}
+                        variant="outline"
+                        className="text-xs bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-800"
+                      >
+                        {skill}
+                      </Badge>
+                    ))}
+                    {task.skillsRequired.length > 3 && (
+                      <Badge variant="outline" className="text-xs">
+                        +{task.skillsRequired.length - 3}
+                      </Badge>
+                    )}
+                  </div>
+                )}
+
+                {/* Task Details */}
                 <div className="space-y-3">
-                  {/* Budget */}
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center text-lg font-bold text-primary">
+                    <div className="flex items-center text-lg font-bold text-blue-600 dark:text-blue-400">
                       <IndianRupee className="w-5 h-5 mr-1" />₹{task.budget}
                       {task.budgetType === "hourly" ? "/hr" : ""}
                     </div>
-                    <div className="text-sm text-muted-foreground">
+                    <div className="text-sm text-gray-500 dark:text-gray-400">
                       {task.timeEstimate}
                     </div>
                   </div>
 
-                  {/* Location and Distance */}
-                  <div className="flex items-center text-sm text-muted-foreground">
-                    <MapPin className="w-4 h-4 mr-1" />
-                    {task.isRemote ? "Remote" : task.location}
-                    {task.distance && (
-                      <span className="ml-2">• {task.distance} miles away</span>
-                    )}
-                  </div>
-
-                  {/* Skills */}
-                  {task.skillsRequired.length > 0 && (
-                    <div className="flex flex-wrap gap-1">
-                      {task.skillsRequired.slice(0, 3).map((skill) => (
-                        <Badge
-                          key={skill}
-                          variant="secondary"
-                          className="text-xs"
-                        >
-                          {skill}
-                        </Badge>
-                      ))}
-                      {task.skillsRequired.length > 3 && (
-                        <Badge variant="secondary" className="text-xs">
-                          +{task.skillsRequired.length - 3} more
-                        </Badge>
-                      )}
-                    </div>
-                  )}
-
-                  {/* Customer Info */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <Avatar className="w-6 h-6">
-                        <AvatarFallback className="text-xs">
-                          {task.customerName
-                            .split(" ")
-                            .map((n) => n[0])
-                            .join("")}
-                        </AvatarFallback>
-                      </Avatar>
-                      <span className="text-sm truncate">
-                        {task.customerName}
-                      </span>
-                      <div className="flex items-center">
-                        <Star className="w-3 h-3 text-yellow-500 mr-1" />
-                        <span className="text-xs">{task.customerRating}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Stats */}
-                  <div className="flex items-center justify-between text-sm text-muted-foreground">
-                    <div className="flex items-center space-x-3">
+                  <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                    <div className="flex items-center space-x-4">
                       <span className="flex items-center">
-                        <Users className="w-3 h-3 mr-1" />
-                        {task.bidsCount}
-                      </span>
-                      <span className="flex items-center">
-                        <Eye className="w-3 h-3 mr-1" />
-                        {task.viewsCount}
+                        <MapPin className="w-3 h-3 mr-1" />
+                        {task.isRemote ? "Remote" : task.location}
                       </span>
                       <span className="flex items-center">
                         <Clock className="w-3 h-3 mr-1" />
@@ -537,36 +434,37 @@ export default function TaskFeed() {
                     </div>
                   </div>
 
-                  {/* Deadline Warning */}
-                  {task.deadline && (
-                    <div className="flex items-center text-sm text-orange-600">
-                      <AlertCircle className="w-3 h-3 mr-1" />
-                      Due: {new Date(task.deadline).toLocaleDateString()}
+                  <div className="flex items-center justify-between pt-2 border-t border-gray-100 dark:border-gray-800">
+                    <div className="flex items-center space-x-3">
+                      <Avatar className="w-8 h-8">
+                        <AvatarFallback className="text-xs bg-gray-100 dark:bg-gray-800">
+                          {task.customerName.charAt(0)}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <p className="text-sm font-medium text-gray-900 dark:text-white">
+                          {task.customerName}
+                        </p>
+                        <div className="flex items-center text-xs text-gray-500 dark:text-gray-400">
+                          <Star className="w-3 h-3 mr-1 text-yellow-500" />
+                          {task.customerRating}
+                          {task.customerVerified && (
+                            <CheckCircle className="w-3 h-3 ml-1 text-green-500" />
+                          )}
+                        </div>
+                      </div>
                     </div>
-                  )}
 
-                  {/* Action Buttons */}
-                  <div className="flex gap-2 pt-2">
-                    <Button
-                      size="sm"
-                      className="flex-1"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        navigate(`/task/${task.id}?action=bid`);
-                      }}
-                    >
-                      Place Bid
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        navigate(`/chat?task=${task.id}`);
-                      }}
-                    >
-                      <MessageSquare className="w-4 h-4" />
-                    </Button>
+                    <div className="flex items-center space-x-4 text-xs text-gray-500 dark:text-gray-400">
+                      <span className="flex items-center">
+                        <Users className="w-3 h-3 mr-1" />
+                        {task.bidsCount}
+                      </span>
+                      <span className="flex items-center">
+                        <Eye className="w-3 h-3 mr-1" />
+                        {task.viewsCount}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -576,17 +474,49 @@ export default function TaskFeed() {
 
         {/* Empty State */}
         {sortedTasks.length === 0 && (
-          <Card className="text-center py-12">
-            <CardContent>
-              <div className="text-6xl mb-4">🔍</div>
-              <h3 className="text-xl font-semibold mb-2">No tasks found</h3>
-              <p className="text-muted-foreground mb-4">
-                Try adjusting your search or filters to find more tasks
-              </p>
+          <div className="text-center py-16">
+            <div className="w-24 h-24 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Search className="w-12 h-12 text-gray-400" />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+              No tasks found
+            </h3>
+            <p className="text-gray-500 dark:text-gray-400 mb-6 max-w-md mx-auto">
+              Try adjusting your search terms or filters to find more tasks.
+            </p>
+            <Button
+              onClick={() => {
+                setSearchQuery("");
+                setFilters({
+                  category: "",
+                  minBudget: 0,
+                  maxBudget: 1000,
+                  location: "",
+                  isRemote: false,
+                  urgency: "",
+                  radius: 25,
+                });
+              }}
+            >
+              Clear All Filters
+            </Button>
+          </div>
+        )}
+      </div>
+
+      {/* Filters Dialog */}
+      <Dialog open={showFilters} onOpenChange={setShowFilters}>
+        <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center justify-between">
+              <span className="flex items-center">
+                <Filter className="w-5 h-5 mr-2" />
+                Filters
+              </span>
               <Button
-                variant="outline"
+                variant="ghost"
+                size="sm"
                 onClick={() => {
-                  setSearchQuery("");
                   setFilters({
                     category: "",
                     minBudget: 0,
@@ -598,12 +528,103 @@ export default function TaskFeed() {
                   });
                 }}
               >
-                Clear All Filters
+                Clear All
               </Button>
-            </CardContent>
-          </Card>
-        )}
-      </div>
+            </DialogTitle>
+          </DialogHeader>
+
+          <div className="space-y-6">
+            {/* Budget Range */}
+            <div>
+              <label className="text-sm font-medium mb-3 block">
+                Budget Range
+              </label>
+              <div className="space-y-3">
+                <Slider
+                  value={[filters.minBudget, filters.maxBudget]}
+                  onValueChange={([min, max]) =>
+                    setFilters((prev) => ({
+                      ...prev,
+                      minBudget: min,
+                      maxBudget: max,
+                    }))
+                  }
+                  max={2000}
+                  step={50}
+                  className="w-full"
+                />
+                <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400">
+                  <span>₹{filters.minBudget}</span>
+                  <span>₹{filters.maxBudget}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Urgency */}
+            <div>
+              <label className="text-sm font-medium mb-3 block">Urgency</label>
+              <Select
+                value={filters.urgency}
+                onValueChange={(value) =>
+                  setFilters((prev) => ({ ...prev, urgency: value }))
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Any urgency" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="">Any urgency</SelectItem>
+                  <SelectItem value="high">High</SelectItem>
+                  <SelectItem value="medium">Medium</SelectItem>
+                  <SelectItem value="low">Low</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Location */}
+            <div>
+              <label className="text-sm font-medium mb-3 block">Location</label>
+              <Input
+                placeholder="Enter city or area"
+                value={filters.location}
+                onChange={(e) =>
+                  setFilters((prev) => ({ ...prev, location: e.target.value }))
+                }
+              />
+              <div className="flex items-center space-x-2 mt-3">
+                <input
+                  type="checkbox"
+                  id="remote"
+                  checked={filters.isRemote}
+                  onChange={(e) =>
+                    setFilters((prev) => ({
+                      ...prev,
+                      isRemote: e.target.checked,
+                    }))
+                  }
+                  className="rounded border-gray-300"
+                />
+                <label htmlFor="remote" className="text-sm">
+                  Include remote tasks
+                </label>
+              </div>
+            </div>
+
+            <div className="flex space-x-3 pt-4">
+              <Button
+                variant="outline"
+                className="flex-1"
+                onClick={() => setShowFilters(false)}
+              >
+                Cancel
+              </Button>
+              <Button className="flex-1" onClick={() => setShowFilters(false)}>
+                Apply Filters
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
