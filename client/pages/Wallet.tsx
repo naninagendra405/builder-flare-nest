@@ -77,6 +77,8 @@ export default function Wallet() {
   const [showWithdraw, setShowWithdraw] = useState(false);
   const [addAmount, setAddAmount] = useState("");
   const [withdrawAmount, setWithdrawAmount] = useState("");
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("1");
+  const [isProcessing, setIsProcessing] = useState(false);
 
   if (!user) {
     navigate("/login");
