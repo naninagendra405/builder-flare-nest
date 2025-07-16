@@ -114,5 +114,132 @@
 
   body {
     @apply bg-background text-foreground;
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Mobile-optimized typography */
+  @media (max-width: 768px) {
+    body {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      line-height: 1.4;
+    }
+
+    h2 {
+      font-size: 1.25rem;
+      line-height: 1.4;
+    }
+
+    h3 {
+      font-size: 1.125rem;
+      line-height: 1.4;
+    }
+
+    /* Better button sizing for mobile */
+    button,
+    .btn {
+      min-height: 44px;
+      font-size: 14px;
+    }
+
+    /* Better input field sizing */
+    input,
+    textarea,
+    select {
+      min-height: 44px;
+      font-size: 16px; /* Prevents zoom on iOS */
+    }
+  }
+
+  /* Enhanced focus states for accessibility */
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Touch optimization */
+  @media (hover: none) and (pointer: coarse) {
+    button,
+    .btn,
+    a {
+      min-height: 44px;
+      min-width: 44px;
+    }
+  }
+
+  /* Custom scrollbar for webkit browsers */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground) / 0.3);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.5);
+  }
+
+  /* Responsive text utilities */
+  .text-responsive-sm {
+    @apply text-sm lg:text-base;
+  }
+
+  .text-responsive-base {
+    @apply text-base lg:text-lg;
+  }
+
+  .text-responsive-lg {
+    @apply text-lg lg:text-xl;
+  }
+
+  .text-responsive-xl {
+    @apply text-xl lg:text-2xl;
+  }
+
+  /* Responsive padding utilities */
+  .p-responsive {
+    @apply p-3 lg:p-4;
+  }
+
+  .px-responsive {
+    @apply px-3 lg:px-4;
+  }
+
+  .py-responsive {
+    @apply py-3 lg:py-4;
+  }
+
+  /* Mobile-first spacing */
+  .space-responsive > * + * {
+    @apply mt-3 lg:mt-4;
+  }
+
+  .gap-responsive {
+    @apply gap-3 lg:gap-4;
   }
 }
