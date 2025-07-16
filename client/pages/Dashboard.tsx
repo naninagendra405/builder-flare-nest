@@ -310,15 +310,7 @@ export default function Dashboard() {
                       <Badge variant="default" className="bg-green-600">
                         ✓ Professional Verified
                       </Badge>
-                      <Badge variant="outline">
-                        Trust Score:{" "}
-                        {user.taskerProfile.professionalCredentials?.filter(
-                          (c) => c.verified,
-                        ).length *
-                          20 +
-                          60}
-                        %
-                      </Badge>
+                      <Badge variant="outline">Trust Score: 100%</Badge>
                     </div>
                   )}
                 </div>
