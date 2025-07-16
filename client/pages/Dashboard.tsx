@@ -299,11 +299,11 @@ export default function Dashboard() {
               {recentTasks.map((task) => (
                 <div
                   key={task.id}
-                  className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors cursor-pointer"
+                  className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors cursor-pointer space-y-3 sm:space-y-0"
                 >
                   <div className="flex-1">
                     <h4 className="font-medium">{task.title}</h4>
-                    <div className="flex items-center space-x-4 mt-2 text-sm text-muted-foreground">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-4 mt-2 text-sm text-muted-foreground">
                       <span className="flex items-center">
                         <MapPin className="w-3 h-3 mr-1" />
                         {task.location}
@@ -316,12 +316,12 @@ export default function Dashboard() {
                       </p>
                     )}
                   </div>
-                  <div className="text-right">
+                  <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center text-right">
                     <div className="text-lg font-semibold text-primary">
                       {task.budget}
                     </div>
                     <Badge
-                      className={`mt-2 ${getStatusColor(task.status)}`}
+                      className={`mt-0 sm:mt-2 ${getStatusColor(task.status)}`}
                       variant="secondary"
                     >
                       {task.status.replace("_", " ")}
