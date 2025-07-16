@@ -25,7 +25,7 @@ import {
   ArrowLeft,
   Plus,
   CreditCard,
-  DollarSign,
+  IndianRupee,
   TrendingUp,
   TrendingDown,
   Clock,
@@ -172,11 +172,11 @@ export default function Wallet() {
       case "escrow_release":
         return <CheckCircle className="w-4 h-4 text-green-600" />;
       case "payment":
-        return <DollarSign className="w-4 h-4 text-blue-600" />;
+        return <IndianRupee className="w-4 h-4 text-blue-600" />;
       case "refund":
         return <TrendingUp className="w-4 h-4 text-green-600" />;
       default:
-        return <DollarSign className="w-4 h-4" />;
+        return <IndianRupee className="w-4 h-4" />;
     }
   };
 
