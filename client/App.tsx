@@ -25,31 +25,32 @@ import AIChatSupport from "./components/AIChatSupport";
 export default function App() {
   return (
     <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-            <AuthProvider>
+      <AuthProvider>
         <NotificationProvider>
           <TaskProvider>
             <BidProvider>
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/create-task" element={<CreateTask />} />
-                <Route path="/tasks" element={<TaskFeed />} />
-                <Route path="/task/:id" element={<TaskDetail />} />
-                <Route path="/chat/:chatId?" element={<Chat />} />
-                <Route path="/wallet" element={<Wallet />} />
-                <Route path="/payment-methods" element={<PaymentMethods />} />
-                <Route path="/notifications" element={<Notifications />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/add-credentials" element={<AddCredentials />} />
-                <Route path="/admin" element={<AdminDashboard />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-              <Toaster />
-              <AIChatSupport />
-            </BrowserRouter>
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/create-task" element={<CreateTask />} />
+                  <Route path="/tasks" element={<TaskFeed />} />
+                  <Route path="/task/:id" element={<TaskDetail />} />
+                  <Route path="/chat/:chatId?" element={<Chat />} />
+                  <Route path="/wallet" element={<Wallet />} />
+                  <Route path="/payment-methods" element={<PaymentMethods />} />
+                  <Route path="/notifications" element={<Notifications />} />
+                  <Route path="/profile" element={<Profile />} />
+                  <Route path="/add-credentials" element={<AddCredentials />} />
+                  <Route path="/admin" element={<AdminDashboard />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+                <Toaster />
+                <AIChatSupport />
+              </BrowserRouter>
+            </BidProvider>
           </TaskProvider>
         </NotificationProvider>
       </AuthProvider>
