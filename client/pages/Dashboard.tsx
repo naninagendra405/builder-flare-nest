@@ -149,6 +149,20 @@ export default function Dashboard() {
     }
   }
 
+  const handleCancelTask = (taskId: string) => {
+    const success = cancelTask(taskId, user.id || "");
+    if (success) {
+      alert(
+        "Task cancelled successfully. It will no longer be visible to taskers.",
+      );
+    } else {
+      alert(
+        "Cannot cancel this task. Tasks with bids or in progress cannot be cancelled.",
+      );
+    }
+    setTaskToCancel(null);
+  };
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case "completed":
