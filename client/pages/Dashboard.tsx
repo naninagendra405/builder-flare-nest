@@ -116,14 +116,18 @@ export default function Dashboard() {
     customer: task.customerName,
   }));
 
-  const availableTasks = allTasks.slice(0, 3).map((task) => ({
-    id: task.id,
-    title: task.title,
-    budget: `₹${task.budget}`,
-    location: task.location,
-    time: getTimeAgo(task.postedAt),
-    bids: task.bidsCount,
-  }));
+  const availableTasks = (
+    user.role === "customer" ? allTasks : availableTasksForTaskers
+  )
+    .slice(0, 3)
+    .map((task) => ({
+      id: task.id,
+      title: task.title,
+      budget: `₹${task.budget}`,
+      location: task.location,
+      time: getTimeAgo(task.postedAt),
+      bids: task.bidsCount,
+    }));
 
   function getTimeAgo(dateString: string) {
     const date = new Date(dateString);
