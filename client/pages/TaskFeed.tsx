@@ -272,11 +272,9 @@ export default function TaskFeed() {
 
       <div className="container mx-auto px-4 py-4 md:py-8">
         {/* Header */}
-        <div className="mb-6 md:mb-8 animate-in slide-in-from-left duration-700 delay-200">
-          <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent animate-in slide-in-from-left duration-500 delay-300">
-            Find Tasks
-          </h1>
-          <p className="text-muted-foreground text-sm md:text-base animate-in slide-in-from-left duration-500 delay-500">
+        <div className="mb-6 md:mb-8">
+          <h1 className="text-2xl md:text-3xl font-bold">Find Tasks</h1>
+          <p className="text-muted-foreground text-sm md:text-base">
             Discover opportunities that match your skills and schedule
           </p>
         </div>
