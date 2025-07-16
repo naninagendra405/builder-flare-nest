@@ -288,9 +288,9 @@ export default function TaskDetail() {
             {/* Task Header */}
             <Card>
               <CardContent className="p-6">
-                <div className="flex items-start justify-between mb-4">
+                <div className="flex flex-col lg:flex-row lg:items-start justify-between mb-4 space-y-4 lg:space-y-0">
                   <div className="flex-1">
-                    <div className="flex items-center space-x-2 mb-3">
+                    <div className="flex flex-wrap items-center gap-2 mb-3">
                       <Badge variant="outline">{task.category}</Badge>
                       <Badge
                         className={getUrgencyColor(task.urgency)}
@@ -300,8 +300,10 @@ export default function TaskDetail() {
                       </Badge>
                       <Badge variant="secondary">{task.status}</Badge>
                     </div>
-                    <h1 className="text-3xl font-bold mb-4">{task.title}</h1>
-                    <div className="flex items-center space-x-6 text-sm text-muted-foreground">
+                    <h1 className="text-2xl md:text-3xl font-bold mb-4">
+                      {task.title}
+                    </h1>
+                    <div className="flex flex-wrap items-center gap-3 md:gap-6 text-sm text-muted-foreground">
                       <span className="flex items-center">
                         <MapPin className="w-4 h-4 mr-1" />
                         {task.isRemote ? "Remote" : task.location}
@@ -320,8 +322,8 @@ export default function TaskDetail() {
                       </span>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-3xl font-bold text-primary mb-2">
+                  <div className="text-left lg:text-right">
+                    <div className="text-2xl md:text-3xl font-bold text-primary mb-2">
                       ${task.budget}
                       {task.budgetType === "hourly" ? "/hr" : ""}
                     </div>
