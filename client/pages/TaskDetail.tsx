@@ -48,6 +48,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useTasks } from "../contexts/TaskContext";
 
 interface Bid {
   id: string;
