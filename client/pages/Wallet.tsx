@@ -126,9 +126,10 @@ export default function Wallet() {
   const handleAddFunds = async () => {
     if (!addAmount || parseFloat(addAmount) <= 0) {
       addNotification({
-        type: "error",
+        type: "system",
         title: "Invalid Amount",
         message: "Please enter a valid amount greater than 0.",
+        priority: "medium",
       });
       return;
     }
