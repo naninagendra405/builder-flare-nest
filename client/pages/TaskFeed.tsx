@@ -44,6 +44,7 @@ import {
   Plus,
 } from "lucide-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { useTasks } from "../contexts/TaskContext";
 
 interface Task {
   id: string;
