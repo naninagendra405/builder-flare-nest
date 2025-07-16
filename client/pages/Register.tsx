@@ -570,7 +570,7 @@ export default function Register() {
             <Input
               id="hourlyRate"
               type="number"
-              placeholder="25"
+              placeholder="2083"
               value={taskerProfile.hourlyRate}
               onChange={(e) =>
                 setTaskerProfile((prev) => ({
