@@ -31,6 +31,7 @@ interface TaskContextType {
     task: Omit<Task, "id" | "postedAt" | "bidsCount" | "viewsCount" | "status">,
   ) => void;
   updateTask: (id: string, updates: Partial<Task>) => void;
+  cancelTask: (id: string, userId: string) => boolean;
   getTasksByUser: (userId: string) => Task[];
   getAllTasks: () => Task[];
 }
@@ -141,6 +142,29 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
     );
   };
 
+  const cancelTask = (id: string, userId: string): boolean => {
+    const task = tasks.find((t) => t.id === id);
+
+    // Check if task exists and belongs to the user
+    if (!task || task.customerId !== userId) {
+      return false;
+    }
+
+    // Check if task can be cancelled (only open tasks with no bids)
+    if (task.status !== "open" || task.bidsCount > 0) {
+      return false;
+    }
+
+    // Cancel the task
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === id ? { ...task, status: "cancelled" as const } : task,
+      ),
+    );
+
+    return true;
+  };
+
   const getTasksByUser = (userId: string) => {
     return tasks.filter((task) => task.customerId === userId);
   };
@@ -155,6 +179,7 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
         tasks,
         addTask,
         updateTask,
+        cancelTask,
         getTasksByUser,
         getAllTasks,
       }}
