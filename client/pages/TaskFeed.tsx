@@ -68,7 +68,6 @@ interface Task {
   images: string[];
   timeEstimate: string;
   customerVerified: boolean;
-  distance?: number;
 }
 
 export default function TaskFeed() {
