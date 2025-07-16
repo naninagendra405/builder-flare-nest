@@ -308,7 +308,7 @@ export default function TaskDetail() {
                   </div>
                   <div className="text-left lg:text-right">
                     <div className="text-2xl md:text-3xl font-bold text-primary mb-2">
-                      ${task.budget}
+                      ₹{task.budget}
                       {task.budgetType === "hourly" ? "/hr" : ""}
                     </div>
                     <div className="text-sm text-muted-foreground">
@@ -686,7 +686,7 @@ export default function TaskDetail() {
                 <li>• Be competitive but fair with your pricing</li>
                 <li>• Highlight your relevant experience</li>
                 <li>• Ask clarifying questions if needed</li>
-                <li>• Be realistic about delivery times</li>
+                <li>�� Be realistic about delivery times</li>
               </ul>
             </div>
 
