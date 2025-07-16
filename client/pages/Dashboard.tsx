@@ -480,7 +480,7 @@ export default function Dashboard() {
                   onClick={() => navigate(`/task/${task.id}`)}
                 >
                   <div className="flex-1 min-w-0 space-y-1">
-                    <h4 className="font-medium text-gray-900 dark:text-white truncate">
+                    <h4 className="font-medium text-gray-900 dark:text-white group-hover:text-green-700 dark:group-hover:text-green-300 transition-colors truncate">
                       {task.title}
                     </h4>
                     <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
