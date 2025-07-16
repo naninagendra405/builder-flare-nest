@@ -399,7 +399,17 @@ export default function Dashboard() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              {recentTasks.map((task) => (
+                            {recentTasks.length === 0 && user.role === "tasker" ? (
+                <div className="text-center py-8">
+                  <p className="text-muted-foreground mb-4">
+                    No assigned tasks yet. Start by browsing available work!
+                  </p>
+                  <Button asChild variant="outline">
+                    <Link to="/tasks">Browse Available Tasks</Link>
+                  </Button>
+                </div>
+              ) : (
+                recentTasks.map((task) => (
                 <div
                   key={task.id}
                   className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors cursor-pointer space-y-3 sm:space-y-0"
