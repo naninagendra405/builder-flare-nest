@@ -283,7 +283,6 @@ export default function TaskWorkflow({ task }: TaskWorkflowProps) {
                   onClick={handleMarkCompleted}
                   className="w-full"
                   disabled={
-                    task.status === "completed" ||
                     (isCustomer && task.customerCompleted) ||
                     (isTasker && task.taskerCompleted)
                   }
