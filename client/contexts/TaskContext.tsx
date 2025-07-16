@@ -167,7 +167,7 @@ const defaultTasks: Task[] = [
     viewsCount: 89,
     images: [],
     timeEstimate: "1-2 days",
-    status: "in_progress",
+    status: "bid_accepted",
     instructions: "Please backup the site before making changes.",
     assignedTaskerId: "demo-tasker",
     assignedTaskerName: "John Smith",
