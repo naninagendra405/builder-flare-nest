@@ -1014,10 +1014,13 @@ export default function Register() {
         <Card className="shadow-xl border-0 bg-card/80 backdrop-blur-sm">
           <CardHeader className="space-y-1 text-center">
             <div className="flex items-center justify-center space-x-2 mb-4">
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                <Home className="w-6 h-6 text-primary-foreground" />
+              <div className="w-10 h-10 flex items-center justify-center">
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets%2Fb7fcb38896684c25a67a71f6b5b0365e%2Fc94f508bd53e4adda6534f00e8c18f19?format=webp&width=800"
+                  alt="TaskIt Logo"
+                  className="w-10 h-10 object-contain"
+                />
               </div>
-              <span className="text-2xl font-bold text-primary">TaskIt</span>
             </div>
 
             {role === "tasker" && (
