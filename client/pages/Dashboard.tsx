@@ -94,9 +94,7 @@ export default function Dashboard() {
   const userTasks =
     user.role === "customer"
       ? getTasksByUser(user.id || "")
-      : getAllTasks().filter(
-          (task) => task.status === "in_progress" || task.status === "open",
-        );
+      : getTasksByTasker(user.id || "");
   const allTasks = getAllTasks();
 
   // Format tasks for display
