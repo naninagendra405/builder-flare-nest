@@ -90,9 +90,13 @@ export default function Dashboard() {
     },
   ];
 
-  // Get user's tasks if customer, or available tasks if tasker
+  // Get user's tasks - customers see their posted tasks, taskers see tasks they're working on
   const userTasks =
-    user.role === "customer" ? getTasksByUser(user.id || "") : [];
+    user.role === "customer"
+      ? getTasksByUser(user.id || "")
+      : getAllTasks().filter(
+          (task) => task.status === "in_progress" || task.status === "open",
+        );
   const allTasks = getAllTasks();
 
   // Format tasks for display
