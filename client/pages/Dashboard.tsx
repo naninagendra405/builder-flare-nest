@@ -67,6 +67,11 @@ export default function Dashboard() {
     navigate("/");
   };
 
+  // Extract first name for nickname display
+  const getUserNickname = (fullName: string) => {
+    return fullName.split(" ")[0];
+  };
+
   const userTasks = getTasksByUser(user.id);
   const allTasks = getAllTasks();
 
