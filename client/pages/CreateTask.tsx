@@ -201,17 +201,40 @@ export default function CreateTask() {
 
   const handleSubmit = async () => {
     try {
-      // TODO: Submit task to backend
-      console.log("Submitting task:", form);
+      // Create task object
+      const taskData = {
+        title: form.title,
+        description: form.description,
+        category: form.category,
+        budget: parseFloat(form.budget),
+        budgetType: form.budgetType as "fixed" | "hourly",
+        location: form.isRemote ? "Remote" : form.location,
+        isRemote: form.isRemote,
+        customerName: user?.name || "Unknown User",
+        customerId: user?.id || "unknown",
+        customerRating: user?.rating || 4.5,
+        customerVerified: user?.verificationStatus === "verified",
+        deadline: form.deadline,
+        urgency: form.urgency,
+        skillsRequired: form.skillsRequired,
+        images: form.images.map(() => "/placeholder.svg"), // Convert File objects to strings for demo
+        timeEstimate: form.timeEstimate,
+        instructions: form.instructions,
+      };
 
       // Mock API call
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      // Show success message
-      alert("🎉 Task posted successfully! You'll start receiving bids soon.");
+      // Add task to context
+      addTask(taskData);
 
-      // Navigate to tasks page to see the posted task
-      navigate("/tasks");
+      // Show success message
+      alert(
+        "🎉 Task posted successfully! You can now see it in your dashboard and taskers can bid on it.",
+      );
+
+      // Navigate to dashboard to see the posted task
+      navigate("/dashboard");
     } catch (error) {
       alert("Failed to post task. Please try again.");
     }
