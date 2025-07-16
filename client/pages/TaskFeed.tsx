@@ -79,7 +79,7 @@ export default function TaskFeed() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [savedTasks, setSavedTasks] = useState<string[]>([]);
   const [filters, setFilters] = useState({
-    category: "",
+    category: searchParams.get("category") || "",
     minBudget: 0,
     maxBudget: 1000,
     location: "",
