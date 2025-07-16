@@ -455,8 +455,28 @@ export default function Wallet() {
                     Available: ${balance.toFixed(2)}
                   </p>
                 </div>
-                <Button className="w-full">
-                  Withdraw ${withdrawAmount || "0.00"}
+
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                  <p className="text-sm text-yellow-800">
+                    ⚠️ <strong>Withdrawal Processing:</strong> Funds will be
+                    transferred to your default payment method within 3-5
+                    business days.
+                  </p>
+                </div>
+
+                <Button
+                  className="w-full"
+                  onClick={handleWithdraw}
+                  disabled={
+                    !withdrawAmount ||
+                    parseFloat(withdrawAmount) <= 0 ||
+                    parseFloat(withdrawAmount) > balance ||
+                    isProcessing
+                  }
+                >
+                  {isProcessing
+                    ? "Processing..."
+                    : `Withdraw $${withdrawAmount || "0.00"}`}
                 </Button>
               </div>
             </DialogContent>
