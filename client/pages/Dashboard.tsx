@@ -476,7 +476,7 @@ export default function Dashboard() {
               {availableTasks.map((task) => (
                 <div
                   key={task.id}
-                  className="flex items-center justify-between p-4 rounded-lg border border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
+                  className="flex items-center justify-between p-4 rounded-lg border border-gray-100 dark:border-gray-800 hover:bg-green-50 dark:hover:bg-green-900/20 hover:border-green-200 dark:hover:border-green-800 transition-all duration-300 cursor-pointer group hover:shadow-md"
                   onClick={() => navigate(`/task/${task.id}`)}
                 >
                   <div className="flex-1 min-w-0 space-y-1">
