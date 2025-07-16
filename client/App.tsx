@@ -17,6 +17,7 @@ import Notifications from "./pages/Notifications";
 import NotFound from "./pages/NotFound";
 import { AuthProvider } from "./contexts/AuthContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
+import { TaskProvider } from "./contexts/TaskContext";
 import AIChatSupport from "./components/AIChatSupport";
 
 export default function App() {
