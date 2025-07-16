@@ -38,6 +38,7 @@ import { useNavigate } from "react-router-dom";
 import { getAIPricingSuggestion } from "../utils/aiPricing";
 import { useTasks } from "../contexts/TaskContext";
 import { formatCurrency } from "@/lib/currency";
+import { RupeeIcon } from "@/components/ui/rupee-icon";
 
 interface TaskForm {
   title: string;
@@ -448,7 +449,7 @@ export default function CreateTask() {
                     <div className="flex-1">
                       <Label htmlFor="budget">Budget *</Label>
                       <div className="relative">
-                        <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
+                        <RupeeIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
                         <Input
                           id="budget"
                           type="number"
