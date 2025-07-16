@@ -25,9 +25,10 @@ import AIChatSupport from "./components/AIChatSupport";
 export default function App() {
   return (
     <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-      <AuthProvider>
+            <AuthProvider>
         <NotificationProvider>
           <TaskProvider>
+            <BidProvider>
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<Index />} />
