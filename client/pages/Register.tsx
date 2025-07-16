@@ -292,6 +292,7 @@ export default function Register() {
         name,
         role,
         role === "tasker" ? taskerProfile : undefined,
+        phone,
       );
       navigate("/dashboard");
     } catch (err) {
