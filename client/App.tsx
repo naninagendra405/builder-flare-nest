@@ -42,6 +42,7 @@ export default function App() {
               <Route path="*" element={<NotFound />} />
             </Routes>
             <Toaster />
+            <AIChatSupport />
           </BrowserRouter>
         </NotificationProvider>
       </AuthProvider>
