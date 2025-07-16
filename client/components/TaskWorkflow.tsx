@@ -58,7 +58,7 @@ export default function TaskWorkflow({ task }: TaskWorkflowProps) {
   };
 
   const handleMarkCompleted = () => {
-    markTaskCompleted(task.id, user.id, user.role);
+    markTaskCompleted(task.id, user.id, user.role as "customer" | "tasker");
 
     const otherUserRole = user.role === "customer" ? "tasker" : "customer";
     const otherUserName =
