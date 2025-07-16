@@ -27,7 +27,6 @@ import {
   AlertCircle,
   CheckCircle,
   Home,
-  Home,
   Monitor,
   Wrench,
   Briefcase,
