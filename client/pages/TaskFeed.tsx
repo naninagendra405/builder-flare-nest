@@ -449,10 +449,11 @@ export default function TaskFeed() {
 
         {/* Tasks Grid/List - Always grid on mobile */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-          {sortedTasks.map((task) => (
+          {sortedTasks.map((task, index) => (
             <Card
               key={task.id}
-              className="hover:shadow-lg transition-all cursor-pointer"
+              className="group hover:shadow-xl hover:shadow-primary/20 transition-all duration-300 cursor-pointer transform hover:scale-[1.02] hover:-translate-y-1 animate-in slide-in-from-bottom duration-500"
+              style={{ animationDelay: `${index * 100}ms` }}
               onClick={() => navigate(`/task/${task.id}`)}
             >
               <CardHeader className="pb-3">
