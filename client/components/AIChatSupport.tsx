@@ -39,7 +39,7 @@ interface QuickAction {
 const quickActions: QuickAction[] = [
   {
     id: "payment-help",
-    text: "Help with payments",
+    text: "Help with payment",
     category: "Payment",
     icon: CreditCard,
   },
