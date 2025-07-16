@@ -54,6 +54,7 @@ import {
   Activity,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { formatCurrency } from "@/lib/currency";
 
 interface User {
   id: string;
@@ -534,7 +535,7 @@ export default function AdminDashboard() {
                           </Badge>
                         </TableCell>
                         <TableCell className="font-medium">
-                          ${task.budget}
+                          {formatCurrency(task.budget)}
                         </TableCell>
                         <TableCell>{task.customerName}</TableCell>
                         <TableCell>{task.taskerName || "N/A"}</TableCell>
@@ -612,7 +613,7 @@ export default function AdminDashboard() {
                         </div>
                         <div>
                           <span className="text-muted-foreground">Amount:</span>{" "}
-                          ${dispute.amount}
+                          {formatCurrency(dispute.amount)}
                         </div>
                         <div>
                           <span className="text-muted-foreground">Date:</span>{" "}
@@ -801,7 +802,7 @@ export default function AdminDashboard() {
                           <div className="flex justify-between">
                             <span>Total Earned:</span>
                             <span className="font-medium">
-                              ${selectedUser.totalEarned}
+                              {formatCurrency(selectedUser.totalEarned)}
                             </span>
                           </div>
                         )}
@@ -809,7 +810,7 @@ export default function AdminDashboard() {
                           <div className="flex justify-between">
                             <span>Total Spent:</span>
                             <span className="font-medium">
-                              ${selectedUser.totalSpent}
+                              {formatCurrency(selectedUser.totalSpent)}
                             </span>
                           </div>
                         )}
