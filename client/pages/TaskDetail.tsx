@@ -410,15 +410,12 @@ export default function TaskDetail() {
             )}
 
             {/* Bids Section */}
-            <Card className="animate-in slide-in-from-left duration-700 delay-500">
+            <Card>
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
                   Bids ({bids.length})
                   {canUserBid && (
-                    <Button
-                      onClick={() => setShowBidDialog(true)}
-                      className="hover:scale-105 transition-transform duration-200 animate-pulse"
-                    >
+                    <Button onClick={() => setShowBidDialog(true)}>
                       Place Bid
                     </Button>
                   )}
@@ -429,8 +426,7 @@ export default function TaskDetail() {
                   {bids.map((bid, index) => (
                     <div
                       key={bid.id}
-                      className="border rounded-lg p-4 hover:bg-muted/50 hover:shadow-md transition-all duration-300 transform hover:scale-[1.02] animate-in slide-in-from-bottom duration-500"
-                      style={{ animationDelay: `${index * 100 + 600}ms` }}
+                      className="border rounded-lg p-4 hover:bg-muted/50 transition-colors duration-200"
                     >
                       <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-3 space-y-3 sm:space-y-0">
                         <div className="flex items-center space-x-3 flex-1">
