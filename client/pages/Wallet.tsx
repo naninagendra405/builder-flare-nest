@@ -315,51 +315,55 @@ export default function Wallet() {
         </div>
 
         {/* Balance Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
-          <Card className="border-2 border-primary/20">
-            <CardHeader>
-              <CardTitle className="text-lg flex items-center">
-                <RupeeIcon className="w-5 h-5 mr-2 text-primary" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6 mb-6 md:mb-8">
+          <Card className="border-2 border-primary/20 sm:col-span-2 lg:col-span-1">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-base sm:text-lg flex items-center">
+                <RupeeIcon className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-primary" />
                 Available Balance
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-primary">
+            <CardContent className="pt-0">
+              <div className="text-2xl sm:text-3xl font-bold text-primary">
                 {formatCurrency(balance)}
               </div>
-              <p className="text-sm text-muted-foreground mt-2">Ready to use</p>
+              <p className="text-xs sm:text-sm text-muted-foreground mt-2">
+                Ready to use
+              </p>
             </CardContent>
           </Card>
 
           <Card>
-            <CardHeader>
-              <CardTitle className="text-lg flex items-center">
-                <Shield className="w-5 h-5 mr-2 text-yellow-600" />
+            <CardHeader className="pb-3">
+              <CardTitle className="text-base sm:text-lg flex items-center">
+                <Shield className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-yellow-600" />
                 In Escrow
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-yellow-600">
+            <CardContent className="pt-0">
+              <div className="text-2xl sm:text-3xl font-bold text-yellow-600">
                 {formatCurrency(escrowBalance)}
               </div>
-              <p className="text-sm text-muted-foreground mt-2">
+              <p className="text-xs sm:text-sm text-muted-foreground mt-2">
                 Held for active tasks
               </p>
             </CardContent>
           </Card>
 
           <Card>
-            <CardHeader>
-              <CardTitle className="text-lg flex items-center">
-                <Clock className="w-5 h-5 mr-2 text-blue-600" />
+            <CardHeader className="pb-3">
+              <CardTitle className="text-base sm:text-lg flex items-center">
+                <Clock className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-blue-600" />
                 Pending
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-blue-600">
+            <CardContent className="pt-0">
+              <div className="text-2xl sm:text-3xl font-bold text-blue-600">
                 {formatCurrency(pendingBalance)}
               </div>
-              <p className="text-sm text-muted-foreground mt-2">Processing</p>
+              <p className="text-xs sm:text-sm text-muted-foreground mt-2">
+                Processing
+              </p>
             </CardContent>
           </Card>
         </div>
