@@ -137,7 +137,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         };
       } else {
         mockUser = {
-          id: "1",
+          id: email.includes("admin") ? "admin_1" : "customer_1",
           email,
           name: email.split("@")[0],
           role: email.includes("admin") ? "admin" : "customer",
