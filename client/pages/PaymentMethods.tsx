@@ -46,12 +46,6 @@ export default function PaymentMethods() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [showAddCard, setShowAddCard] = useState(false);
-
-  if (!user) {
-    navigate("/login");
-    return null;
-  }
-
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([
     {
       id: "1",
