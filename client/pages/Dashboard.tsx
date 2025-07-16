@@ -272,8 +272,7 @@ export default function Dashboard() {
             return (
               <Card
                 key={index}
-                className="hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 transform hover:scale-105 animate-in slide-in-from-bottom duration-500"
-                style={{ animationDelay: `${index * 100 + 300}ms` }}
+                className="hover:shadow-md transition-shadow duration-200"
               >
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
@@ -281,18 +280,9 @@ export default function Dashboard() {
                       <p className="text-sm text-muted-foreground">
                         {stat.label}
                       </p>
-                      <p className="text-2xl font-bold animate-in zoom-in duration-700 delay-700">
-                        {stat.value}
-                      </p>
+                      <p className="text-2xl font-bold">{stat.value}</p>
                     </div>
-                    <Icon
-                      className={`w-8 h-8 ${stat.color} animate-bounce`}
-                      style={{
-                        animationDelay: `${index * 200 + 800}ms`,
-                        animationDuration: "1s",
-                        animationIterationCount: "3",
-                      }}
-                    />
+                    <Icon className={`w-8 h-8 ${stat.color}`} />
                   </div>
                 </CardContent>
               </Card>
