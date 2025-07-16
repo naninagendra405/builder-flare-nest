@@ -561,7 +561,9 @@ export default function TaskFeed() {
                         navigate("/task-suggestions");
                       }}
                     >
-                      Get Task Ideas
+                      {user.role === "customer"
+                        ? "Get Task Ideas"
+                        : "Find More Work"}
                     </Button>
                     <Button
                       size="sm"
