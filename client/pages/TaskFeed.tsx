@@ -460,20 +460,23 @@ export default function TaskFeed() {
                 <div className="flex items-start justify-between">
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-wrap items-center gap-2 mb-2">
-                      <Badge variant="outline" className="text-xs">
+                      <Badge
+                        variant="outline"
+                        className="text-xs transition-all duration-200 hover:scale-105 hover:shadow-sm"
+                      >
                         {task.category}
                       </Badge>
                       <Badge
-                        className={`text-xs ${getUrgencyColor(task.urgency)}`}
+                        className={`text-xs ${getUrgencyColor(task.urgency)} transition-all duration-200 hover:scale-105`}
                         variant="secondary"
                       >
                         {task.urgency}
                       </Badge>
                       {task.customerVerified && (
-                        <CheckCircle className="w-4 h-4 text-green-600" />
+                        <CheckCircle className="w-4 h-4 text-green-600 animate-pulse" />
                       )}
                     </div>
-                    <CardTitle className="text-base md:text-lg line-clamp-2 mb-2">
+                    <CardTitle className="text-base md:text-lg line-clamp-2 mb-2 group-hover:text-primary transition-colors duration-200">
                       {task.title}
                     </CardTitle>
                     <p className="text-muted-foreground text-sm line-clamp-2">
