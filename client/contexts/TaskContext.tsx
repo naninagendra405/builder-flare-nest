@@ -21,12 +21,27 @@ export interface Task {
   viewsCount: number;
   images: string[];
   timeEstimate: string;
-  status: "open" | "in_progress" | "completed" | "cancelled";
+  status:
+    | "open"
+    | "bid_accepted"
+    | "approved"
+    | "in_progress"
+    | "completed"
+    | "cancelled";
   instructions?: string;
   distance?: number;
   assignedTaskerId?: string;
   assignedTaskerName?: string;
   acceptedBidId?: string;
+  escrowAmount?: number;
+  escrowStatus?: "pending" | "held" | "released" | "refunded";
+  customerApproval?: boolean;
+  taskerCompleted?: boolean;
+  customerCompleted?: boolean;
+  completedAt?: string;
+  paymentReleased?: boolean;
+  adminCommission?: number;
+  taskerPayment?: number;
 }
 
 interface TaskContextType {
