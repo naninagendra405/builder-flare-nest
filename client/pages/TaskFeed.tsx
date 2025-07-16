@@ -57,6 +57,7 @@ interface Task {
   location: string;
   isRemote: boolean;
   customerName: string;
+  distance?: number;
   customerRating: number;
   postedAt: string;
   deadline?: string;
