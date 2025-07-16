@@ -26,7 +26,7 @@ import {
   Filter,
   MapPin,
   Clock,
-  DollarSign,
+  IndianRupee,
   Star,
   Users,
   Bookmark,
