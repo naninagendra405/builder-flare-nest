@@ -167,9 +167,10 @@ export default function Wallet() {
       setAddAmount("");
     } catch (error) {
       addNotification({
-        type: "error",
+        type: "system",
         title: "Payment Failed",
         message: "Failed to add funds. Please try again.",
+        priority: "high",
       });
     } finally {
       setIsProcessing(false);
