@@ -62,6 +62,7 @@ export interface Task {
 
 interface TaskContextType {
   tasks: Task[];
+  bids: Bid[];
   addTask: (
     task: Omit<Task, "id" | "postedAt" | "bidsCount" | "viewsCount" | "status">,
   ) => void;
@@ -82,7 +83,11 @@ interface TaskContextType {
     userRole: "customer" | "tasker",
   ) => void;
   releasePayment: (taskId: string) => void;
-  placeBid: (taskId: string) => void;
+  placeBid: (
+    taskId: string,
+    bidData: Omit<Bid, "id" | "taskId" | "submittedAt">,
+  ) => void;
+  getBidsForTask: (taskId: string) => Bid[];
 }
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
