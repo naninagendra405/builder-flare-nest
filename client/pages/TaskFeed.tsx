@@ -266,15 +266,20 @@ export default function TaskFeed() {
           <CardContent className="p-4 md:p-6">
             <div className="space-y-4">
               {/* Search */}
-              <div className="relative">
+              <form onSubmit={(e) => e.preventDefault()} className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
                 <Input
-                  placeholder="Search tasks..."
+                  placeholder="Search tasks by title or description..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-12"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                    }
+                  }}
                 />
-              </div>
+              </form>
 
               {/* Filters Row */}
               <div className="flex flex-col sm:flex-row gap-3">
