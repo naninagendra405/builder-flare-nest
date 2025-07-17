@@ -44,14 +44,28 @@ export default function TaskWorkflow({ task }: TaskWorkflowProps) {
   const handleApproveTask = () => {
     approveTaskAndHoldEscrow(task.id);
 
-    // Notify tasker
+    // Notify tasker about task approval
+    if (task.assignedTaskerId) {
+      addNotificationForUser(task.assignedTaskerId, {
+        type: "task_update",
+        title: "🎉 Task Approved - Start Working!",
+        message: `"${task.title}" has been approved! Payment of ₹${task.budget} is now held in escrow. You can start working!`,
+        priority: "high",
+        taskId: task.id,
+        fromUser: user.name,
+        actionUrl: `/task/${task.id}`,
+      });
+    }
+
+    // Notify customer (current user) about successful approval
     addNotification({
       type: "task_update",
-      title: "Task Approved!",
-      message: `"${task.title}" has been approved by the customer. Payment is now held in escrow. You can start working!`,
-      priority: "high",
+      title: "Task Approved Successfully",
+      message: `"${task.title}" has been approved. Payment is now held in escrow and ${task.assignedTaskerName} can start working.`,
+      priority: "medium",
       taskId: task.id,
-      fromUser: user.name,
+      fromUser: "TaskIt System",
+      actionUrl: `/task/${task.id}`,
     });
 
     setShowApprovalDialog(false);
@@ -63,27 +77,59 @@ export default function TaskWorkflow({ task }: TaskWorkflowProps) {
     const otherUserRole = user.role === "customer" ? "tasker" : "customer";
     const otherUserName =
       user.role === "customer" ? task.assignedTaskerName : task.customerName;
+    const otherUserId =
+      user.role === "customer" ? task.assignedTaskerId : task.customerId;
 
+    // Notify the other user about completion
+    if (otherUserId) {
+      addNotificationForUser(otherUserId, {
+        type: "task_update",
+        title: "Task Marked as Completed",
+        message: `"${task.title}" has been marked as completed by the ${user.role}. Please confirm to finalize and release payment.`,
+        priority: "high",
+        taskId: task.id,
+        fromUser: user.name,
+        actionUrl: `/task/${task.id}`,
+      });
+    }
+
+    // Notify current user
     addNotification({
       type: "task_update",
-      title: "Task Completion Marked",
-      message: `"${task.title}" has been marked as completed by the ${user.role}. Waiting for ${otherUserRole} confirmation.`,
-      priority: "high",
+      title: "Completion Marked",
+      message: `You've marked "${task.title}" as completed. Waiting for ${otherUserRole} confirmation.`,
+      priority: "medium",
       taskId: task.id,
-      fromUser: user.name,
+      fromUser: "TaskIt System",
+      actionUrl: `/task/${task.id}`,
     });
   };
 
   const handleReleasePayment = () => {
     releasePayment(task.id);
 
+    // Notify tasker about payment release
+    if (task.assignedTaskerId) {
+      addNotificationForUser(task.assignedTaskerId, {
+        type: "payment",
+        title: "💰 Payment Released!",
+        message: `Payment of ₹${task.taskerPayment} has been released for "${task.title}". Funds will appear in your wallet shortly.`,
+        priority: "high",
+        taskId: task.id,
+        fromUser: "TaskIt System",
+        actionUrl: "/wallet",
+      });
+    }
+
+    // Notify customer about payment release
     addNotification({
       type: "payment",
-      title: "Payment Released!",
+      title: "Payment Released Successfully",
       message: `Payment of ₹${task.taskerPayment} has been released to ${task.assignedTaskerName} for "${task.title}".`,
-      priority: "high",
+      priority: "medium",
       taskId: task.id,
       fromUser: "TaskIt System",
+      actionUrl: `/task/${task.id}`,
     });
   };
 
