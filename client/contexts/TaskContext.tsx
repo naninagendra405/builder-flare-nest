@@ -461,7 +461,19 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
     return tasks.filter((task) => task.assignedTaskerId === taskerId);
   };
 
-  const placeBid = (taskId: string) => {
+  const placeBid = (
+    taskId: string,
+    bidData: Omit<Bid, "id" | "taskId" | "submittedAt">,
+  ) => {
+    const newBid: Bid = {
+      ...bidData,
+      id: `bid_${Date.now()}`,
+      taskId: taskId,
+      submittedAt: new Date().toISOString(),
+    };
+
+    setBids((prev) => [newBid, ...prev]);
+
     setTasks((prev) =>
       prev.map((task) =>
         task.id === taskId
@@ -472,6 +484,10 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
           : task,
       ),
     );
+  };
+
+  const getBidsForTask = (taskId: string) => {
+    return bids.filter((bid) => bid.taskId === taskId);
   };
 
   return (
