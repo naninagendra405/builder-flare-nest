@@ -48,7 +48,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { useTasks } from "../contexts/TaskContext";
+import { useTasks, type Bid } from "../contexts/TaskContext";
 import { useNotifications } from "../contexts/NotificationContext";
 import TaskWorkflow from "../components/TaskWorkflow";
 
