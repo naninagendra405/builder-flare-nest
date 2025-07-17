@@ -130,39 +130,43 @@ export function NotificationProvider({
     );
   };
 
-  const addNotification = (
-    notificationData: Omit<Notification, "id" | "timestamp" | "read">,
-  ) => {
-    const newNotification: Notification = {
-      ...notificationData,
-      id: Date.now().toString(),
-      timestamp: new Date().toISOString(),
-      read: false,
-    };
+  const addNotification = useCallback(
+    (notificationData: Omit<Notification, "id" | "timestamp" | "read">) => {
+      const newNotification: Notification = {
+        ...notificationData,
+        id: Date.now().toString(),
+        timestamp: new Date().toISOString(),
+        read: false,
+      };
 
-    setNotifications((prev) => [newNotification, ...prev]);
-  };
+      setNotifications((prev) => [newNotification, ...prev]);
+    },
+    [],
+  );
 
-  const addNotificationForUser = (
-    userId: string,
-    notificationData: Omit<Notification, "id" | "timestamp" | "read">,
-  ) => {
-    const newNotification: Notification = {
-      ...notificationData,
-      id: Date.now().toString(),
-      timestamp: new Date().toISOString(),
-      read: false,
-    };
+  const addNotificationForUser = useCallback(
+    (
+      userId: string,
+      notificationData: Omit<Notification, "id" | "timestamp" | "read">,
+    ) => {
+      const newNotification: Notification = {
+        ...notificationData,
+        id: Date.now().toString(),
+        timestamp: new Date().toISOString(),
+        read: false,
+      };
 
-    // Store in global notifications for the target user
-    if (!globalNotifications[userId]) {
-      globalNotifications[userId] = [];
-    }
-    globalNotifications[userId].unshift(newNotification);
+      // Store in global notifications for the target user
+      if (!globalNotifications[userId]) {
+        globalNotifications[userId] = [];
+      }
+      globalNotifications[userId].unshift(newNotification);
 
-    // If the target user is the current user, also add to local state
-    setNotifications((prev) => [newNotification, ...prev]);
-  };
+      // If the target user is the current user, also add to local state
+      setNotifications((prev) => [newNotification, ...prev]);
+    },
+    [],
+  );
 
   const loadNotificationsForUser = useCallback((userId: string) => {
     // Load notifications for the specific user from global store
