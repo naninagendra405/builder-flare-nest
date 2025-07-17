@@ -116,19 +116,19 @@ export function NotificationProvider({
 
   const unreadCount = notifications.filter((n) => !n.read).length;
 
-  const markAsRead = (id: string) => {
+  const markAsRead = useCallback((id: string) => {
     setNotifications((prev) =>
       prev.map((notification) =>
         notification.id === id ? { ...notification, read: true } : notification,
       ),
     );
-  };
+  }, []);
 
-  const markAllAsRead = () => {
+  const markAllAsRead = useCallback(() => {
     setNotifications((prev) =>
       prev.map((notification) => ({ ...notification, read: true })),
     );
-  };
+  }, []);
 
   const addNotification = useCallback(
     (notificationData: Omit<Notification, "id" | "timestamp" | "read">) => {
