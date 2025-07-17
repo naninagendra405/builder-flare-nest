@@ -148,7 +148,7 @@ const defaultTasks: Task[] = [
     title: "Help with apartment moving",
     description:
       "Need 2-3 people to help move from a 2-bedroom apartment. Heavy furniture included. Truck provided.",
-    category: "Emergency Help",
+    category: "Moving Help",
     budget: 35,
     budgetType: "hourly",
     location: "Brooklyn, NY",
