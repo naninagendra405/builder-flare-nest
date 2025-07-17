@@ -474,11 +474,13 @@ export default function Dashboard() {
               <Button variant="outline" className="w-full" asChild>
                 <Link
                   to={
-                    user.role === "customer" ? "/tasks" : "/my-assigned-tasks"
+                    user.role === "customer"
+                      ? "/my-tasks"
+                      : "/my-assigned-tasks"
                   }
                 >
                   {user.role === "customer"
-                    ? "View All Tasks"
+                    ? "View All My Tasks"
                     : "View All Assigned Tasks"}
                 </Link>
               </Button>
