@@ -269,8 +269,73 @@ const defaultTasks: Task[] = [
   },
 ];
 
+// Default sample bids
+const defaultBids: Bid[] = [
+  {
+    id: "bid_1",
+    taskId: "1",
+    bidderId: "tasker_1",
+    bidderName: "Mike Wilson",
+    bidderRating: 4.9,
+    bidderCompletedTasks: 127,
+    amount: 70,
+    message:
+      "I have 15+ years of plumbing experience and can fix this today. I carry all necessary tools and parts.",
+    deliveryTime: "Same day",
+    submittedAt: "2024-01-15T11:15:00Z",
+    bidderVerified: true,
+    bidderResponse: "under 1 hour",
+  },
+  {
+    id: "bid_2",
+    taskId: "1",
+    bidderId: "tasker_2",
+    bidderName: "John Smith",
+    bidderRating: 4.7,
+    bidderCompletedTasks: 89,
+    amount: 65,
+    message:
+      "Experienced plumber available this afternoon. I guarantee my work and provide 30-day warranty.",
+    deliveryTime: "Today",
+    submittedAt: "2024-01-15T12:30:00Z",
+    bidderVerified: true,
+    bidderResponse: "under 2 hours",
+  },
+  {
+    id: "bid_3",
+    taskId: "1",
+    bidderId: "tasker_3",
+    bidderName: "David Brown",
+    bidderRating: 4.6,
+    bidderCompletedTasks: 45,
+    amount: 80,
+    message:
+      "I can fix this properly with quality parts. Available tomorrow morning.",
+    deliveryTime: "1-2 days",
+    submittedAt: "2024-01-15T14:45:00Z",
+    bidderVerified: false,
+    bidderResponse: "under 4 hours",
+  },
+  {
+    id: "bid_4",
+    taskId: "2",
+    bidderId: "tasker_4",
+    bidderName: "Sarah Designer",
+    bidderRating: 4.8,
+    bidderCompletedTasks: 156,
+    amount: 220,
+    message:
+      "I'm a professional logo designer with 8+ years of experience. I'll provide multiple concepts and unlimited revisions.",
+    deliveryTime: "3-5 days",
+    submittedAt: "2024-01-14T16:20:00Z",
+    bidderVerified: true,
+    bidderResponse: "under 1 hour",
+  },
+];
+
 export function TaskProvider({ children }: { children: React.ReactNode }) {
   const [tasks, setTasks] = useState<Task[]>(defaultTasks);
+  const [bids, setBids] = useState<Bid[]>(defaultBids);
 
   const addTask = (
     taskData: Omit<
