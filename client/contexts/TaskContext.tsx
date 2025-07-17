@@ -1,4 +1,20 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useCallback } from "react";
+
+export interface Bid {
+  id: string;
+  taskId: string;
+  bidderId: string;
+  bidderName: string;
+  bidderRating: number;
+  bidderCompletedTasks: number;
+  amount: number;
+  message: string;
+  deliveryTime: string;
+  submittedAt: string;
+  isAccepted?: boolean;
+  bidderVerified: boolean;
+  bidderResponse: string;
+}
 
 export interface Task {
   id: string;
@@ -46,6 +62,7 @@ export interface Task {
 
 interface TaskContextType {
   tasks: Task[];
+  bids: Bid[];
   addTask: (
     task: Omit<Task, "id" | "postedAt" | "bidsCount" | "viewsCount" | "status">,
   ) => void;
@@ -66,7 +83,11 @@ interface TaskContextType {
     userRole: "customer" | "tasker",
   ) => void;
   releasePayment: (taskId: string) => void;
-  placeBid: (taskId: string) => void;
+  placeBid: (
+    taskId: string,
+    bidData: Omit<Bid, "id" | "taskId" | "submittedAt">,
+  ) => void;
+  getBidsForTask: (taskId: string) => Bid[];
 }
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
@@ -127,7 +148,7 @@ const defaultTasks: Task[] = [
     title: "Help with apartment moving",
     description:
       "Need 2-3 people to help move from a 2-bedroom apartment. Heavy furniture included. Truck provided.",
-    category: "Emergency Help",
+    category: "Moving Help",
     budget: 35,
     budgetType: "hourly",
     location: "Brooklyn, NY",
@@ -179,7 +200,7 @@ const defaultTasks: Task[] = [
     title: "House cleaning service needed",
     description:
       "Looking for professional house cleaning service for a 3-bedroom apartment. Deep cleaning required including kitchen and bathrooms.",
-    category: "Home Repair",
+    category: "Cleaning",
     budget: 120,
     budgetType: "fixed",
     location: "Brooklyn, NY",
@@ -246,10 +267,99 @@ const defaultTasks: Task[] = [
     status: "open",
     instructions: "Weekend work preferred.",
   },
+  {
+    id: "8",
+    title: "Math tutoring for high school student",
+    description:
+      "Looking for an experienced math tutor to help my daughter with Algebra 2 and Calculus preparation. Need someone patient and good at explaining concepts.",
+    category: "Tutoring",
+    budget: 45,
+    budgetType: "hourly",
+    location: "Queens, NY",
+    isRemote: false,
+    customerName: "Patricia Lee",
+    customerId: "customer_8",
+    customerRating: 4.8,
+    customerVerified: true,
+    postedAt: "2024-01-17T10:30:00Z",
+    urgency: "medium",
+    skillsRequired: ["Mathematics", "Teaching", "Tutoring", "High School"],
+    bidsCount: 6,
+    viewsCount: 28,
+    images: [],
+    timeEstimate: "2 hours per session",
+    status: "open",
+    instructions: "Prefer sessions twice a week, flexible timing.",
+  },
+];
+
+// Default sample bids
+const defaultBids: Bid[] = [
+  {
+    id: "bid_1",
+    taskId: "1",
+    bidderId: "tasker_1",
+    bidderName: "Mike Wilson",
+    bidderRating: 4.9,
+    bidderCompletedTasks: 127,
+    amount: 70,
+    message:
+      "I have 15+ years of plumbing experience and can fix this today. I carry all necessary tools and parts.",
+    deliveryTime: "Same day",
+    submittedAt: "2024-01-15T11:15:00Z",
+    bidderVerified: true,
+    bidderResponse: "under 1 hour",
+  },
+  {
+    id: "bid_2",
+    taskId: "1",
+    bidderId: "tasker_2",
+    bidderName: "John Smith",
+    bidderRating: 4.7,
+    bidderCompletedTasks: 89,
+    amount: 65,
+    message:
+      "Experienced plumber available this afternoon. I guarantee my work and provide 30-day warranty.",
+    deliveryTime: "Today",
+    submittedAt: "2024-01-15T12:30:00Z",
+    bidderVerified: true,
+    bidderResponse: "under 2 hours",
+  },
+  {
+    id: "bid_3",
+    taskId: "1",
+    bidderId: "tasker_3",
+    bidderName: "David Brown",
+    bidderRating: 4.6,
+    bidderCompletedTasks: 45,
+    amount: 80,
+    message:
+      "I can fix this properly with quality parts. Available tomorrow morning.",
+    deliveryTime: "1-2 days",
+    submittedAt: "2024-01-15T14:45:00Z",
+    bidderVerified: false,
+    bidderResponse: "under 4 hours",
+  },
+  {
+    id: "bid_4",
+    taskId: "2",
+    bidderId: "tasker_4",
+    bidderName: "Sarah Designer",
+    bidderRating: 4.8,
+    bidderCompletedTasks: 156,
+    amount: 220,
+    message:
+      "I'm a professional logo designer with 8+ years of experience. I'll provide multiple concepts and unlimited revisions.",
+    deliveryTime: "3-5 days",
+    submittedAt: "2024-01-14T16:20:00Z",
+    bidderVerified: true,
+    bidderResponse: "under 1 hour",
+  },
 ];
 
 export function TaskProvider({ children }: { children: React.ReactNode }) {
   const [tasks, setTasks] = useState<Task[]>(defaultTasks);
+  const [bids, setBids] = useState<Bid[]>(defaultBids);
 
   const addTask = (
     taskData: Omit<
@@ -375,7 +485,19 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
     return tasks.filter((task) => task.assignedTaskerId === taskerId);
   };
 
-  const placeBid = (taskId: string) => {
+  const placeBid = (
+    taskId: string,
+    bidData: Omit<Bid, "id" | "taskId" | "submittedAt">,
+  ) => {
+    const newBid: Bid = {
+      ...bidData,
+      id: `bid_${Date.now()}`,
+      taskId: taskId,
+      submittedAt: new Date().toISOString(),
+    };
+
+    setBids((prev) => [newBid, ...prev]);
+
     setTasks((prev) =>
       prev.map((task) =>
         task.id === taskId
@@ -388,10 +510,15 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
     );
   };
 
+  const getBidsForTask = (taskId: string) => {
+    return bids.filter((bid) => bid.taskId === taskId);
+  };
+
   return (
     <TaskContext.Provider
       value={{
         tasks,
+        bids,
         addTask,
         updateTask,
         getTasksByUser,
@@ -402,6 +529,7 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
         markTaskCompleted,
         releasePayment,
         placeBid,
+        getBidsForTask,
       }}
     >
       {children}

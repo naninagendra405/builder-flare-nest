@@ -48,31 +48,17 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { useTasks } from "../contexts/TaskContext";
+import { useTasks, type Bid } from "../contexts/TaskContext";
 import { useNotifications } from "../contexts/NotificationContext";
 import TaskWorkflow from "../components/TaskWorkflow";
 
-interface Bid {
-  id: string;
-  bidderId: string;
-  bidderName: string;
-  bidderRating: number;
-  bidderCompletedTasks: number;
-  amount: number;
-  message: string;
-  deliveryTime: string;
-  submittedAt: string;
-  isAccepted?: boolean;
-  bidderVerified: boolean;
-  bidderResponse: string;
-}
-
-// Use Task interface from context instead of duplicating
+// Use Task and Bid interfaces from context
 
 export default function TaskDetail() {
   const { user } = useAuth();
-  const { acceptBid, getAllTasks, placeBid, updateTask } = useTasks();
-  const { addNotification } = useNotifications();
+  const { acceptBid, getAllTasks, placeBid, updateTask, getBidsForTask } =
+    useTasks();
+  const { addNotification, addNotificationForUser } = useNotifications();
   const navigate = useNavigate();
   const { id } = useParams();
   const [searchParams] = useSearchParams();
@@ -109,50 +95,8 @@ export default function TaskDetail() {
     );
   }
 
-  const bids: Bid[] = [
-    {
-      id: "bid_1",
-      bidderId: "tasker_1",
-      bidderName: "Mike Wilson",
-      bidderRating: 4.9,
-      bidderCompletedTasks: 127,
-      amount: 70,
-      message:
-        "I have 15+ years of plumbing experience and can fix this today. I carry all necessary tools and parts.",
-      deliveryTime: "Same day",
-      submittedAt: "2024-01-15T11:15:00Z",
-      bidderVerified: true,
-      bidderResponse: "under 1 hour",
-    },
-    {
-      id: "bid_2",
-      bidderId: "tasker_2",
-      bidderName: "John Smith",
-      bidderRating: 4.7,
-      bidderCompletedTasks: 89,
-      amount: 65,
-      message:
-        "Experienced plumber available this afternoon. I guarantee my work and provide 30-day warranty.",
-      deliveryTime: "Today",
-      submittedAt: "2024-01-15T12:30:00Z",
-      bidderVerified: true,
-      bidderResponse: "under 2 hours",
-    },
-    {
-      id: "bid_3",
-      bidderId: "tasker_3",
-      bidderName: "David Brown",
-      bidderRating: 4.6,
-      bidderCompletedTasks: 45,
-      amount: 80,
-      message:
-        "I can fix this properly with quality parts. Available tomorrow morning.",
-      deliveryTime: "1-2 days",
-      submittedAt: "2024-01-15T14:45:00Z",
-      bidderVerified: false,
-      bidderResponse: "under 4 hours",
-    },
-  ];
+  // Get dynamic bids for this task
+  const bids = getBidsForTask(task?.id || "");
 
   const getUrgencyColor = (urgency: string) => {
     switch (urgency) {
@@ -186,9 +130,8 @@ export default function TaskDetail() {
   const submitBid = () => {
     if (!bidAmount || !bidMessage) return;
 
-    // Create new bid object
-    const newBid: Bid = {
-      id: `bid_${Date.now()}`,
+    // Create new bid data (without id, taskId, submittedAt - these are handled by context)
+    const bidData = {
       bidderId: user.id,
       bidderName: user.name,
       bidderRating: user.rating || 4.5,
@@ -196,13 +139,12 @@ export default function TaskDetail() {
       amount: parseInt(bidAmount),
       message: bidMessage,
       deliveryTime: deliveryTime.replace("-", " "),
-      submittedAt: new Date().toISOString(),
       bidderVerified: user.verificationStatus === "verified",
       bidderResponse: "under 1 hour",
     };
 
-    // Update task bid count using context
-    placeBid(task.id);
+    // Add bid using context
+    placeBid(task.id, bidData);
 
     // Notify customer about new bid
     addNotification({
@@ -241,24 +183,26 @@ export default function TaskDetail() {
       // Use context to accept bid and assign task
       acceptBid(task.id, bidId, acceptedBid.bidderId, acceptedBid.bidderName);
 
-      // Add notification for the tasker
-      addNotification({
+      // Add notification for the tasker (whose bid was accepted)
+      addNotificationForUser(acceptedBid.bidderId, {
         type: "task_update",
-        title: "Bid Accepted!",
-        message: `Your bid for "${task.title}" has been accepted! Waiting for customer approval to start work.`,
+        title: "🎉 Bid Accepted!",
+        message: `Your bid for "${task.title}" has been accepted! The customer will approve the task soon to start work and secure payment.`,
         priority: "high",
         taskId: task.id,
         fromUser: user.name,
+        actionUrl: `/task/${task.id}`,
       });
 
-      // Add notification for the customer
+      // Add notification for the customer (current user)
       addNotification({
         type: "task_update",
-        title: "Bid Accepted",
-        message: `${acceptedBid.bidderName}'s bid for "${task.title}" has been accepted. Please approve the task to hold payment in escrow.`,
+        title: "Bid Accepted Successfully",
+        message: `${acceptedBid.bidderName}'s bid for "${task.title}" has been accepted. Please approve the task to hold payment in escrow and start work.`,
         priority: "high",
         taskId: task.id,
         fromUser: "TaskIt System",
+        actionUrl: `/task/${task.id}`,
       });
 
       // Show success message
@@ -292,11 +236,16 @@ export default function TaskDetail() {
                 className="flex items-center space-x-2 cursor-pointer"
                 onClick={() => navigate("/dashboard")}
               >
-                <div className="w-8 h-8 flex items-center justify-center">
+                <div className="w-8 h-8 flex items-center justify-center ml-[7px]">
                   <img
                     src="https://cdn.builder.io/api/v1/image/assets%2Fb7fcb38896684c25a67a71f6b5b0365e%2F81896caa38e7430aac41e48cb8db0102?format=webp&width=800"
                     alt="TaskIt Logo"
-                    className="w-8 h-8 object-contain"
+                    className="object-contain max-w-[500px] pb-[21px] ml-[76px]"
+                    style={{
+                      width: "138px",
+                      height: "58px",
+                      margin: "26px auto 0 49px",
+                    }}
                   />
                 </div>
               </div>

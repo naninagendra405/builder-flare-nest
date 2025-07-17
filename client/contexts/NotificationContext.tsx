@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 
 export interface Notification {
   id: string;
@@ -28,6 +34,11 @@ interface NotificationContextType {
   addNotification: (
     notification: Omit<Notification, "id" | "timestamp" | "read">,
   ) => void;
+  addNotificationForUser: (
+    userId: string,
+    notification: Omit<Notification, "id" | "timestamp" | "read">,
+  ) => void;
+  loadNotificationsForUser: (userId: string) => void;
   removeNotification: (id: string) => void;
   clearAll: () => void;
 }
@@ -35,6 +46,9 @@ interface NotificationContextType {
 const NotificationContext = createContext<NotificationContextType | undefined>(
   undefined,
 );
+
+// Global notification store for all users (in a real app, this would be in a backend)
+const globalNotifications: { [userId: string]: Notification[] } = {};
 
 export function NotificationProvider({
   children,
@@ -102,42 +116,76 @@ export function NotificationProvider({
 
   const unreadCount = notifications.filter((n) => !n.read).length;
 
-  const markAsRead = (id: string) => {
+  const markAsRead = useCallback((id: string) => {
     setNotifications((prev) =>
       prev.map((notification) =>
         notification.id === id ? { ...notification, read: true } : notification,
       ),
     );
-  };
+  }, []);
 
-  const markAllAsRead = () => {
+  const markAllAsRead = useCallback(() => {
     setNotifications((prev) =>
       prev.map((notification) => ({ ...notification, read: true })),
     );
-  };
+  }, []);
 
-  const addNotification = (
-    notificationData: Omit<Notification, "id" | "timestamp" | "read">,
-  ) => {
-    const newNotification: Notification = {
-      ...notificationData,
-      id: Date.now().toString(),
-      timestamp: new Date().toISOString(),
-      read: false,
-    };
+  const addNotification = useCallback(
+    (notificationData: Omit<Notification, "id" | "timestamp" | "read">) => {
+      const newNotification: Notification = {
+        ...notificationData,
+        id: Date.now().toString(),
+        timestamp: new Date().toISOString(),
+        read: false,
+      };
 
-    setNotifications((prev) => [newNotification, ...prev]);
-  };
+      setNotifications((prev) => [newNotification, ...prev]);
+    },
+    [],
+  );
 
-  const removeNotification = (id: string) => {
+  const addNotificationForUser = useCallback(
+    (
+      userId: string,
+      notificationData: Omit<Notification, "id" | "timestamp" | "read">,
+    ) => {
+      const newNotification: Notification = {
+        ...notificationData,
+        id: Date.now().toString(),
+        timestamp: new Date().toISOString(),
+        read: false,
+      };
+
+      // Store in global notifications for the target user
+      if (!globalNotifications[userId]) {
+        globalNotifications[userId] = [];
+      }
+      globalNotifications[userId].unshift(newNotification);
+
+      // If the target user is the current user, also add to local state
+      setNotifications((prev) => [newNotification, ...prev]);
+    },
+    [],
+  );
+
+  const loadNotificationsForUser = useCallback((userId: string) => {
+    // Load notifications for the specific user from global store
+    if (globalNotifications[userId]) {
+      setNotifications((prev) => [...globalNotifications[userId], ...prev]);
+      // Clear the global notifications after loading (they're now in local state)
+      globalNotifications[userId] = [];
+    }
+  }, []);
+
+  const removeNotification = useCallback((id: string) => {
     setNotifications((prev) =>
       prev.filter((notification) => notification.id !== id),
     );
-  };
+  }, []);
 
-  const clearAll = () => {
+  const clearAll = useCallback(() => {
     setNotifications([]);
-  };
+  }, []);
 
   // Simulate receiving new notifications
   useEffect(() => {
@@ -170,7 +218,7 @@ export function NotificationProvider({
     }, 5000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [addNotification]);
 
   return (
     <NotificationContext.Provider
@@ -180,6 +228,8 @@ export function NotificationProvider({
         markAsRead,
         markAllAsRead,
         addNotification,
+        addNotificationForUser,
+        loadNotificationsForUser,
         removeNotification,
         clearAll,
       }}

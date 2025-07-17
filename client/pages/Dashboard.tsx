@@ -29,12 +29,21 @@ import {
   Home,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNotifications } from "../contexts/NotificationContext";
 
 export default function Dashboard() {
   const { user, logout } = useAuth();
   const { getTasksByUser, getAllTasks, getTasksByTasker } = useTasks();
+  const { loadNotificationsForUser } = useNotifications();
   const navigate = useNavigate();
+
+  // Load user-specific notifications when dashboard loads
+  useEffect(() => {
+    if (user?.id) {
+      loadNotificationsForUser(user.id);
+    }
+  }, [user?.id, loadNotificationsForUser]);
 
   if (!user) {
     navigate("/login");
@@ -208,11 +217,16 @@ export default function Dashboard() {
               className="flex items-center space-x-2 cursor-pointer"
               onClick={() => navigate("/dashboard")}
             >
-              <div className="w-8 h-8 flex items-center justify-center">
+              <div className="w-8 h-8 flex items-center justify-center ml-[7px]">
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets%2Fb7fcb38896684c25a67a71f6b5b0365e%2F81896caa38e7430aac41e48cb8db0102?format=webp&width=800"
                   alt="TaskIt Logo"
-                  className="w-8 h-8 object-contain"
+                  className="object-contain max-w-[500px] pb-[21px] ml-[76px]"
+                  style={{
+                    width: "138px",
+                    height: "58px",
+                    margin: "26px auto 0 49px",
+                  }}
                 />
               </div>
             </div>
@@ -463,8 +477,16 @@ export default function Dashboard() {
                 ))
               )}
               <Button variant="outline" className="w-full" asChild>
-                <Link to={user.role === "customer" ? "/tasks" : "/tasks"}>
-                  View All Tasks
+                <Link
+                  to={
+                    user.role === "customer"
+                      ? "/my-tasks"
+                      : "/my-assigned-tasks"
+                  }
+                >
+                  {user.role === "customer"
+                    ? "View All My Tasks"
+                    : "View All Assigned Tasks"}
                 </Link>
               </Button>
             </CardContent>
@@ -526,7 +548,7 @@ export default function Dashboard() {
                 <Link to="/tasks">
                   {user.role === "customer"
                     ? "Browse All Tasks"
-                    : "See More Tasks"}
+                    : "Browse Available Tasks"}
                 </Link>
               </Button>
             </CardContent>

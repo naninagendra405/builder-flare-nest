@@ -16,6 +16,8 @@ import PaymentMethods from "./pages/PaymentMethods";
 import Notifications from "./pages/Notifications";
 import AddCredentials from "./pages/AddCredentials";
 import TaskSuggestionsPage from "./pages/TaskSuggestionsPage";
+import MyAssignedTasks from "./pages/MyAssignedTasks";
+import MyTasks from "./pages/MyTasks";
 import NotFound from "./pages/NotFound";
 import { AuthProvider } from "./contexts/AuthContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
@@ -36,6 +38,11 @@ export default function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/create-task" element={<CreateTask />} />
                 <Route path="/tasks" element={<TaskFeed />} />
+                <Route path="/my-tasks" element={<MyTasks />} />
+                <Route
+                  path="/my-assigned-tasks"
+                  element={<MyAssignedTasks />}
+                />
                 <Route path="/task/:id" element={<TaskDetail />} />
                 <Route path="/chat/:chatId?" element={<Chat />} />
                 <Route path="/wallet" element={<Wallet />} />

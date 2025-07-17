@@ -121,7 +121,7 @@ function TaskerTaskFeed() {
                   <MapPin className="w-4 h-4 mr-1" />
                   {task.isRemote ? "Remote" : task.location}
                   {task.distance && (
-                    <span className="ml-2">• {task.distance} miles away</span>
+                    <span className="ml-2">�� {task.distance} miles away</span>
                   )}
                 </div>
 
@@ -236,11 +236,16 @@ export default function TaskSuggestionsPage() {
                 className="flex items-center space-x-2 cursor-pointer"
                 onClick={() => navigate("/dashboard")}
               >
-                <div className="w-8 h-8 flex items-center justify-center">
+                <div className="w-8 h-8 flex items-center justify-center ml-[7px]">
                   <img
                     src="https://cdn.builder.io/api/v1/image/assets%2Fb7fcb38896684c25a67a71f6b5b0365e%2F81896caa38e7430aac41e48cb8db0102?format=webp&width=800"
                     alt="TaskIt Logo"
-                    className="w-8 h-8 object-contain"
+                    className="object-contain max-w-[500px] pb-[21px] ml-[76px]"
+                    style={{
+                      width: "138px",
+                      height: "58px",
+                      margin: "26px auto 0 49px",
+                    }}
                   />
                 </div>
               </div>
