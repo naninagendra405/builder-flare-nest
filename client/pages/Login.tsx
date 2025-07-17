@@ -47,7 +47,7 @@ export default function Login() {
               <img
                 src="https://cdn.builder.io/api/v1/image/assets%2Fb7fcb38896684c25a67a71f6b5b0365e%2Fc94f508bd53e4adda6534f00e8c18f19?format=webp&width=800"
                 alt="TaskIt Logo"
-                className="h-12 w-auto object-contain"
+                className="h-8 w-auto object-contain"
               />
             </div>
             <CardTitle className="text-2xl">Welcome back</CardTitle>
