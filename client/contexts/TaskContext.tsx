@@ -200,7 +200,7 @@ const defaultTasks: Task[] = [
     title: "House cleaning service needed",
     description:
       "Looking for professional house cleaning service for a 3-bedroom apartment. Deep cleaning required including kitchen and bathrooms.",
-    category: "Home Repair",
+    category: "Cleaning",
     budget: 120,
     budgetType: "fixed",
     location: "Brooklyn, NY",
