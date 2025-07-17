@@ -99,7 +99,7 @@ export default function Index() {
                   style={{
                     width: "138px",
                     height: "58px",
-                    margin: "26px auto 0 76px",
+                    margin: "26px auto 0 49px",
                   }}
                 />
               </div>
