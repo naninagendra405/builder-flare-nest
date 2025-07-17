@@ -276,6 +276,123 @@ export default function Index() {
         </div>
       </section>
 
+      {/* How it works Section */}
+      <section id="how-it-works" className="py-20 px-4">
+        <div className="container mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">How TaskIt Works</h2>
+            <p className="text-xl text-muted-foreground">
+              Get things done in three simple steps
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="text-center p-6">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span className="text-2xl font-bold text-primary">1</span>
+              </div>
+              <h3 className="text-xl font-semibold mb-4">Post Your Task</h3>
+              <p className="text-muted-foreground">
+                Describe what you need done, set your budget, and specify your
+                location or if it's remote work.
+              </p>
+            </div>
+
+            <div className="text-center p-6">
+              <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span className="text-2xl font-bold text-accent">2</span>
+              </div>
+              <h3 className="text-xl font-semibold mb-4">
+                Get Bids from Taskers
+              </h3>
+              <p className="text-muted-foreground">
+                Skilled taskers will bid on your task. Review their profiles,
+                ratings, and proposals to choose the best fit.
+              </p>
+            </div>
+
+            <div className="text-center p-6">
+              <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span className="text-2xl font-bold text-success">3</span>
+              </div>
+              <h3 className="text-xl font-semibold mb-4">Get It Done</h3>
+              <p className="text-muted-foreground">
+                Work gets completed safely with payments held in escrow. Release
+                payment when you're satisfied.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="pricing" className="py-20 bg-card/50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">
+              Simple, Transparent Pricing
+            </h2>
+            <p className="text-xl text-muted-foreground">
+              Only pay when you're satisfied with the work
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="text-center p-8 border rounded-lg bg-background">
+              <h3 className="text-2xl font-bold mb-4">For Customers</h3>
+              <div className="text-4xl font-bold text-primary mb-4">Free</div>
+              <p className="text-muted-foreground mb-6">
+                No fees to post tasks or browse taskers
+              </p>
+              <ul className="space-y-3 text-left">
+                <li className="flex items-center">
+                  <CheckCircle className="w-5 h-5 text-green-600 mr-3" />
+                  Post unlimited tasks
+                </li>
+                <li className="flex items-center">
+                  <CheckCircle className="w-5 h-5 text-green-600 mr-3" />
+                  Browse and message taskers
+                </li>
+                <li className="flex items-center">
+                  <CheckCircle className="w-5 h-5 text-green-600 mr-3" />
+                  Secure payment protection
+                </li>
+                <li className="flex items-center">
+                  <CheckCircle className="w-5 h-5 text-green-600 mr-3" />
+                  24/7 customer support
+                </li>
+              </ul>
+            </div>
+
+            <div className="text-center p-8 border rounded-lg bg-background">
+              <h3 className="text-2xl font-bold mb-4">For Taskers</h3>
+              <div className="text-4xl font-bold text-primary mb-4">15%</div>
+              <p className="text-muted-foreground mb-6">
+                Service fee on completed tasks
+              </p>
+              <ul className="space-y-3 text-left">
+                <li className="flex items-center">
+                  <CheckCircle className="w-5 h-5 text-green-600 mr-3" />
+                  Bid on unlimited tasks
+                </li>
+                <li className="flex items-center">
+                  <CheckCircle className="w-5 h-5 text-green-600 mr-3" />
+                  Direct messaging with customers
+                </li>
+                <li className="flex items-center">
+                  <CheckCircle className="w-5 h-5 text-green-600 mr-3" />
+                  Secure and fast payments
+                </li>
+                <li className="flex items-center">
+                  <CheckCircle className="w-5 h-5 text-green-600 mr-3" />
+                  Profile verification badge
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
       <section id="features" className="py-20 bg-card/30">
         <div className="container mx-auto px-4">
