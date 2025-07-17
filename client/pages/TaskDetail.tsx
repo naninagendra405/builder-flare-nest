@@ -72,7 +72,7 @@ interface Bid {
 export default function TaskDetail() {
   const { user } = useAuth();
   const { acceptBid, getAllTasks, placeBid, updateTask } = useTasks();
-  const { addNotification } = useNotifications();
+  const { addNotification, addNotificationForUser } = useNotifications();
   const navigate = useNavigate();
   const { id } = useParams();
   const [searchParams] = useSearchParams();
