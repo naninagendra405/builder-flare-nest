@@ -95,50 +95,8 @@ export default function TaskDetail() {
     );
   }
 
-  const bids: Bid[] = [
-    {
-      id: "bid_1",
-      bidderId: "tasker_1",
-      bidderName: "Mike Wilson",
-      bidderRating: 4.9,
-      bidderCompletedTasks: 127,
-      amount: 70,
-      message:
-        "I have 15+ years of plumbing experience and can fix this today. I carry all necessary tools and parts.",
-      deliveryTime: "Same day",
-      submittedAt: "2024-01-15T11:15:00Z",
-      bidderVerified: true,
-      bidderResponse: "under 1 hour",
-    },
-    {
-      id: "bid_2",
-      bidderId: "tasker_2",
-      bidderName: "John Smith",
-      bidderRating: 4.7,
-      bidderCompletedTasks: 89,
-      amount: 65,
-      message:
-        "Experienced plumber available this afternoon. I guarantee my work and provide 30-day warranty.",
-      deliveryTime: "Today",
-      submittedAt: "2024-01-15T12:30:00Z",
-      bidderVerified: true,
-      bidderResponse: "under 2 hours",
-    },
-    {
-      id: "bid_3",
-      bidderId: "tasker_3",
-      bidderName: "David Brown",
-      bidderRating: 4.6,
-      bidderCompletedTasks: 45,
-      amount: 80,
-      message:
-        "I can fix this properly with quality parts. Available tomorrow morning.",
-      deliveryTime: "1-2 days",
-      submittedAt: "2024-01-15T14:45:00Z",
-      bidderVerified: false,
-      bidderResponse: "under 4 hours",
-    },
-  ];
+  // Get dynamic bids for this task
+  const bids = getBidsForTask(task?.id || "");
 
   const getUrgencyColor = (urgency: string) => {
     switch (urgency) {
