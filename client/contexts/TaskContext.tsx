@@ -494,6 +494,7 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
     <TaskContext.Provider
       value={{
         tasks,
+        bids,
         addTask,
         updateTask,
         getTasksByUser,
@@ -504,6 +505,7 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
         markTaskCompleted,
         releasePayment,
         placeBid,
+        getBidsForTask,
       }}
     >
       {children}
