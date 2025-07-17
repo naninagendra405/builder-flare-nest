@@ -230,18 +230,11 @@ export default function TaskFeed() {
                 className="flex items-center space-x-2 cursor-pointer"
                 onClick={() => navigate("/dashboard")}
               >
-                <div className="w-8 h-8 flex items-center justify-center ml-[7px]">
-                  <img
-                    src="https://cdn.builder.io/api/v1/image/assets%2Fb7fcb38896684c25a67a71f6b5b0365e%2F81896caa38e7430aac41e48cb8db0102?format=webp&width=800"
-                    alt="TaskIt Logo"
-                    className="object-contain max-w-[500px] pb-[21px] ml-[76px]"
-                    style={{
-                      width: "138px",
-                      height: "58px",
-                      margin: "26px auto 0 49px",
-                    }}
-                  />
-                </div>
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets%2Fb7fcb38896684c25a67a71f6b5b0365e%2F81896caa38e7430aac41e48cb8db0102?format=webp&width=800"
+                  alt="TaskIt Logo"
+                  className="h-10 w-auto object-contain"
+                />
               </div>
             </div>
             <div className="flex items-center space-x-2">
@@ -273,15 +266,20 @@ export default function TaskFeed() {
           <CardContent className="p-4 md:p-6">
             <div className="space-y-4">
               {/* Search */}
-              <div className="relative">
+              <form onSubmit={(e) => e.preventDefault()} className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
                 <Input
-                  placeholder="Search tasks..."
+                  placeholder="Search tasks by title or description..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-12"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                    }
+                  }}
                 />
-              </div>
+              </form>
 
               {/* Filters Row */}
               <div className="flex flex-col sm:flex-row gap-3">
