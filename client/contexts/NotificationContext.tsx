@@ -219,6 +219,7 @@ export function NotificationProvider({
         markAllAsRead,
         addNotification,
         addNotificationForUser,
+        loadNotificationsForUser,
         removeNotification,
         clearAll,
       }}
