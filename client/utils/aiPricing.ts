@@ -183,37 +183,37 @@ export function getPopularTaskPricing(): Array<{
       title: "Kitchen sink repair",
       category: "Home Repair",
       averagePrice: 75,
-      priceRange: "$50 - $120",
+      priceRange: "₹50 - ₹120",
     },
     {
       title: "Logo design",
       category: "Digital Services",
       averagePrice: 250,
-      priceRange: "$150 - $400",
+      priceRange: "₹150 - ₹400",
     },
     {
       title: "Apartment cleaning",
       category: "Cleaning",
       averagePrice: 80,
-      priceRange: "$60 - $120",
+      priceRange: "₹60 - ₹120",
     },
     {
       title: "Furniture assembly",
       category: "Handyman",
       averagePrice: 65,
-      priceRange: "$40 - $100",
+      priceRange: "₹40 - ₹100",
     },
     {
       title: "Math tutoring",
       category: "Tutoring",
       averagePrice: 45,
-      priceRange: "$30 - $70",
+      priceRange: "₹30 - ₹70",
     },
     {
       title: "Moving help",
       category: "Transport & Moving",
       averagePrice: 90,
-      priceRange: "$60 - $140",
+      priceRange: "₹60 - ₹140",
     },
   ];
 }

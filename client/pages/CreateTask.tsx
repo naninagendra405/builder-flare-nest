@@ -511,7 +511,7 @@ export default function CreateTask() {
                             <div className="text-center">
                               <div className="text-sm text-blue-600">Min</div>
                               <div className="font-bold text-blue-800">
-                                ${aiPricingSuggestion.min}
+                                ₹{aiPricingSuggestion.min}
                               </div>
                             </div>
                             <div className="text-center">
@@ -519,13 +519,13 @@ export default function CreateTask() {
                                 Recommended
                               </div>
                               <div className="font-bold text-blue-800 text-lg">
-                                ${aiPricingSuggestion.recommended}
+                                ₹{aiPricingSuggestion.recommended}
                               </div>
                             </div>
                             <div className="text-center">
                               <div className="text-sm text-blue-600">Max</div>
                               <div className="font-bold text-blue-800">
-                                ${aiPricingSuggestion.max}
+                                ₹{aiPricingSuggestion.max}
                               </div>
                             </div>
                           </div>
@@ -800,7 +800,7 @@ export default function CreateTask() {
                   )}
                   {form.budget && (
                     <Badge variant="secondary">
-                      ${form.budget}{" "}
+                      ₹{form.budget}{" "}
                       {form.budgetType === "hourly" ? "/hour" : "fixed"}
                     </Badge>
                   )}

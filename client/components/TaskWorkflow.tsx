@@ -340,25 +340,40 @@ export default function TaskWorkflow({ task }: TaskWorkflowProps) {
             </div>
           )}
 
-          {/* Payment Release - Admin or Automatic */}
-          {task.status === "completed" && !task.paymentReleased && (
+          {/* Payment Release - Customer Only */}
+          {task.status === "completed" &&
+            !task.paymentReleased &&
+            isCustomer && (
+              <div className="space-y-4">
+                <Alert>
+                  <CheckCircle className="h-4 w-4" />
+                  <AlertDescription>
+                    Task completed by both parties! You can now release payment
+                    to the tasker.
+                  </AlertDescription>
+                </Alert>
+
+                <Button
+                  onClick={handleReleasePayment}
+                  className="w-full"
+                  variant="default"
+                >
+                  <IndianRupee className="w-4 h-4 mr-2" />
+                  Release Payment (₹{task.taskerPayment})
+                </Button>
+              </div>
+            )}
+
+          {/* Payment Release Pending - Tasker View */}
+          {task.status === "completed" && !task.paymentReleased && isTasker && (
             <div className="space-y-4">
               <Alert>
-                <CheckCircle className="h-4 w-4" />
+                <Clock className="h-4 w-4" />
                 <AlertDescription>
-                  Task completed by both parties! Payment will be released
-                  automatically.
+                  Task completed! Waiting for customer to release payment of ₹
+                  {task.taskerPayment}.
                 </AlertDescription>
               </Alert>
-
-              <Button
-                onClick={handleReleasePayment}
-                className="w-full"
-                variant="default"
-              >
-                <IndianRupee className="w-4 h-4 mr-2" />
-                Release Payment (₹{task.taskerPayment})
-              </Button>
             </div>
           )}
 
