@@ -275,7 +275,7 @@ export default function CreateTask() {
                 onClick={() => navigate("/dashboard")}
               >
                 <img
-                  src="https://cdn.builder.io/api/v1/image/assets%2Fb7fcb38896684c25a67a71f6b5b0365e%2Fc94f508bd53e4adda6534f00e8c18f19?format=webp&width=800"
+                  src="https://cdn.builder.io/api/v1/image/assets%2Fb7fcb38896684c25a67a71f6b5b0365e%2F81896caa38e7430aac41e48cb8db0102?format=webp&width=800"
                   alt="TaskIt Logo"
                   className="h-10 w-auto object-contain"
                 />
