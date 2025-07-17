@@ -31,12 +31,12 @@ import {
   Search,
   Star,
   MapPin,
-  DollarSign,
+  IndianRupee,
   Calendar,
   CheckCircle,
   Clock,
   AlertCircle,
-  Zap,
+  Home,
   FileText,
   Camera,
   Smile,
@@ -291,11 +291,17 @@ export default function Chat() {
               >
                 <ArrowLeft className="w-5 h-5" />
               </Button>
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                  <Zap className="w-5 h-5 text-primary-foreground" />
+              <div
+                className="flex items-center space-x-2 cursor-pointer"
+                onClick={() => navigate("/dashboard")}
+              >
+                <div className="w-8 h-8 flex items-center justify-center">
+                  <img
+                    src="https://cdn.builder.io/api/v1/image/assets%2Fb7fcb38896684c25a67a71f6b5b0365e%2Fc94f508bd53e4adda6534f00e8c18f19?format=webp&width=800"
+                    alt="TaskIt Logo"
+                    className="w-8 h-8 object-contain"
+                  />
                 </div>
-                <span className="text-2xl font-bold text-primary">TaskIt</span>
               </div>
             </div>
             <div className="flex items-center space-x-2">
@@ -480,7 +486,7 @@ export default function Chat() {
                   </div>
                   <div className="flex items-center space-x-4 text-sm">
                     <span className="flex items-center text-primary font-semibold">
-                      <DollarSign className="w-4 h-4 mr-1" />
+                      <IndianRupee className="w-4 h-4 mr-1" />
                       {selectedChat.taskBudget}
                     </span>
                     <Button size="sm" onClick={() => setShowTaskDetails(true)}>
@@ -607,7 +613,7 @@ export default function Chat() {
                     {selectedChat.taskStatus.replace("_", " ")}
                   </Badge>
                   <span className="flex items-center">
-                    <DollarSign className="w-4 h-4 mr-1" />
+                    <IndianRupee className="w-4 h-4 mr-1" />
                     {selectedChat.taskBudget}
                   </span>
                 </div>

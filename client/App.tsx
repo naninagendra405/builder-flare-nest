@@ -15,6 +15,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import PaymentMethods from "./pages/PaymentMethods";
 import Notifications from "./pages/Notifications";
 import AddCredentials from "./pages/AddCredentials";
+import TaskSuggestionsPage from "./pages/TaskSuggestionsPage";
 import NotFound from "./pages/NotFound";
 import { AuthProvider } from "./contexts/AuthContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
@@ -42,6 +43,10 @@ export default function App() {
                 <Route path="/notifications" element={<Notifications />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/add-credentials" element={<AddCredentials />} />
+                <Route
+                  path="/task-suggestions"
+                  element={<TaskSuggestionsPage />}
+                />
                 <Route path="/admin" element={<AdminDashboard />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>

@@ -26,7 +26,7 @@ import {
   Filter,
   MapPin,
   Clock,
-  DollarSign,
+  IndianRupee,
   Star,
   Users,
   Bookmark,
@@ -34,7 +34,7 @@ import {
   Eye,
   MessageSquare,
   Calendar,
-  Zap,
+  Home,
   SlidersHorizontal,
   Grid,
   List,
@@ -67,6 +67,8 @@ interface Task {
   timeEstimate: string;
   customerVerified: boolean;
   distance?: number;
+  customerId: string;
+  status: "open" | "in_progress" | "completed" | "cancelled";
 }
 
 export default function TaskFeed() {
@@ -117,6 +119,23 @@ export default function TaskFeed() {
         return "bg-yellow-100 text-yellow-800";
       case "low":
         return "bg-green-100 text-green-800";
+      default:
+        return "bg-gray-100 text-gray-800";
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "completed":
+        return "bg-green-100 text-green-800";
+      case "in_progress":
+        return "bg-blue-100 text-blue-800";
+      case "approved":
+        return "bg-emerald-100 text-emerald-800";
+      case "bid_accepted":
+        return "bg-purple-100 text-purple-800";
+      case "open":
+        return "bg-yellow-100 text-yellow-800";
       default:
         return "bg-gray-100 text-gray-800";
     }
@@ -204,13 +223,17 @@ export default function TaskFeed() {
               >
                 <ArrowLeft className="w-5 h-5" />
               </Button>
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                  <Zap className="w-5 h-5 text-primary-foreground" />
+              <div
+                className="flex items-center space-x-2 cursor-pointer"
+                onClick={() => navigate("/dashboard")}
+              >
+                <div className="w-8 h-8 flex items-center justify-center">
+                  <img
+                    src="https://cdn.builder.io/api/v1/image/assets%2Fb7fcb38896684c25a67a71f6b5b0365e%2F81896caa38e7430aac41e48cb8db0102?format=webp&width=800"
+                    alt="TaskIt Logo"
+                    className="w-8 h-8 object-contain"
+                  />
                 </div>
-                <span className="text-xl md:text-2xl font-bold text-primary">
-                  TaskIt
-                </span>
               </div>
             </div>
             <div className="flex items-center space-x-2">
@@ -305,8 +328,8 @@ export default function TaskFeed() {
                             className="mb-2"
                           />
                           <div className="flex justify-between text-sm text-muted-foreground">
-                            <span>${filters.minBudget}</span>
-                            <span>${filters.maxBudget}</span>
+                            <span>₹{filters.minBudget}</span>
+                            <span>₹{filters.maxBudget}</span>
                           </div>
                         </div>
                       </div>
@@ -396,10 +419,21 @@ export default function TaskFeed() {
             {sortedTasks.length} tasks found
           </p>
           {user.role === "customer" && (
-            <Button variant="outline" onClick={() => navigate("/create-task")}>
-              <Plus className="w-4 h-4 mr-2" />
-              Post a Task
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                onClick={() => navigate("/task-suggestions")}
+              >
+                💡 Get Task Ideas
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => navigate("/create-task")}
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Post a Task
+              </Button>
+            </div>
           )}
         </div>
 
@@ -427,6 +461,14 @@ export default function TaskFeed() {
                       >
                         {task.urgency}
                       </Badge>
+                      {task.status !== "open" && (
+                        <Badge
+                          className={`text-xs ${getStatusColor(task.status)}`}
+                          variant="secondary"
+                        >
+                          {task.status.replace("_", " ")}
+                        </Badge>
+                      )}
                       {task.customerVerified && (
                         <CheckCircle className="w-4 h-4 text-green-600" />
                       )}
@@ -461,7 +503,7 @@ export default function TaskFeed() {
                   {/* Budget */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center text-lg font-bold text-primary">
-                      <DollarSign className="w-5 h-5 mr-1" />${task.budget}
+                      <IndianRupee className="w-5 h-5 mr-1" />₹{task.budget}
                       {task.budgetType === "hourly" ? "/hr" : ""}
                     </div>
                     <div className="text-sm text-muted-foreground">
@@ -552,10 +594,16 @@ export default function TaskFeed() {
                       className="flex-1"
                       onClick={(e) => {
                         e.stopPropagation();
-                        navigate(`/task/${task.id}?action=bid`);
+                        if (user.role === "customer") {
+                          navigate("/task-suggestions");
+                        } else {
+                          navigate(`/task/${task.id}`);
+                        }
                       }}
                     >
-                      Place Bid
+                      {user.role === "customer"
+                        ? "Get Task Ideas"
+                        : "View & Bid"}
                     </Button>
                     <Button
                       size="sm"

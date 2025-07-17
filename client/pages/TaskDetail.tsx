@@ -26,7 +26,7 @@ import {
   ArrowLeft,
   MapPin,
   Clock,
-  DollarSign,
+  IndianRupee,
   Star,
   Calendar,
   Users,
@@ -40,7 +40,7 @@ import {
   Send,
   Phone,
   Shield,
-  Zap,
+  Home,
   Award,
   Flag,
   Heart,
@@ -48,6 +48,9 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useTasks } from "../contexts/TaskContext";
+import { useNotifications } from "../contexts/NotificationContext";
+import TaskWorkflow from "../components/TaskWorkflow";
 
 interface Bid {
   id: string;
@@ -64,33 +67,12 @@ interface Bid {
   bidderResponse: string;
 }
 
-interface TaskData {
-  id: string;
-  title: string;
-  description: string;
-  category: string;
-  budget: number;
-  budgetType: "fixed" | "hourly";
-  location: string;
-  isRemote: boolean;
-  customerName: string;
-  customerId: string;
-  customerRating: number;
-  customerVerified: boolean;
-  postedAt: string;
-  deadline?: string;
-  urgency: "low" | "medium" | "high";
-  skillsRequired: string[];
-  bidsCount: number;
-  viewsCount: number;
-  images: string[];
-  timeEstimate: string;
-  status: "open" | "in_progress" | "completed" | "cancelled";
-  instructions?: string;
-}
+// Use Task interface from context instead of duplicating
 
 export default function TaskDetail() {
   const { user } = useAuth();
+  const { acceptBid, getAllTasks, placeBid, updateTask } = useTasks();
+  const { addNotification } = useNotifications();
   const navigate = useNavigate();
   const { id } = useParams();
   const [searchParams] = useSearchParams();
@@ -109,33 +91,23 @@ export default function TaskDetail() {
     return null;
   }
 
-  // Mock task data
-  const task: TaskData = {
-    id: id || "1",
-    title: "Fix kitchen sink leak",
-    description:
-      "My kitchen sink has been leaking for a week now and it's getting worse. The leak appears to be coming from under the sink, possibly from the pipes or connections. I need an experienced plumber to diagnose and fix the issue quickly. I have some basic tools available but the plumber should bring any specialized equipment needed. The kitchen is easily accessible and I can provide parking. This is urgent as the leak is causing water damage to the cabinet below.",
-    category: "Home Repair",
-    budget: 75,
-    budgetType: "fixed",
-    location: "Manhattan, NY",
-    isRemote: false,
-    customerName: "Sarah Johnson",
-    customerId: "customer_1",
-    customerRating: 4.8,
-    customerVerified: true,
-    postedAt: "2024-01-15T10:30:00Z",
-    deadline: "2024-01-18T17:00:00Z",
-    urgency: "high",
-    skillsRequired: ["Plumbing", "Repair", "Tools"],
-    bidsCount: 12,
-    viewsCount: 67,
-    images: ["/placeholder.svg"],
-    timeEstimate: "2-3 hours",
-    status: "open",
-    instructions:
-      "Please text me when you arrive. The building entrance is on 5th Street. Ring apartment 4B.",
-  };
+  // Get real task data from context
+  const allTasks = getAllTasks();
+  const task = allTasks.find((t) => t.id === id);
+
+  if (!task) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold mb-4">Task Not Found</h2>
+          <p className="text-muted-foreground mb-4">
+            The task you're looking for doesn't exist.
+          </p>
+          <Button onClick={() => navigate("/tasks")}>Browse Tasks</Button>
+        </div>
+      </div>
+    );
+  }
 
   const bids: Bid[] = [
     {
@@ -214,22 +186,86 @@ export default function TaskDetail() {
   const submitBid = () => {
     if (!bidAmount || !bidMessage) return;
 
-    // TODO: Submit bid to backend
-    console.log("Submitting bid:", {
-      taskId: task.id,
-      amount: bidAmount,
+    // Create new bid object
+    const newBid: Bid = {
+      id: `bid_${Date.now()}`,
+      bidderId: user.id,
+      bidderName: user.name,
+      bidderRating: user.rating || 4.5,
+      bidderCompletedTasks: 25, // Mock value
+      amount: parseInt(bidAmount),
       message: bidMessage,
-      deliveryTime,
+      deliveryTime: deliveryTime.replace("-", " "),
+      submittedAt: new Date().toISOString(),
+      bidderVerified: user.verificationStatus === "verified",
+      bidderResponse: "under 1 hour",
+    };
+
+    // Update task bid count using context
+    placeBid(task.id);
+
+    // Notify customer about new bid
+    addNotification({
+      type: "bid_received",
+      title: "New Bid Received!",
+      message: `${user.name} placed a bid of ₹${bidAmount} on your task "${task.title}". Review and accept to start work.`,
+      priority: "high",
+      taskId: task.id,
+      fromUser: user.name,
+    });
+
+    // Notify tasker about successful bid placement
+    addNotification({
+      type: "bid_placed",
+      title: "Bid Placed Successfully!",
+      message: `Your bid of ₹${bidAmount} for "${task.title}" has been submitted. You'll be notified when the customer responds.`,
+      priority: "medium",
+      taskId: task.id,
+      fromUser: "TaskIt System",
     });
 
     setShowBidDialog(false);
     setBidAmount("");
     setBidMessage("");
+
+    // Show success message
+    alert("Bid placed successfully! The customer will be notified.");
   };
 
-  const acceptBid = (bidId: string) => {
-    // TODO: Accept bid
-    console.log("Accepting bid:", bidId);
+  const acceptBidHandler = (bidId: string) => {
+    const acceptedBid = bids.find((bid) => bid.id === bidId);
+
+    if (acceptedBid) {
+      console.log("Bid accepted:", acceptedBid);
+
+      // Use context to accept bid and assign task
+      acceptBid(task.id, bidId, acceptedBid.bidderId, acceptedBid.bidderName);
+
+      // Add notification for the tasker
+      addNotification({
+        type: "task_update",
+        title: "Bid Accepted!",
+        message: `Your bid for "${task.title}" has been accepted! Waiting for customer approval to start work.`,
+        priority: "high",
+        taskId: task.id,
+        fromUser: user.name,
+      });
+
+      // Add notification for the customer
+      addNotification({
+        type: "task_update",
+        title: "Bid Accepted",
+        message: `${acceptedBid.bidderName}'s bid for "${task.title}" has been accepted. Please approve the task to hold payment in escrow.`,
+        priority: "high",
+        taskId: task.id,
+        fromUser: "TaskIt System",
+      });
+
+      // Show success message
+      alert(
+        `🎉 Bid accepted! ${acceptedBid.bidderName} has been assigned to this task. Please approve the task to start work and secure payment.`,
+      );
+    }
   };
 
   const contactCustomer = () => {
@@ -252,11 +288,17 @@ export default function TaskDetail() {
               <Button variant="ghost" size="icon" onClick={() => navigate(-1)}>
                 <ArrowLeft className="w-5 h-5" />
               </Button>
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                  <Zap className="w-5 h-5 text-primary-foreground" />
+              <div
+                className="flex items-center space-x-2 cursor-pointer"
+                onClick={() => navigate("/dashboard")}
+              >
+                <div className="w-8 h-8 flex items-center justify-center">
+                  <img
+                    src="https://cdn.builder.io/api/v1/image/assets%2Fb7fcb38896684c25a67a71f6b5b0365e%2F81896caa38e7430aac41e48cb8db0102?format=webp&width=800"
+                    alt="TaskIt Logo"
+                    className="w-8 h-8 object-contain"
+                  />
                 </div>
-                <span className="text-2xl font-bold text-primary">TaskIt</span>
               </div>
             </div>
             <div className="flex items-center space-x-2">
@@ -324,7 +366,7 @@ export default function TaskDetail() {
                   </div>
                   <div className="text-left lg:text-right">
                     <div className="text-2xl md:text-3xl font-bold text-primary mb-2">
-                      ${task.budget}
+                      ₹{task.budget}
                       {task.budgetType === "hourly" ? "/hr" : ""}
                     </div>
                     <div className="text-sm text-muted-foreground">
@@ -462,7 +504,7 @@ export default function TaskDetail() {
                         </div>
                         <div className="text-left sm:text-right">
                           <div className="text-2xl font-bold text-primary">
-                            ${bid.amount}
+                            ₹{bid.amount}
                           </div>
                           <div className="text-sm text-muted-foreground">
                             {bid.deliveryTime}
@@ -486,7 +528,10 @@ export default function TaskDetail() {
                             Message
                           </Button>
                           {isTaskOwner && (
-                            <Button size="sm" onClick={() => acceptBid(bid.id)}>
+                            <Button
+                              size="sm"
+                              onClick={() => acceptBidHandler(bid.id)}
+                            >
                               Accept Bid
                             </Button>
                           )}
@@ -497,6 +542,12 @@ export default function TaskDetail() {
                 </div>
               </CardContent>
             </Card>
+
+            {/* Task Workflow */}
+            {(task.status === "bid_accepted" ||
+              task.status === "approved" ||
+              task.status === "in_progress" ||
+              task.status === "completed") && <TaskWorkflow task={task} />}
           </div>
 
           {/* Sidebar */}
@@ -591,7 +642,7 @@ export default function TaskDetail() {
                     className="w-full"
                     onClick={() => setShowBidDialog(true)}
                   >
-                    <DollarSign className="w-4 h-4 mr-2" />
+                    <IndianRupee className="w-4 h-4 mr-2" />
                     Place Bid
                   </Button>
                 )}
@@ -645,7 +696,7 @@ export default function TaskDetail() {
             <div className="p-4 bg-muted/50 rounded-lg">
               <h3 className="font-semibold mb-2">{task.title}</h3>
               <div className="flex items-center justify-between text-sm">
-                <span>Budget: ${task.budget}</span>
+                <span>Budget: ₹{task.budget}</span>
                 <span>Current bids: {bids.length}</span>
               </div>
             </div>
@@ -654,7 +705,7 @@ export default function TaskDetail() {
               <div>
                 <Label htmlFor="bidAmount">Your Bid Amount *</Label>
                 <div className="relative">
-                  <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                  <IndianRupee className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
                   <Input
                     id="bidAmount"
                     type="number"

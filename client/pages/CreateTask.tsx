@@ -19,14 +19,13 @@ import { Switch } from "@/components/ui/switch";
 import {
   ArrowLeft,
   MapPin,
-  DollarSign,
+  IndianRupee,
   Calendar,
   Clock,
   Camera,
   X,
   AlertCircle,
   CheckCircle,
-  Zap,
   Home,
   Monitor,
   Wrench,
@@ -34,7 +33,7 @@ import {
   Car,
   Users,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { getAIPricingSuggestion } from "../utils/aiPricing";
 import { useTasks } from "../contexts/TaskContext";
 
@@ -58,22 +57,26 @@ export default function CreateTask() {
   const { user } = useAuth();
   const { addTask } = useTasks();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Get suggested task data from navigation state
+  const suggestedTask = location.state?.suggestedTask;
 
   const [currentStep, setCurrentStep] = useState(1);
   const [aiPricingSuggestion, setAiPricingSuggestion] = useState<any>(null);
   const [form, setForm] = useState<TaskForm>({
-    title: "",
-    description: "",
-    category: "",
-    budget: "",
+    title: suggestedTask?.title || "",
+    description: suggestedTask?.description || "",
+    category: suggestedTask?.category || "",
+    budget: suggestedTask?.estimatedBudget?.toString() || "",
     budgetType: "fixed",
-    location: "",
+    location: suggestedTask?.location || "",
     isRemote: false,
     deadline: "",
-    timeEstimate: "",
-    skillsRequired: [],
+    timeEstimate: suggestedTask?.estimatedDuration || "",
+    skillsRequired: suggestedTask?.tags || [],
     images: [],
-    urgency: "medium",
+    urgency: suggestedTask?.urgency || "medium",
     instructions: "",
   });
 
@@ -267,11 +270,17 @@ export default function CreateTask() {
               >
                 <ArrowLeft className="w-5 h-5" />
               </Button>
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                  <Zap className="w-5 h-5 text-primary-foreground" />
+              <div
+                className="flex items-center space-x-2 cursor-pointer"
+                onClick={() => navigate("/dashboard")}
+              >
+                <div className="w-8 h-8 flex items-center justify-center">
+                  <img
+                    src="https://cdn.builder.io/api/v1/image/assets%2Fb7fcb38896684c25a67a71f6b5b0365e%2Fc94f508bd53e4adda6534f00e8c18f19?format=webp&width=800"
+                    alt="TaskIt Logo"
+                    className="w-8 h-8 object-contain"
+                  />
                 </div>
-                <span className="text-2xl font-bold text-primary">TaskIt</span>
               </div>
             </div>
             <div className="flex items-center space-x-2">
@@ -292,10 +301,21 @@ export default function CreateTask() {
       <div className="container mx-auto px-4 py-4 md:py-8 max-w-4xl">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold">Post a New Task</h1>
+          <h1 className="text-3xl font-bold">
+            {suggestedTask ? "Create Task from Suggestion" : "Post a New Task"}
+          </h1>
           <p className="text-muted-foreground">
-            Tell us what you need done and connect with skilled taskers
+            {suggestedTask
+              ? "We've pre-filled some details based on your selection. Feel free to customize them!"
+              : "Tell us what you need done and connect with skilled taskers"}
           </p>
+          {suggestedTask && (
+            <div className="mt-3 p-3 bg-primary/10 border border-primary/20 rounded-lg">
+              <p className="text-sm text-primary font-medium">
+                💡 Task suggestion: {suggestedTask.title}
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Progress Steps */}
@@ -447,7 +467,7 @@ export default function CreateTask() {
                     <div className="flex-1">
                       <Label htmlFor="budget">Budget *</Label>
                       <div className="relative">
-                        <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
+                        <IndianRupee className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
                         <Input
                           id="budget"
                           type="number"

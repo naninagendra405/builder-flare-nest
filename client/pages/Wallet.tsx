@@ -25,7 +25,7 @@ import {
   ArrowLeft,
   Plus,
   CreditCard,
-  DollarSign,
+  IndianRupee,
   TrendingUp,
   TrendingDown,
   Clock,
@@ -36,7 +36,7 @@ import {
   MoreHorizontal,
   Wallet as WalletIcon,
   Shield,
-  Zap,
+  Home,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -172,11 +172,11 @@ export default function Wallet() {
       case "escrow_release":
         return <CheckCircle className="w-4 h-4 text-green-600" />;
       case "payment":
-        return <DollarSign className="w-4 h-4 text-blue-600" />;
+        return <IndianRupee className="w-4 h-4 text-blue-600" />;
       case "refund":
         return <TrendingUp className="w-4 h-4 text-green-600" />;
       default:
-        return <DollarSign className="w-4 h-4" />;
+        return <IndianRupee className="w-4 h-4" />;
     }
   };
 
@@ -268,11 +268,17 @@ export default function Wallet() {
               >
                 <ArrowLeft className="w-5 h-5" />
               </Button>
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                  <Zap className="w-5 h-5 text-primary-foreground" />
+              <div
+                className="flex items-center space-x-2 cursor-pointer"
+                onClick={() => navigate("/dashboard")}
+              >
+                <div className="w-8 h-8 flex items-center justify-center">
+                  <img
+                    src="https://cdn.builder.io/api/v1/image/assets%2Fb7fcb38896684c25a67a71f6b5b0365e%2Fc94f508bd53e4adda6534f00e8c18f19?format=webp&width=800"
+                    alt="TaskIt Logo"
+                    className="w-8 h-8 object-contain"
+                  />
                 </div>
-                <span className="text-2xl font-bold text-primary">TaskIt</span>
               </div>
             </div>
             <div className="flex items-center space-x-2">

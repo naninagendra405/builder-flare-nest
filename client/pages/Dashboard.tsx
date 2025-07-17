@@ -22,18 +22,18 @@ import {
   MessageSquare,
   Clock,
   CheckCircle,
-  DollarSign,
+  IndianRupee,
   TrendingUp,
   MapPin,
   Star,
-  Zap,
+  Home,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 export default function Dashboard() {
   const { user, logout } = useAuth();
-  const { getTasksByUser, getAllTasks } = useTasks();
+  const { getTasksByUser, getAllTasks, getTasksByTasker } = useTasks();
   const navigate = useNavigate();
 
   if (!user) {
@@ -57,7 +57,7 @@ export default function Dashboard() {
     {
       label: "Total Spent",
       value: "₹1,03,968",
-      icon: DollarSign,
+      icon: IndianRupee,
       color: "text-purple-600",
     },
     { label: "Avg Rating", value: "4.9", icon: Star, color: "text-yellow-600" },
@@ -79,7 +79,7 @@ export default function Dashboard() {
     {
       label: "Total Earned",
       value: "₹2,88,074",
-      icon: DollarSign,
+      icon: IndianRupee,
       color: "text-purple-600",
     },
     {
@@ -90,30 +90,44 @@ export default function Dashboard() {
     },
   ];
 
-  // Get user's tasks if customer, or available tasks if tasker
+  // Get user's tasks - customers see their posted tasks, taskers see tasks they're working on
   const userTasks =
-    user.role === "customer" ? getTasksByUser(user.id || "") : [];
+    user.role === "customer"
+      ? getTasksByUser(user.id || "")
+      : getTasksByTasker(user.id || "");
   const allTasks = getAllTasks();
+
+  // For taskers, also get available tasks they can bid on
+  const availableTasksForTaskers =
+    user.role === "tasker"
+      ? allTasks.filter(
+          (task) => task.status === "open" && !task.assignedTaskerId,
+        )
+      : [];
 
   // Format tasks for display
   const recentTasks = userTasks.slice(0, 3).map((task) => ({
     id: task.id,
     title: task.title,
     status: task.status,
-    budget: `$${task.budget}`,
+    budget: `₹${task.budget}`,
     location: task.location,
     time: getTimeAgo(task.postedAt),
     customer: task.customerName,
   }));
 
-  const availableTasks = allTasks.slice(0, 3).map((task) => ({
-    id: task.id,
-    title: task.title,
-    budget: `$${task.budget}`,
-    location: task.location,
-    time: getTimeAgo(task.postedAt),
-    bids: task.bidsCount,
-  }));
+  const availableTasks = (
+    user.role === "customer" ? allTasks : availableTasksForTaskers
+  )
+    .slice(0, 3)
+    .map((task) => ({
+      id: task.id,
+      title: task.title,
+      budget: `₹${task.budget}`,
+      location: task.location,
+      time: getTimeAgo(task.postedAt),
+      bids: task.bidsCount,
+    }));
 
   function getTimeAgo(dateString: string) {
     const date = new Date(dateString);
@@ -137,10 +151,48 @@ export default function Dashboard() {
         return "bg-green-100 text-green-800";
       case "in_progress":
         return "bg-blue-100 text-blue-800";
-      case "pending":
+      case "approved":
+        return "bg-emerald-100 text-emerald-800";
+      case "bid_accepted":
+        return "bg-purple-100 text-purple-800";
+      case "open":
         return "bg-yellow-100 text-yellow-800";
       default:
         return "bg-gray-100 text-gray-800";
+    }
+  };
+
+  const getStatusText = (status: string, role: string) => {
+    if (role === "tasker") {
+      switch (status) {
+        case "bid_accepted":
+          return "Bid Accepted";
+        case "approved":
+          return "Approved - Payment Secured";
+        case "in_progress":
+          return "In Progress";
+        case "open":
+          return "Available";
+        case "completed":
+          return "Completed";
+        default:
+          return status.replace("_", " ");
+      }
+    } else {
+      switch (status) {
+        case "bid_accepted":
+          return "Awaiting Your Approval";
+        case "approved":
+          return "Approved - Payment in Escrow";
+        case "in_progress":
+          return "In Progress";
+        case "open":
+          return "Open for Bids";
+        case "completed":
+          return "Completed";
+        default:
+          return status.replace("_", " ");
+      }
     }
   };
 
@@ -152,11 +204,17 @@ export default function Dashboard() {
       <nav className="border-b bg-background/80 backdrop-blur-md sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <Zap className="w-5 h-5 text-primary-foreground" />
+            <div
+              className="flex items-center space-x-2 cursor-pointer"
+              onClick={() => navigate("/dashboard")}
+            >
+              <div className="w-8 h-8 flex items-center justify-center">
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets%2Fb7fcb38896684c25a67a71f6b5b0365e%2F81896caa38e7430aac41e48cb8db0102?format=webp&width=800"
+                  alt="TaskIt Logo"
+                  className="w-8 h-8 object-contain"
+                />
               </div>
-              <span className="text-2xl font-bold text-primary">TaskIt</span>
             </div>
 
             <div className="flex items-center space-x-4">
@@ -310,15 +368,7 @@ export default function Dashboard() {
                       <Badge variant="default" className="bg-green-600">
                         ✓ Professional Verified
                       </Badge>
-                      <Badge variant="outline">
-                        Trust Score:{" "}
-                        {user.taskerProfile.professionalCredentials?.filter(
-                          (c) => c.verified,
-                        ).length *
-                          20 +
-                          60}
-                        %
-                      </Badge>
+                      <Badge variant="outline">Trust Score: 100%</Badge>
                     </div>
                   )}
                 </div>
@@ -357,43 +407,61 @@ export default function Dashboard() {
           <Card>
             <CardHeader>
               <CardTitle>
-                {user.role === "customer" ? "Your Tasks" : "Current Tasks"}
+                {user.role === "customer" ? "Your Tasks" : "Assigned Tasks"}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              {recentTasks.map((task) => (
-                <div
-                  key={task.id}
-                  className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors cursor-pointer space-y-3 sm:space-y-0"
-                >
-                  <div className="flex-1">
-                    <h4 className="font-medium">{task.title}</h4>
-                    <div className="flex flex-wrap items-center gap-2 sm:gap-4 mt-2 text-sm text-muted-foreground">
-                      <span className="flex items-center">
-                        <MapPin className="w-3 h-3 mr-1" />
-                        {task.location}
-                      </span>
-                      <span>{task.time}</span>
-                    </div>
-                    {user.role === "customer" && (
-                      <p className="text-sm text-muted-foreground mt-1">
-                        Tasker: {task.customer}
-                      </p>
-                    )}
-                  </div>
-                  <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center text-right">
-                    <div className="text-lg font-semibold text-primary">
-                      {task.budget}
-                    </div>
-                    <Badge
-                      className={`mt-0 sm:mt-2 ${getStatusColor(task.status)}`}
-                      variant="secondary"
-                    >
-                      {task.status.replace("_", " ")}
-                    </Badge>
-                  </div>
+              {recentTasks.length === 0 && user.role === "tasker" ? (
+                <div className="text-center py-8">
+                  <p className="text-muted-foreground mb-4">
+                    No assigned tasks yet. Start by browsing available work!
+                  </p>
+                  <Button asChild variant="outline">
+                    <Link to="/tasks">Browse Available Tasks</Link>
+                  </Button>
                 </div>
-              ))}
+              ) : (
+                recentTasks.map((task) => (
+                  <div
+                    key={task.id}
+                    className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors cursor-pointer space-y-3 sm:space-y-0"
+                    onClick={() => navigate(`/task/${task.id}`)}
+                  >
+                    <div className="flex-1">
+                      <h4 className="font-medium">{task.title}</h4>
+                      <div className="flex flex-wrap items-center gap-2 sm:gap-4 mt-2 text-sm text-muted-foreground">
+                        <span className="flex items-center">
+                          <MapPin className="w-3 h-3 mr-1" />
+                          {task.location}
+                        </span>
+                        <span>{task.time}</span>
+                      </div>
+                      {user.role === "customer" &&
+                        task.status === "in_progress" && (
+                          <p className="text-sm text-muted-foreground mt-1">
+                            Assigned to: {task.customer}
+                          </p>
+                        )}
+                      {user.role === "tasker" && (
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Customer: {task.customer}
+                        </p>
+                      )}
+                    </div>
+                    <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center text-right">
+                      <div className="text-lg font-semibold text-primary">
+                        {task.budget}
+                      </div>
+                      <Badge
+                        className={`mt-0 sm:mt-2 ${getStatusColor(task.status)}`}
+                        variant="secondary"
+                      >
+                        {getStatusText(task.status, user.role)}
+                      </Badge>
+                    </div>
+                  </div>
+                ))
+              )}
               <Button variant="outline" className="w-full" asChild>
                 <Link to={user.role === "customer" ? "/tasks" : "/tasks"}>
                   View All Tasks
@@ -408,7 +476,7 @@ export default function Dashboard() {
               <CardTitle>
                 {user.role === "customer"
                   ? "Recommended Tasks"
-                  : "Available Tasks"}
+                  : "Available Work"}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -416,6 +484,7 @@ export default function Dashboard() {
                 <div
                   key={task.id}
                   className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors cursor-pointer"
+                  onClick={() => navigate(`/task/${task.id}`)}
                 >
                   <div className="flex-1">
                     <h4 className="font-medium">{task.title}</h4>
@@ -436,8 +505,19 @@ export default function Dashboard() {
                     <div className="text-lg font-semibold text-primary">
                       {task.budget}
                     </div>
-                    <Button size="sm" className="mt-2">
-                      {user.role === "customer" ? "View" : "Bid Now"}
+                    <Button
+                      size="sm"
+                      className="mt-2"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (user.role === "customer") {
+                          navigate(`/task/${task.id}`);
+                        } else {
+                          navigate(`/task/${task.id}`);
+                        }
+                      }}
+                    >
+                      {user.role === "customer" ? "View" : "View & Bid"}
                     </Button>
                   </div>
                 </div>
