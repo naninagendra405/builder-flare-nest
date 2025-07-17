@@ -183,7 +183,7 @@ export function getPopularTaskPricing(): Array<{
       title: "Kitchen sink repair",
       category: "Home Repair",
       averagePrice: 75,
-      priceRange: "$50 - $120",
+      priceRange: "₹50 - ₹120",
     },
     {
       title: "Logo design",
