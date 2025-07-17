@@ -267,6 +267,30 @@ const defaultTasks: Task[] = [
     status: "open",
     instructions: "Weekend work preferred.",
   },
+  {
+    id: "8",
+    title: "Math tutoring for high school student",
+    description:
+      "Looking for an experienced math tutor to help my daughter with Algebra 2 and Calculus preparation. Need someone patient and good at explaining concepts.",
+    category: "Tutoring",
+    budget: 45,
+    budgetType: "hourly",
+    location: "Queens, NY",
+    isRemote: false,
+    customerName: "Patricia Lee",
+    customerId: "customer_8",
+    customerRating: 4.8,
+    customerVerified: true,
+    postedAt: "2024-01-17T10:30:00Z",
+    urgency: "medium",
+    skillsRequired: ["Mathematics", "Teaching", "Tutoring", "High School"],
+    bidsCount: 6,
+    viewsCount: 28,
+    images: [],
+    timeEstimate: "2 hours per session",
+    status: "open",
+    instructions: "Prefer sessions twice a week, flexible timing.",
+  },
 ];
 
 // Default sample bids
