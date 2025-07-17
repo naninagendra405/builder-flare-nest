@@ -177,15 +177,15 @@ export function NotificationProvider({
     }
   }, []);
 
-  const removeNotification = (id: string) => {
+  const removeNotification = useCallback((id: string) => {
     setNotifications((prev) =>
       prev.filter((notification) => notification.id !== id),
     );
-  };
+  }, []);
 
-  const clearAll = () => {
+  const clearAll = useCallback(() => {
     setNotifications([]);
-  };
+  }, []);
 
   // Simulate receiving new notifications
   useEffect(() => {
