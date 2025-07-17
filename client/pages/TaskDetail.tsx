@@ -130,9 +130,8 @@ export default function TaskDetail() {
   const submitBid = () => {
     if (!bidAmount || !bidMessage) return;
 
-    // Create new bid object
-    const newBid: Bid = {
-      id: `bid_${Date.now()}`,
+    // Create new bid data (without id, taskId, submittedAt - these are handled by context)
+    const bidData = {
       bidderId: user.id,
       bidderName: user.name,
       bidderRating: user.rating || 4.5,
@@ -140,13 +139,12 @@ export default function TaskDetail() {
       amount: parseInt(bidAmount),
       message: bidMessage,
       deliveryTime: deliveryTime.replace("-", " "),
-      submittedAt: new Date().toISOString(),
       bidderVerified: user.verificationStatus === "verified",
       bidderResponse: "under 1 hour",
     };
 
-    // Update task bid count using context
-    placeBid(task.id);
+    // Add bid using context
+    placeBid(task.id, bidData);
 
     // Notify customer about new bid
     addNotification({
