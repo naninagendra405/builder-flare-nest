@@ -218,7 +218,7 @@ export function NotificationProvider({
     }, 5000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [addNotification]);
 
   return (
     <NotificationContext.Provider
