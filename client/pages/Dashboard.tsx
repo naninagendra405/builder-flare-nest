@@ -472,8 +472,14 @@ export default function Dashboard() {
                 ))
               )}
               <Button variant="outline" className="w-full" asChild>
-                <Link to={user.role === "customer" ? "/tasks" : "/tasks"}>
-                  View All Tasks
+                <Link
+                  to={
+                    user.role === "customer" ? "/tasks" : "/my-assigned-tasks"
+                  }
+                >
+                  {user.role === "customer"
+                    ? "View All Tasks"
+                    : "View All Assigned Tasks"}
                 </Link>
               </Button>
             </CardContent>
