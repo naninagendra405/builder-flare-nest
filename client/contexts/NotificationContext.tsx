@@ -32,6 +32,7 @@ interface NotificationContextType {
     userId: string,
     notification: Omit<Notification, "id" | "timestamp" | "read">,
   ) => void;
+  loadNotificationsForUser: (userId: string) => void;
   removeNotification: (id: string) => void;
   clearAll: () => void;
 }
