@@ -95,8 +95,12 @@ export default function Index() {
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets%2Fb7fcb38896684c25a67a71f6b5b0365e%2F81896caa38e7430aac41e48cb8db0102?format=webp&width=800"
                   alt="TaskIt Logo"
-                  className="object-contain max-w-[500px] pb-[21px] mt-[26px] ml-[76px]"
-                  style={{ width: "182px", height: "71px" }}
+                  className="object-contain max-w-[500px] pb-[21px] ml-[76px]"
+                  style={{
+                    width: "138px",
+                    height: "58px",
+                    margin: "26px auto 0 76px",
+                  }}
                 />
               </div>
             </div>
