@@ -56,7 +56,8 @@ import TaskWorkflow from "../components/TaskWorkflow";
 
 export default function TaskDetail() {
   const { user } = useAuth();
-  const { acceptBid, getAllTasks, placeBid, updateTask } = useTasks();
+  const { acceptBid, getAllTasks, placeBid, updateTask, getBidsForTask } =
+    useTasks();
   const { addNotification, addNotificationForUser } = useNotifications();
   const navigate = useNavigate();
   const { id } = useParams();
