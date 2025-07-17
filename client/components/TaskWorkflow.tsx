@@ -33,7 +33,7 @@ export default function TaskWorkflow({ task }: TaskWorkflowProps) {
   const { user } = useAuth();
   const { approveTaskAndHoldEscrow, markTaskCompleted, releasePayment } =
     useTasks();
-  const { addNotification } = useNotifications();
+  const { addNotification, addNotificationForUser } = useNotifications();
   const [showApprovalDialog, setShowApprovalDialog] = useState(false);
 
   if (!user) return null;
