@@ -1,5 +1,21 @@
 import React, { createContext, useContext, useState } from "react";
 
+export interface Bid {
+  id: string;
+  taskId: string;
+  bidderId: string;
+  bidderName: string;
+  bidderRating: number;
+  bidderCompletedTasks: number;
+  amount: number;
+  message: string;
+  deliveryTime: string;
+  submittedAt: string;
+  isAccepted?: boolean;
+  bidderVerified: boolean;
+  bidderResponse: string;
+}
+
 export interface Task {
   id: string;
   title: string;
