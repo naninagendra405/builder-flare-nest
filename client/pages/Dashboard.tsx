@@ -541,7 +541,7 @@ export default function Dashboard() {
                 <Link to="/tasks">
                   {user.role === "customer"
                     ? "Browse All Tasks"
-                    : "See More Tasks"}
+                    : "Browse Available Tasks"}
                 </Link>
               </Button>
             </CardContent>
