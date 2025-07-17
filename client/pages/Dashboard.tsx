@@ -35,7 +35,15 @@ import { useNotifications } from "../contexts/NotificationContext";
 export default function Dashboard() {
   const { user, logout } = useAuth();
   const { getTasksByUser, getAllTasks, getTasksByTasker } = useTasks();
+  const { loadNotificationsForUser } = useNotifications();
   const navigate = useNavigate();
+
+  // Load user-specific notifications when dashboard loads
+  useEffect(() => {
+    if (user?.id) {
+      loadNotificationsForUser(user.id);
+    }
+  }, [user?.id, loadNotificationsForUser]);
 
   if (!user) {
     navigate("/login");
