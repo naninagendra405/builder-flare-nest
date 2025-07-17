@@ -164,14 +164,14 @@ export function NotificationProvider({
     setNotifications((prev) => [newNotification, ...prev]);
   };
 
-  const loadNotificationsForUser = (userId: string) => {
+  const loadNotificationsForUser = useCallback((userId: string) => {
     // Load notifications for the specific user from global store
     if (globalNotifications[userId]) {
       setNotifications((prev) => [...globalNotifications[userId], ...prev]);
       // Clear the global notifications after loading (they're now in local state)
       globalNotifications[userId] = [];
     }
-  };
+  }, []);
 
   const removeNotification = (id: string) => {
     setNotifications((prev) =>
