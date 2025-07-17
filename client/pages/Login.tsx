@@ -48,11 +48,11 @@ export default function Login() {
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets%2Fb7fcb38896684c25a67a71f6b5b0365e%2Fc94f508bd53e4adda6534f00e8c18f19?format=webp&width=800"
                   alt="TaskIt Logo"
-                  className="object-contain max-w-[500px] pb-[21px] ml-[76px]"
+                  className="object-contain max-w-[500px] pb-[21px]"
                   style={{
-                    width: "138px",
-                    height: "58px",
-                    margin: "26px auto 0 49px",
+                    width: "180px",
+                    height: "75px",
+                    margin: "26px auto 0 auto",
                   }}
                 />
               </div>
