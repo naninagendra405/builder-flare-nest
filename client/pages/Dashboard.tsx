@@ -29,7 +29,8 @@ import {
   Home,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNotifications } from "../contexts/NotificationContext";
 
 export default function Dashboard() {
   const { user, logout } = useAuth();
