@@ -37,6 +37,10 @@ export default function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/create-task" element={<CreateTask />} />
                 <Route path="/tasks" element={<TaskFeed />} />
+                <Route
+                  path="/my-assigned-tasks"
+                  element={<MyAssignedTasks />}
+                />
                 <Route path="/task/:id" element={<TaskDetail />} />
                 <Route path="/chat/:chatId?" element={<Chat />} />
                 <Route path="/wallet" element={<Wallet />} />
