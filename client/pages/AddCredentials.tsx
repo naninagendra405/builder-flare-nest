@@ -119,19 +119,12 @@ export default function AddCredentials() {
 
         <Card className="shadow-xl border-0 bg-card/80 backdrop-blur-sm">
           <CardHeader className="text-center">
-            <div className="flex items-center justify-center space-x-2 mb-4">
-              <div className="w-8 h-8 flex items-center justify-center ml-[7px]">
-                <img
-                  src="https://cdn.builder.io/api/v1/image/assets%2Fb7fcb38896684c25a67a71f6b5b0365e%2Fc94f508bd53e4adda6534f00e8c18f19?format=webp&width=800"
-                  alt="TaskIt Logo"
-                  className="object-contain max-w-[500px] pb-[21px] ml-[76px]"
-                  style={{
-                    width: "138px",
-                    height: "58px",
-                    margin: "26px auto 0 49px",
-                  }}
-                />
-              </div>
+            <div className="flex items-center justify-center mb-4">
+              <img
+                src="https://cdn.builder.io/api/v1/image/assets%2Fb7fcb38896684c25a67a71f6b5b0365e%2Fc94f508bd53e4adda6534f00e8c18f19?format=webp&width=800"
+                alt="TaskIt Logo"
+                className="h-8 w-auto object-contain"
+              />
             </div>
             <CardTitle className="text-2xl">
               Add Professional Credentials
