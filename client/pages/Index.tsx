@@ -147,7 +147,7 @@ export default function Index() {
             <div className="relative">
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
               <Input
-                placeholder="What do you need help with?"
+                placeholder="What do you need help with? (e.g. fix sink, design logo, help moving)"
                 className="pl-12 pr-32 py-6 text-lg rounded-full border-2 focus:border-primary"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
