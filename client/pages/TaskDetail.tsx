@@ -241,24 +241,26 @@ export default function TaskDetail() {
       // Use context to accept bid and assign task
       acceptBid(task.id, bidId, acceptedBid.bidderId, acceptedBid.bidderName);
 
-      // Add notification for the tasker
-      addNotification({
+      // Add notification for the tasker (whose bid was accepted)
+      addNotificationForUser(acceptedBid.bidderId, {
         type: "task_update",
-        title: "Bid Accepted!",
-        message: `Your bid for "${task.title}" has been accepted! Waiting for customer approval to start work.`,
+        title: "🎉 Bid Accepted!",
+        message: `Your bid for "${task.title}" has been accepted! The customer will approve the task soon to start work and secure payment.`,
         priority: "high",
         taskId: task.id,
         fromUser: user.name,
+        actionUrl: `/task/${task.id}`,
       });
 
-      // Add notification for the customer
+      // Add notification for the customer (current user)
       addNotification({
         type: "task_update",
-        title: "Bid Accepted",
-        message: `${acceptedBid.bidderName}'s bid for "${task.title}" has been accepted. Please approve the task to hold payment in escrow.`,
+        title: "Bid Accepted Successfully",
+        message: `${acceptedBid.bidderName}'s bid for "${task.title}" has been accepted. Please approve the task to hold payment in escrow and start work.`,
         priority: "high",
         taskId: task.id,
         fromUser: "TaskIt System",
+        actionUrl: `/task/${task.id}`,
       });
 
       // Show success message
