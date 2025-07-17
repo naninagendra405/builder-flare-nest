@@ -52,22 +52,7 @@ import { useTasks, type Bid } from "../contexts/TaskContext";
 import { useNotifications } from "../contexts/NotificationContext";
 import TaskWorkflow from "../components/TaskWorkflow";
 
-interface Bid {
-  id: string;
-  bidderId: string;
-  bidderName: string;
-  bidderRating: number;
-  bidderCompletedTasks: number;
-  amount: number;
-  message: string;
-  deliveryTime: string;
-  submittedAt: string;
-  isAccepted?: boolean;
-  bidderVerified: boolean;
-  bidderResponse: string;
-}
-
-// Use Task interface from context instead of duplicating
+// Use Task and Bid interfaces from context
 
 export default function TaskDetail() {
   const { user } = useAuth();
