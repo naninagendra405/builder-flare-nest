@@ -92,9 +92,9 @@ export default function Index() {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2 cursor-pointer">
               <img
-                src="https://cdn.builder.io/api/v1/image/assets%2Fb7fcb38896684c25a67a71f6b5b0365e%2F81896caa38e7430aac41e48cb8db0102?format=webp&width=800"
-                alt="TaskIt Logo"
-                className="h-10 w-auto object-contain"
+                src="https://cdn.builder.io/api/v1/image/assets%2F49df43ed9ff0405e8e16cefcd448c514%2F4f70d3bad8334dbfa7beca7d1e69b919?format=webp&width=800"
+                alt="DOZO Logo"
+                className="h-7 w-auto object-contain ml-3"
               />
             </div>
             <div className="hidden md:flex items-center space-x-6">
@@ -280,7 +280,7 @@ export default function Index() {
       <section id="how-it-works" className="py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">How TaskIt Works</h2>
+            <h2 className="text-4xl font-bold mb-4">How DOZO Works</h2>
             <p className="text-xl text-muted-foreground">
               Get things done in three simple steps
             </p>
@@ -397,7 +397,7 @@ export default function Index() {
       <section id="features" className="py-20 bg-card/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Why Choose TaskIt?</h2>
+            <h2 className="text-4xl font-bold mb-4">Why Choose DOZO?</h2>
             <p className="text-xl text-muted-foreground">
               The most trusted platform for getting things done
             </p>
@@ -447,9 +447,9 @@ export default function Index() {
             <div>
               <div className="flex items-center space-x-2 mb-4">
                 <img
-                  src="https://cdn.builder.io/api/v1/image/assets%2Fb7fcb38896684c25a67a71f6b5b0365e%2F81896caa38e7430aac41e48cb8db0102?format=webp&width=800"
-                  alt="TaskIt Logo"
-                  className="h-10 w-auto object-contain"
+                  src="https://cdn.builder.io/api/v1/image/assets%2F49df43ed9ff0405e8e16cefcd448c514%2F4f70d3bad8334dbfa7beca7d1e69b919?format=webp&width=800"
+                  alt="DOZO Logo"
+                  className="h-7 w-auto object-contain ml-3"
                 />
               </div>
               <p className="text-muted-foreground">
@@ -546,7 +546,7 @@ export default function Index() {
             </div>
           </div>
           <div className="border-t mt-8 pt-8 text-center text-muted-foreground">
-            <p>&copy; 2024 TaskIt. All rights reserved.</p>
+            <p>&copy; 2024 Dozo. All rights reserved.</p>
           </div>
         </div>
       </footer>

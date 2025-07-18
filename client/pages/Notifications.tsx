@@ -129,9 +129,9 @@ export default function Notifications() {
                 onClick={() => navigate("/dashboard")}
               >
                 <img
-                  src="https://cdn.builder.io/api/v1/image/assets%2Fb7fcb38896684c25a67a71f6b5b0365e%2F81896caa38e7430aac41e48cb8db0102?format=webp&width=800"
-                  alt="TaskIt Logo"
-                  className="h-10 w-auto object-contain"
+                  src="https://cdn.builder.io/api/v1/image/assets%2F49df43ed9ff0405e8e16cefcd448c514%2F4f70d3bad8334dbfa7beca7d1e69b919?format=webp&width=800"
+                  alt="DOZO Logo"
+                  className="h-7 w-auto object-contain"
                 />
               </div>
             </div>
