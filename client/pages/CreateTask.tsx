@@ -277,7 +277,7 @@ export default function CreateTask() {
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets%2F49df43ed9ff0405e8e16cefcd448c514%2F4f70d3bad8334dbfa7beca7d1e69b919?format=webp&width=800"
                   alt="DOZO Logo"
-                  className="h-10 w-auto object-contain"
+                  className="h-8 w-auto object-contain"
                 />
               </div>
             </div>
