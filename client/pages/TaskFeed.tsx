@@ -231,8 +231,8 @@ export default function TaskFeed() {
                 onClick={() => navigate("/dashboard")}
               >
                 <img
-                  src="https://cdn.builder.io/api/v1/image/assets%2F49df43ed9ff0405e8e16cefcd448c514%2Fe50ee6de74a14e229883d2e6530bccb2?format=webp&width=800"
-                  alt="TaskIt Logo"
+                  src="https://cdn.builder.io/api/v1/image/assets%2F49df43ed9ff0405e8e16cefcd448c514%2F4f70d3bad8334dbfa7beca7d1e69b919?format=webp&width=800"
+                  alt="DOZO Logo"
                   className="h-10 w-auto object-contain"
                 />
               </div>
