@@ -280,7 +280,7 @@ export default function Index() {
       <section id="how-it-works" className="py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">How TaskIt Works</h2>
+            <h2 className="text-4xl font-bold mb-4">How DOZO Works</h2>
             <p className="text-xl text-muted-foreground">
               Get things done in three simple steps
             </p>
@@ -397,7 +397,7 @@ export default function Index() {
       <section id="features" className="py-20 bg-card/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Why Choose TaskIt?</h2>
+            <h2 className="text-4xl font-bold mb-4">Why Choose DOZO?</h2>
             <p className="text-xl text-muted-foreground">
               The most trusted platform for getting things done
             </p>
@@ -546,7 +546,7 @@ export default function Index() {
             </div>
           </div>
           <div className="border-t mt-8 pt-8 text-center text-muted-foreground">
-            <p>&copy; 2024 TaskIt. All rights reserved.</p>
+            <p>&copy; 2024 Dozo. All rights reserved.</p>
           </div>
         </div>
       </footer>
